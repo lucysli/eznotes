@@ -58,7 +58,6 @@ Heroku <https://www.heroku.com/>
 ## Online tools ##
 Wireframes <http://pencil.evolus.vn/>  
 GitHub <https://github.com/mcgillosd/eznotes>  
-
 -------------------------------------------
 # Getting Started #
 
@@ -182,6 +181,20 @@ Now we have to configure a new Heroku account.
 -	Fourth use the `heroku` command to create a place on the Heroku servers for your app to live:
 		- `heroku create`
 
+## Heroku Deployment, in one step ##
+To deploy the application, use Git to push to Heroku  
+`$ git push heroku master`
+
+To open the web page deployed on Heroku you can run  
+`$ git heroku open`
+
+## Heroku commands ##
+There are many [Heroku commands](https://devcenter.heroku.com/categories/command-line) you can use.
+If you want to rename your application you can run  
+`$ heroku rename EZNotes`. you can also change the name from your account on heroku.com
+
+For development we generated a reasonably secure random/obscure subdomain such as hsjceevf.herokuapp.com.  
+We did this by running `ruby -r "print ('a'..'z').to_a.shuffle[0..7].join"` on the command line.
 -------------------------------------------
 # Testing #
 -------------------------------------------
