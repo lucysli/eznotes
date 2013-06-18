@@ -40,7 +40,7 @@ taking the same course so that they can share their notes
 ### Framework ###
 Rails
 
-### Programming Language ###
+### Programming Language(s) ###
 -	Ruby
 -	JQuery
 -	Javascript
@@ -57,7 +57,7 @@ Heroku <https://www.heroku.com/>
 
 ## Online tools ##
 Wireframes <http://pencil.evolus.vn/>  
-GitHub <https://github.com/mcgillosd/eznotes>  
+GitHub <https://github.com/mcgillosd/eznotes>    
 -------------------------------------------
 # Getting Started #
 
@@ -67,7 +67,7 @@ thoroughly.
 
 ## Installing Ruby and Rails ##
 
-for instally Ruby on OS X follow this link:  
+for installing Ruby and Rails on OS X follow this link:  
 <http://www.moncefbelyamani.com/how-to-install-xcode-homebrew-git-rvm-ruby-on-mac/#step-7>  
 
 here is a summary
@@ -145,10 +145,11 @@ the . will add files recursively so it automatically includes subdirectories
 
 This command will tell you what changes are ready to be committed
 
-`$ git commit -m "Initial commit"`  
+`$ git commit -m "Initial commit"`
+
 This will perform a local commit on your machine. in order to commit to the remote repository like github you need to perform a `git push`
 
-`$ git log`
+`$ git log`  
 will display the list of your commit messages
 
 ## GitHub ##
@@ -172,9 +173,9 @@ We are using Heroku to deploy our application which makes things easy as long as
 
 ## Heroku Setup ##
 
-Heroku uses PostfreSQL database we need to add pg gem to our GemFile.  
+Heroku uses PostgreSQL database we need to add pg gem to our GemFile and run `bundle install` and push new gemfile to Git and GitHub.  
 
-Now we have to configure a new Heroku account.
+We have to configure a new Heroku account.
 -	First [sign up for Heroku](https://id.heroku.com/signup)
 -	Second install necessary Heroku software using [Heroku Toolbelt](https://toolbelt.heroku.com/)
 -	Third use the heroku command to log in at the command line: `heroku login`
@@ -191,10 +192,10 @@ To open the web page deployed on Heroku you can run
 ## Heroku commands ##
 There are many [Heroku commands](https://devcenter.heroku.com/categories/command-line) you can use.
 If you want to rename your application you can run  
-`$ heroku rename EZNotes`. you can also change the name from your account on heroku.com
+`$ heroku rename EZNotes`. you can also change the name from the app settings page on heroku.com
 
-For development we generated a reasonably secure random/obscure subdomain such as hsjceevf.herokuapp.com.  
-We did this by running `ruby -r "print ('a'..'z').to_a.shuffle[0..7].join"` on the command line.
+For development we generated a reasonably secure random/obscure subdomain such as hsjceevf.herokuapp.com. We did this by running `ruby -r "print ('a'..'z').to_a.shuffle[0..7].join"` on the command line.
+
 -------------------------------------------
 # Testing #
 -------------------------------------------
