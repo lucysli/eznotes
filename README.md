@@ -16,22 +16,23 @@ H3A 0C9
 
 <http://www.mcgill.ca/osd/contact>
 
-Andrew Bennett, B.A.
-Administrative Coordinator
-Email: andrew.bennett@mcgill.ca
+Andrew Bennett, B.A.  
+Administrative Coordinator  
+Email: andrew.bennett@mcgill.ca  
 
 ## Developers ##
 
-Wisam Al Abed
-wisam.alabed@mail.mcgill.ca
-<http://ca.linkedin.com/in/wisamalabed>
+Wisam Al Abed  
+wisam.alabed@mail.mcgill.ca  
+<http://ca.linkedin.com/in/wisamalabed>  
 
 ## Project Summary ##
 
-What problem is this project solving?
-We are developing a web application that will match
-students with disabilities with prospective students
-taking the same course so that they can share their notes
+What problem is this project solving?  
+
+We are developing a web application that will match  
+students with disabilities with prospective students  
+taking the same course so that they can share their notes  
 . TODO
 
 ## Technologies ##
@@ -55,8 +56,8 @@ PostgreSQL
 Heroku <https://www.heroku.com/>
 
 ## Online tools ##
-Wireframes <http://pencil.evolus.vn/>
-GitHub <https://github.com/mcgillosd/eznotes>
+Wireframes <http://pencil.evolus.vn/>  
+GitHub <https://github.com/mcgillosd/eznotes>  
 
 -------------------------------------------
 # Getting Started #
@@ -67,8 +68,8 @@ thoroughly.
 
 ## Installing Ruby and Rails ##
 
-for instally Ruby on OS X follow this link:
-<http://www.moncefbelyamani.com/how-to-install-xcode-homebrew-git-rvm-ruby-on-mac/#step-7>
+for instally Ruby on OS X follow this link:  
+<http://www.moncefbelyamani.com/how-to-install-xcode-homebrew-git-rvm-ruby-on-mac/#step-7>  
 
 here is a summary
 
@@ -112,32 +113,32 @@ directory for your Rails projects and then run `rails new` to make the first app
 | .gitignore 			| Patterns for files that should be ignored by Git 												 |
 
 ## using *Bundler* to install the included gems needed by the app ##
-once you have assembed the proper and correct GemFile run
-$ `bundle update`
-$ `bundle install`
+once you have assembed the proper and correct GemFile run  
+$ `bundle update`  
+$ `bundle install`  
 
 ## Running a local web server ##
-use `rails server`. To see the result visit <http://localhost:3000/>
+use `rails server`. To see the result visit <http://localhost:3000/>  
 
 # Setting up Git #
 
 ## First-time system setup ##
-perform one time system setups.
-`$ git config --global user.name "Your Name"`
-`$ git config --global user.email your.email@example.com`
+perform one time system setups.  
+`$ git config --global user.name "Your Name"`  
+`$ git config --global user.email your.email@example.com`  
 
 if you like using `co` in place of the more verbose `checkout` command then run
 `$ git config --global alias.co checkout`
 
 ## First-time repository setup ##
-navigate to the root directory of your app and run
+navigate to the root directory of your app and run  
 `$ git init`
 
 The next step is to add the project files to the repository. Git tracks all changes so if you want to ignore 
 certain files then you need to edit .gitignore
 
 ## Adding and committing ##
-`$ git add . `
+`$ git add . `  
 
 the . will add files recursively so it automatically includes subdirectories
 
@@ -145,19 +146,19 @@ the . will add files recursively so it automatically includes subdirectories
 
 This command will tell you what changes are ready to be committed
 
-`$ git commit -m "Initial commit"`
+`$ git commit -m "Initial commit"`  
 This will perform a local commit on your machine. in order to commit to the remote repository like github you need to perform a `git push`
 
 `$ git log`
 will display the list of your commit messages
 
 ## GitHub ##
-to push your application to GitHub type
-`$ git remote add origin https://github.com/<username>/first_app.git`
-`$ git push -u origin master`
+to push your application to GitHub type  
+`$ git remote add origin https://github.com/<username>/first_app.git`  
+`$ git push -u origin master`  
 
 This command tells Git that you want to add GitHub as the origin for you main (master) branch and then push
-your repository up to GitHub. Make sure to replace <username> with your actual username. For example the command i ran was:
+your repository up to GitHub. Make sure to replace <username> with your actual username. For example the command i ran was:  
 `$ git remote add origin https://github.com/ElectronMan/EZNotes.git`
 
 note on most systems after performing the above command for the first time any further subsequent pushes we can 
@@ -167,6 +168,7 @@ omit origin and just run `$ git push`
 We are taking the approach of deploying our Rails application early and often to production in order to faciliate
 catching any deployment problems early as opposed to deploying only at the end after much effort was put into
 developing the app.
+
 We are using Heroku to deploy our application which makes things easy as long as the source code is under version control with Git.
 
 ## Heroku Setup ##
