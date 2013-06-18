@@ -112,7 +112,7 @@ directory for your Rails projects and then run `rails new` to make the first app
 | config.ru 			| A configuration file for [Rack middleware](http://rack.rubyforge.org/doc/) 				 |
 | .gitignore 			| Patterns for files that should be ignored by Git 												 |
 
-## using *Bundler* to install the included gems needed by the app ##
+## Using *Bundler* to install the included gems needed by the app ##
 once you have assembed the proper and correct GemFile run  
 $ `bundle update`  
 $ `bundle install`  
@@ -172,6 +172,15 @@ developing the app.
 We are using Heroku to deploy our application which makes things easy as long as the source code is under version control with Git.
 
 ## Heroku Setup ##
+
+Heroku uses PostfreSQL database we need to add pg gem to our GemFile.  
+
+Now we have to configure a new Heroku account.
+-	First [sign up for Heroku](https://id.heroku.com/signup)
+-	Second install necessary Heroku software using [Heroku Toolbelt](https://toolbelt.heroku.com/)
+-	Third use the heroku command to log in at the command line: `heroku login`
+-	Fourth use the `heroku` command to create a place on the Heroku servers for your app to live:
+		- `heroku create`
 
 -------------------------------------------
 # Testing #

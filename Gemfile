@@ -5,7 +5,8 @@ gem 'rails', '3.2.13'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+# Gem Postgres in order to work with heroku
+gem 'pg'
 
 
 # Gems used only for assets and not required
