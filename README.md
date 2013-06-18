@@ -57,7 +57,8 @@ Heroku <https://www.heroku.com/>
 
 ## Online tools ##
 Wireframes <http://pencil.evolus.vn/>  
-GitHub <https://github.com/mcgillosd/eznotes>    
+GitHub <https://github.com/mcgillosd/eznotes>
+  
 -------------------------------------------
 # Getting Started #
 
