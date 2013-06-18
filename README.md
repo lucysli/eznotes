@@ -58,7 +58,7 @@ Heroku <https://www.heroku.com/>
 ## Online tools ##
 Wireframes <http://pencil.evolus.vn/>  
 GitHub <https://github.com/mcgillosd/eznotes>
-  
+
 -------------------------------------------
 # Getting Started #
 
@@ -119,6 +119,60 @@ $ `bundle install`
 
 ## Running a local web server ##
 use `rails server`. To see the result visit <http://localhost:3000/>  
+
+# Installing PostgreSQL #
+
+The easiest way is to follow the tutorial at <http://robdodson.me/blog/2012/04/27/how-to-setup-postgresql-for-rails-and-heroku/> and/or <http://railscasts.com/episodes/342-migrating-to-postgresql>
+
+To install PostgreSQL locally on your machine use homebrew <https://wiki.postgresql.org/wiki/Homebrew>
+```
+brew install postgresql
+initdb /usr/local/var/postgres
+pg_ctl -D /user/local/var/postgres -l /user/local/var/postgres/server.log start
+which psql
+rails new  blog -d postgresql
+rake db:create:all
+```
+
+Note following the advice from the tutorial i created aliases in my .bash_profile to start stop and check the status of the server. I found this very useful.  
+alias pg-start='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'  
+alias pg-stop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'  
+alias pg-status='pg_ctl status -D /usr/local/var/postgres'  
+
+update the gem file of your app to eliminate the sqlite3 gem and add the pg gem.
+open config/database.yml file. I set it up as follows  
+```
+# postgresql version 9.2.2.x'
+#   gem install pg
+#
+#   Ensure the pg gem is defined in your Gemfile
+#   gem 'pg'
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: EZNotes_development
+  pool: 5
+  timeout: 5000
+  host: localhost
+
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test: &test
+  adapter: postgresql
+  database: EZNotes_test
+  pool: 5
+  timeout: 5000
+  host: localhost
+
+
+production:
+  adapter: postgresql
+  database: EZNotes_production
+  pool: 5
+  timeout: 5000
+  ```
 
 # Setting up Git #
 
@@ -197,8 +251,22 @@ If you want to rename your application you can run
 
 For development we generated a reasonably secure random/obscure subdomain such as hsjceevf.herokuapp.com. We did this by running `ruby -r "print ('a'..'z').to_a.shuffle[0..7].join"` on the command line.
 
+## Running the app ##
+
+### Running locally ###
+
+### Running on Heroku ###
+
 -------------------------------------------
 # Testing #
+
+## Test suites ##
+-	RSpec: used for test driven development
+-	Capayara: A gem that allowed us to simulate user's interaction with the app using a natural english-like syntax
+
+## Configure Rails to use RSpec ##
+Run the command `rails generate rspec:install`
+Note you need the postgres server running locally for this to work.
+
 -------------------------------------------
 # Staging and Production Environments #
--------------------------------------------
