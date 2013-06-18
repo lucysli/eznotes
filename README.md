@@ -7,9 +7,13 @@ EZNotes@McGillOSD
 ## Contact Info ##
 
 McGill Office for Students with Disabilities
+
 Redpath Library Building, Suite RS56
+
 3459 McTavish Street
+
 Montreal, Quebec
+
 H3A 0C9
 
 514-398-6009
