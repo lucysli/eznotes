@@ -8,7 +8,11 @@ gem 'pg'
 
 # gems used only in development and testing
 group :development, :test do
-	gem 'rspec-rails'
+	gem 'rspec-rails', '2.11.0'
+	gem 'guard-rspec'
+	gem 'guard-spork'
+	gem 'childprocess'
+	gem 'spork'
 end
 
 
@@ -20,8 +24,8 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails', '2.0.2'
 
 group :test do
-	gem 'capybara'
+	gem 'capybara', '1.1.2'
 end

@@ -263,10 +263,148 @@ For development we generated a reasonably secure random/obscure subdomain such a
 ## Test suites ##
 -	RSpec: used for test driven development
 -	Capayara: A gem that allowed us to simulate user's interaction with the app using a natural english-like syntax
+-	Guard: Automated running of tests.
+-	Spork: Test server that speeds up the running of future tests.
 
 ## Configure Rails to use RSpec ##
 Run the command `rails generate rspec:install`
 Note you need the postgres server running locally for this to work.
+
+## Eliminating bundle exec ##
+
+RVM includes Bundler integration as of version 1.11 so this is the easiest way to eliminate having to type bundle exec everytime.  
+To verify the version of RVM running on your machine type:   
+```
+$ rvm get head && rvm reload
+$ rvm -v
+```
+## Automated test with Guard ##
+We use Guard to automate the running of the tests. Guard monitors changes in the filesystem so that when a change occurs it runs the tests that are relevant to that change.
+
+First add guard-rspec to the Gemfile.
+
+Next run `bundle install` 
+
+Next initialize Guard so that it works with RSpec  
+`$ bundle exec guard init rspec` if you correctly eliminated the use of bundle exec then you can simply type `$ guard init rspec`
+
+Next edit the resulting Guardfile  
+```
+require 'active_support/core_ext'
+
+guard 'rspec', :all_after_pass => false do
+	.
+	.
+	.
+  # Allow Guard to run the right tests when the integration test and view are updated
+  watch(%r{^app/controllers/(.+)_(controller)\.rb$}) do |m|
+    ["spec/routing/#{m[1]}_routing_spec.rb",
+     "spec/#{m[2]}s/#{m[1]}_#{m[2]}_spec.rb",
+     "spec/acceptance/#{m[1]}_spec.rb",
+     (m[1][/_pages/] ? "spec/requests/#{m[1]}_spec.rb" : 
+                       "spec/requests/#{m[1].singularize}_pages_spec.rb")]
+   end
+   watch(%r{^app/views/(.+)/}) do |m|
+    (m[1][/_pages/] ? "spec/requests/#{m[1]}_spec.rb" :
+                      "spec/requests/#{m[1].singularize}_pages_spec.rb")
+   end
+	.
+	.
+	.
+end
+```
+Now you can start guard in its own terminal by running `guard`.
+
+## Speeding up tests with Spork ##
+
+First add guard-spork, childprocess, and spork to the gemfile.
+
+Second Install Spork using `$ bundle install`
+
+Third bootstrap the Spork configuration `$ spork --bootstrap`
+
+Fourth edit the RSpec configuration file located in spec/spec_helper.rb
+```
+require 'rubygems'
+require 'spork'
+
+Spork.prefork do
+  # Loading more in this block will cause your tests to run faster. However,
+  # if you change any configuration or code from libraries loaded here, you'll
+  # need to restart spork for it take effect.
+  # This file is copied to spec/ when you run 'rails generate rspec:install'
+  ENV["RAILS_ENV"] ||= 'test'
+  require File.expand_path("../../config/environment", __FILE__)
+  require 'rspec/rails'
+  require 'rspec/autorun'
+
+  # Requires supporting ruby files with custom matchers and macros, etc,
+  # in spec/support/ and its subdirectories.
+  Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+
+  RSpec.configure do |config|
+    # ## Mock Framework
+    #
+    # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
+    #
+    # config.mock_with :mocha
+    # config.mock_with :flexmock
+    # config.mock_with :rr
+    config.mock_with :rspec
+
+    # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
+    config.fixture_path = "#{::Rails.root}/spec/fixtures"
+
+    # If you're not using ActiveRecord, or you'd prefer not to run each of your
+    # examples within a transaction, remove the following line or assign false
+    # instead of true.
+    config.use_transactional_fixtures = true
+
+    # If true, the base class of anonymous controllers will be inferred
+    # automatically. This will be the default behavior in future versions of
+    # rspec-rails.
+    config.infer_base_class_for_anonymous_controllers = false
+  end
+end
+
+Spork.each_run do
+  # This code will be run each time you run your specs.
+
+end
+```
+
+Fifth add --drb option to .rspec file  
+```
+--colour
+--drb
+```
+### Running Guard with Spork ###
+`guard init spork`
+
+change the Guardfile as follows
+```
+require 'active_support/core_ext'
+
+guard 'spork', :rspec_env => { 'RAILS_ENV' => 'test' } do
+  watch('config/application.rb')
+  watch('config/environment.rb')
+  watch(%r{^config/environments/.+\.rb$})
+  watch(%r{^config/initializers/.+\.rb$})
+  watch('Gemfile')
+  watch('Gemfile.lock')
+  watch('spec/spec_helper.rb')
+  watch('test/test_helper.rb')
+  watch('spec/support/')
+end
+
+guard 'rspec', :all_after_pass => false, :cli => '--drb' do
+	.
+	.
+	.
+end
+```
+
+Now if you run guard it will automatically start a Spork server which will reduce the overhead of running tests each time.
 
 -------------------------------------------
 # Staging and Production Environments #
