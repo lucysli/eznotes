@@ -174,7 +174,8 @@ production:
   timeout: 5000
   ```
 # Setting up CSS #
-We make use of Bootstrap, an open-source web design framework from twitter.
+We make use of Bootstrap, an open-source web design framework from twitter. Bootstrap uses LESS CSS. To use Bootstrap we include the bootstrap-sass gem.
+Rails 3 uses HTML5 by default as indicated by <code> <!DOCTYPE html> </code>
 # Setting up Git #
 
 ## First-time system setup ##

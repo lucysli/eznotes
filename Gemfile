@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
+gem 'bootstrap-sass', '2.1'
 
 # Gem Postgres in order to work with heroku
 # We will be using postgres in development testing and deployment
