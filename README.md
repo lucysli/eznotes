@@ -173,7 +173,8 @@ production:
   pool: 5
   timeout: 5000
   ```
-
+# Setting up CSS #
+We make use of Bootstrap, an open-source web design framework from twitter.
 # Setting up Git #
 
 ## First-time system setup ##
