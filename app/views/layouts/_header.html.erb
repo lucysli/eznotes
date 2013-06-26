@@ -5,18 +5,18 @@
 			<nav>
 				<ul class="nav pull-right">
 					<li>
-						<%= link_to root_path do %>
-							<i class="cus-home"></i> Home
+						<%= link_to root_path, class: "cus-home" do %> 
+							Home
 						<% end %>
 					</li>
 					<li>
-						<%= link_to help_path do %>
-							<i class="cus-help-circled"></i> Help
+						<%= link_to help_path, class: "cus-help-circled" do %>
+							Help
 						<% end %>
 					</li>
 					<li>
-						<%= link_to '#' do %>
-							<i class="cus-user"></i> Sign in
+						<%= link_to '#', class: "cus-user" do %>
+							Sign in
 						<% end %>						
 					</li>
 				</ul>

@@ -13,13 +13,12 @@
 		Please log in with your McGill ID and password 
 	</p>
 
-	<%= link_to '#', class: "btn btn-large btn-primary" do %>
-		<i class="cus-user"></i> Sign in
+	<%= link_to '#', class: "btn btn-large btn-primary cus-user" do %>
+		Sign in
 	<% end %>
 	<br>
 	<br>
-	<h3>Important!</h3>
-	<i class="cus-attention"></i>
+	<h3 class="cus-attention">Important!</h3>
 	<div class="alert alert-info">
 		
 		<p>
@@ -29,11 +28,11 @@
 		<p>
 			If you are a student registered with the office for Students with Disabilities
 			and you require note taking, log-in as normal. If you encounter problems please
-			<%= link_to "Contact us", contact_path %>
+			<p> <%= link_to "Contact us", contact_path, class: "cus-mail-alt" %> </p>
 		</p>
 	</div>
-	<%= link_to signup_path, class: "btn btn-large btn-primary" do%>
-		<i class="cus-user"></i> Apply to be a notetaker
+	<%= link_to signup_path, class: "btn btn-large btn-primary cus-user" do%>
+		Apply to be a notetaker
 	<% end %>
 </div>
 
