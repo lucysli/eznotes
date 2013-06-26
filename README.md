@@ -36,7 +36,7 @@ taking the same course so that they can share their notes
 . TODO
 
 ## Licensing ##
-This project is licences under the MIT open source initiative <http://opensource.org/licenses/MIT>  
+This project is licenced under the MIT open source initiative <http://opensource.org/licenses/MIT>  
 Currently the icons come from <fontello.com>. The following is the Licence file:
 
 
@@ -52,7 +52,7 @@ Font license info
    Homepage:  http://fortawesome.github.com/Font-Awesome/
 
 
-Since our project is open source then we will make the licence and readme file avaialble publically in the repository in a folder called fontello-icons
+Since our project is open source then we will make the licence and readme file available publically in the repository in a folder called fontello-icons
 
 ## Technologies ##
 
