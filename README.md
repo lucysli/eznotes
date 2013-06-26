@@ -35,6 +35,25 @@ students with disabilities with prospective students
 taking the same course so that they can share their notes  
 . TODO
 
+## Licensing ##
+This project is licences under the MIT open source initiative <http://opensource.org/licenses/MIT>  
+Currently the icons come from <fontello.com>. The following is the Licence file:
+
+
+Font license info
+
+
+## Font Awesome
+
+   Copyright (C) 2012 by Dave Gandy
+
+   Author:    Dave Gandy
+   License:   SIL ()
+   Homepage:  http://fortawesome.github.com/Font-Awesome/
+
+
+Since our project is open source then we will make the licence and readme file avaialble publically in the repository in a folder called fontello-icons
+
 ## Technologies ##
 
 ### Framework ###

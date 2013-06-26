@@ -4,9 +4,21 @@
 			<%= link_to "McGill EZ Notes", root_path, id: "logo" %>
 			<nav>
 				<ul class="nav pull-right">
-					<li><%= link_to "Home", 	root_path %></li>
-					<li><%= link_to "Help", 	help_path %></li>
-					<li><%= link_to "Sign in", '#' %></li>
+					<li>
+						<%= link_to root_path do %>
+							<i class="cus-home"></i> Home
+						<% end %>
+					</li>
+					<li>
+						<%= link_to help_path do %>
+							<i class="cus-help-circled"></i> Help
+						<% end %>
+					</li>
+					<li>
+						<%= link_to '#' do %>
+							<i class="cus-user"></i> Sign in
+						<% end %>						
+					</li>
 				</ul>
 			</nav>
 		</div>

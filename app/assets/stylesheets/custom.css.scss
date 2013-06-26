@@ -1,5 +1,6 @@
 @import "bootstrap";
 
+
 /* mixins, variables, etc. */
 
 $grayMediumLight: #eaeaea;
@@ -77,13 +78,13 @@ p {
 	.nav {
 		li {
 			a {
-	  			color: $black;
-	  			&:hover { 
-	  				color: white;
-	  				text-decoration: none;
-	  			}
-	  		}
+  			color: $black;
+  			&:hover { 
+  				color: white;
+  				text-decoration: none;
+  			}
 	  	}
+	  }
 	}
 }
 
