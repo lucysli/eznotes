@@ -87,12 +87,43 @@ thoroughly.
 
 ## Installing Ruby and Rails ##
 
-for installing Ruby and Rails on OS X follow this link:  
-<http://www.moncefbelyamani.com/how-to-install-xcode-homebrew-git-rvm-ruby-on-mac/#step-7>  
+For Our purposes we are using Ruby version 2.0.0-p and Rails 4.0.0.  
+To check the version of ruby installed on your system type `ruby -v` in command line.  
+I strongly reccomend to use [Ruby Version Manager(RVM)]<http://rvm.io/> to install ruby.  
+OS X Users must install Command line tools for Xcode.
 
-here is a summary
+To get started with Ruby Installation, first install RVM:  
+`curl -L https://get.rvm.io | bash -s`  
 
--	Step 1: Download and Install the Command Line Tools (via Xcode or the standalone installer)
+If RVM is already installed run:  
+`rvm get stable`
+
+To get Ruby set up you can examine the requirements by running:  
+`rvm requirements`
+
+To install Ruby 2.0.0 run:  
+`rvm install 2.0.0`
+
+I suggest for the project to create a gemset which are self-contained bundles of gems in order to minimize potential conflicts due to gems updating.  
+`rvm use 2.0.0@EZNotes_rails_4_0 --create --default`
+
+You can type `which gem` to figure out if RubyGems is installed. By installing RVM you get RubyGems by default
+
+if you dont have RubyGems you need to download it and go to the rubygems directory and run  
+`ruby setup.rb`
+
+If you have RubyGems installed make sure your system uses the version you want it to. i.e you want to freeze your system to a particular version to avoid conflicts when RubyGems changes in the future. In our case we are using version 2.0.0 so  
+`gem update --system 2.0.0`
+
+Finally we can install rails simply by running  
+`gem install rails --version 4.0.0 --no-ri --no-rdoc`
+
+Type `rails v` to verify the version of rails is 4.0.0
+
+
+
+
+-	Step 1: Install Git
 -	Step 2: Verify that GCC was installed
 -	Step 3: Install Homebrew
 -	Step 4: Install Git

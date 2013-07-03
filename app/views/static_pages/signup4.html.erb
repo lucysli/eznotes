@@ -1,0 +1,145 @@
+<% provide(:title, 'Notetaker Application 4') %>
+<h4> Lastly, Please provide us with your course schedule for the year</h4>
+
+<div class="row">
+	<%= form_for(:static_pages, url: signupsubmit_path) do |f|%>
+		<div class="span1"> 
+			<%= f.text_field :course_code, placeholder: 'CHEM' %> 
+		</div>
+
+		<div class="span1"> 
+			<%= f.text_field :course_num, placeholder: '200' %>
+		</div>
+
+		<div class="span2"> 
+			<%= f.text_field :course_section, placeholder: 'Section' %>
+		</div>
+
+		<div class="span4">
+			<%= f.label :fall, class: 'checkbox inline' %>
+			<%= f.check_box :fall %> 
+			
+			<%= f.label :Winter, class: 'checkbox inline' %>
+			<%= f.check_box :Winter %>
+			
+			<%= f.label :Summer, class: 'checkbox inline' %>
+			<%= f.check_box :Summer %>	
+		</div>
+
+		<%= f.submit "Add", class: "cus-plus btn btn-mini btn-primary" %>		
+	<% end %>
+</div>
+<span class="help-block"> If the course is a multi-term course 
+	please check all applicable terms.</span>
+<h4> Fall </h4>
+<ul class="thumbnails">
+	<li class="span2">
+		<div class="thumbnail">
+			<p> ENVR 330 </p>
+			<p class="muted"><small> section D200 </small> </p>
+		</div>
+	</li>
+	<li class="span2">
+		<div class="thumbnail">
+			<p> PHYS 132  </p>
+			<p class="muted"><small> section D200 </small> </p>
+		</div>
+	</li>
+	<li class="span2">
+		<div class="thumbnail">
+			<p> CHEM 200  </p>
+			<p class="muted"><small> section D200 </small> </p>
+		</div>
+	</li>
+	<li class="span2">
+		<div class="thumbnail">
+			<p> MATH 555  </p>
+			<p class="muted"><small> section D200 </small> </p>
+		</div>
+	</li>
+	<li class="span2">
+		<div class="thumbnail">
+			<p> PHIL 202  </p>
+			<p class="muted"><small> section D200 </small> </p>
+		</div>
+	</li>
+</ul>
+<h4> Winter </h4>
+<ul class="thumbnails">
+	<li class="span2">
+		<div class="thumbnail">
+			<p> ENVR 330 </p>
+			<p class="muted"><small> section D200 </small> </p>
+		</div>
+	</li>
+	<li class="span2">
+		<div class="thumbnail">
+			<p> PHYS 132  </p>
+			<p class="muted"><small> section D200 </small> </p>
+		</div>
+	</li>
+	<li class="span2">
+		<div class="thumbnail">
+			<p> CHEM 200  </p>
+			<p class="muted"><small> section D200 </small> </p>
+		</div>
+	</li>
+	<li class="span2">
+		<div class="thumbnail">
+			<p> MATH 555  </p>
+			<p class="muted"><small> section D200 </small> </p>
+		</div>
+	</li>
+	<li class="span2">
+		<div class="thumbnail">
+			<p> PHIL 202  </p>
+			<p class="muted"><small> section D200 </small> </p>
+		</div>
+	</li>
+</ul>
+<h4> Summer </h4>
+<ul class="thumbnails">
+	<li class="span2">
+		<div class="thumbnail">
+			<p> ENVR 330 </p>
+			<p class="muted"><small> section D200 </small> </p>
+		</div>
+	</li>
+	<li class="span2">
+		<div class="thumbnail">
+			<p> PHYS 132  </p>
+			<p class="muted"><small> section D200 </small> </p>
+		</div>
+	</li>
+	<li class="span2">
+		<div class="thumbnail">
+			<p> CHEM 200  </p>
+			<p class="muted"><small> section D200 </small> </p>
+		</div>
+	</li>
+	<li class="span2">
+		<div class="thumbnail">
+			<p> MATH 555  </p>
+			<p class="muted"><small> section D200 </small> </p>
+		</div>
+	</li>
+	<li class="span2">
+		<div class="thumbnail">
+			<p> PHIL 202  </p>
+			<p class="muted"><small> section D200 </small> </p>
+		</div>
+	</li>
+</ul>
+
+<ul class="pager">
+	<li class="previous"> 
+		<%= link_to "Previous", signup3_path, class: "cus-right" %> 
+	</li>
+	<li class="next">
+		<%= link_to "Next", signup5_path, class: "cus-left" %>
+	</li>
+</ul>
+
+<div class="progress progress-striped active">
+	<div class="bar" style="width: 80%"></div>
+</div>

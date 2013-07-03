@@ -1,32 +1,36 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.13'
-gem 'bootstrap-sass', '2.1'
+ruby '2.0.0'
+
+gem 'rails', '4.0.0'
+gem 'bootstrap-sass', '2.3.2.0'
 
 # Gem Postgres in order to work with heroku
 # We will be using postgres in development testing and deployment
-gem 'pg'
+gem 'pg', '0.15.1'
 
 # gems used only in development and testing
 group :development, :test do
-	gem 'rspec-rails', '2.11.0'
-	gem 'guard-rspec'
-	gem 'guard-spork'
-	gem 'childprocess'
-	gem 'spork'
+	gem 'rspec-rails', '2.13.2'
+	gem 'guard-rspec', '2.5.0'
+	gem 'spork-rails', github: 'railstutorial/spork-rails'
+	gem 'guard-spork', '1.5.1'
+	gem 'childprocess', '0.3.9'
 end
 
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
-end
+gem 'sass-rails',   	'4.0.0'
+gem 'uglifier', 		'2.1.1'
+gem 'coffee-rails', 	'4.0.0'
+gem 'jquery-rails', 	'2.2.1'
+gem 'turbolinks',		'1.1.1'
+gem 'jbuilder',		'1.0.2'
 
-gem 'jquery-rails', '2.0.2'
+group :doc do
+	gem 'sdoc',	'0.3.20', require: false
+end
 
 group :test do
-	gem 'capybara', '1.1.2'
+	gem 'selenium-webdriver',	'2.0.0'
+	gem 'capybara', 				'2.1.0'
 end

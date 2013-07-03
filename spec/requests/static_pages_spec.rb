@@ -5,14 +5,12 @@ describe "Static pages" do
   subject { page }
 
   shared_examples_for "all static pages" do
-    it { should have_selector('h1', text: heading) }
-    it { should have_selector('title', text: full_title(page_title)) }
+    it { should have_title(full_title(page_title)) }
   end
 
 	describe "Home page" do
 
     before { visit root_path }
-    let(:heading) { 'Welcome to McGill OSD EZ Notes' }
     let(:page_title) { '' }
 
     it_should_behave_like "all static pages"
@@ -20,7 +18,6 @@ describe "Static pages" do
 
   describe "Help page" do
     before { visit help_path }
-    let(:heading) { 'Help' }
     let(:page_title) { 'Help' }
 
     it_should_behave_like "all static pages"
@@ -28,7 +25,6 @@ describe "Static pages" do
 
   describe "About page" do
     before { visit about_path }
-    let(:heading) { 'About' }
     let(:page_title) { 'About Us' }
 
     it_should_behave_like "all static pages"
@@ -37,25 +33,86 @@ describe "Static pages" do
   describe "Contact page" do
 
     before { visit contact_path }
-    let(:heading) { 'Contact' }
     let(:page_title) { 'Contact' }
 
     it_should_behave_like "all static pages"
   end
 
+  describe "signup page" do
+    
+    before { visit signup_path }
+    let(:page_title) { 'Notetaker Application' }
+
+    it_should_behave_like "all static pages"
+
+    it "should have the right links in the pager" do
+      click_link "Next"
+      expect(page).to have_title(full_title('Notetaker Application 2'))
+      click_link "Previous"
+      expect(page).to have_title(full_title(''))
+    end
+  end
+
+  describe "signup page 2" do
+    
+    before { visit signup2_path }
+    let(:page_title) { 'Notetaker Application 2' }
+
+    it_should_behave_like "all static pages"
+
+    it "should have the right links in the pager" do
+      click_link "Next"
+      expect(page).to have_title(full_title('Notetaker Application 3'))
+      click_link "Previous"
+      expect(page).to have_title(full_title('Notetaker Application'))
+    end
+  end
+
+  describe "signup page 3" do
+    
+    before { visit signup3_path }
+    let(:page_title) { 'Notetaker Application 3' }
+
+    it_should_behave_like "all static pages"
+
+    it "should have the right links in the pager" do
+      click_link "Next"
+      expect(page).to have_title(full_title('Notetaker Application 4'))
+      
+      click_link "Previous"
+      expect(page).to have_title(full_title('Notetaker Application 2'))
+    end
+  end
+
+  describe "signup page 4" do
+    
+    before { visit signup4_path }
+    let(:page_title) { 'Notetaker Application 4' }
+
+    it_should_behave_like "all static pages"
+
+    it "should have the right links in the pager" do
+
+      click_link "Previous"
+      expect(page).to have_title(full_title('Notetaker Application 3'))
+      click_link "Next"
+      expect(page).to have_title(full_title('Notetaker Application 4'))
+    end
+  end
+
   it "should have the right links on the layout" do
     visit root_path
     click_link "About"
-    page.should have_selector 'title', text: full_title('About Us')
+    expect(page).to have_title(full_title('About Us'))
     click_link "Help"
-    page.should have_selector 'title', text: full_title('Help')
+    expect(page).to have_title(full_title('Help'))
     click_link "Contact"
-    page.should have_selector 'title', text: full_title('Contact')
+    expect(page).to have_title(full_title('Contact'))
     click_link "Home"
-    page.should have_selector 'title', text: full_title('')
+    expect(page).to have_title(full_title(''))
     click_link "Apply to be a notetaker"
-    page.should have_selector 'title', text: full_title('Note-Taker Sign up')
+    expect(page).to have_title(full_title('Notetaker Application'))
     click_link "McGill EZ Notes"
-    page.should have_selector 'title', text: full_title('')
+    expect(page).to have_title(full_title(''))
   end
 end

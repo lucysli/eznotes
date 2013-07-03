@@ -12,4 +12,19 @@ class StaticPagesController < ApplicationController
 	def about
 	end
 
+	def signup
+	end
+
+	def signup2
+	end
+
+	def signup3
+	end
+
+	def signup4
+	end
+
+	def create
+		render 'signup4'
+	end
 end

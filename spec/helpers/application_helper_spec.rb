@@ -4,11 +4,11 @@ describe ApplicationHelper do
 	
 	describe "full_title" do
 		it "should include the page title" do
-			full_title("foo").should =~ /foo/
+			expect(full_title("foo")).to match(/foo/)
 		end
 
 		it "should include the base title" do
-			full_title('').should =~ /^McGill EZ Notes/
+			expect(full_title('')).to match(/^McGill EZ Notes/)
 		end
 	end
 end

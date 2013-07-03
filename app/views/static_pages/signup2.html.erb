@@ -1,0 +1,33 @@
+<% provide(:title, 'Notetaker Application 2') %>
+<h4 class="center"> First, tell us a bit about yourself.</h4>
+<div class="row">
+	<div class="span6 offset3">
+		<%= form_tag('/static_pages') do %>
+
+	      <%= label_tag 'First Name' %>
+	      <%= text_field_tag 'First Name', nil, placeholder: 'Enter your first name here' %>
+
+	      <%= label_tag 'Last Name' %>
+	      <%= text_field_tag 'Last Name', nil, placeholder: 'Enter your last name here' %>
+
+	      <%= label_tag 'Student ID' %>
+	      <%= text_field_tag 'Student ID', nil, placeholder: 'Enter your nine digit student ID here', maxlength: 9 %>
+
+	      <%= label_tag 'McGill Email' %>
+	      <%= email_field_tag 'McGill Email', nil, placeholder: 'firstname.lastname@mail.mcgill.ca' %>
+	   <% end %>
+	</div>
+</div>
+
+<ul class="pager">
+	<li class="previous"> 
+		<%= link_to "Previous", signup_path, class: "cus-right" %> 
+	</li>
+	<li class="next">
+		<%= link_to "Next", signup3_path, class: "cus-left" %>
+	</li>
+</ul>
+
+<div class="progress progress-striped active">
+	<div class="bar" style="width: 40%"></div>
+</div>

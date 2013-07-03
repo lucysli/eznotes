@@ -13,9 +13,7 @@
 		Please log in with your McGill ID and password 
 	</p>
 
-	<%= link_to '#', class: "btn btn-large btn-primary cus-user" do %>
-		Sign in
-	<% end %>
+	<%= link_to "Sign in", '#', class: "btn btn-large btn-primary cus-user" %>
 	<br>
 	<br>
 	<h3 class="cus-attention">Important!</h3>
@@ -31,9 +29,7 @@
 			<p> <%= link_to "Contact us", contact_path, class: "cus-mail-alt" %> </p>
 		</p>
 	</div>
-	<%= link_to signup_path, class: "btn btn-large btn-primary cus-user" do%>
-		Apply to be a notetaker
-	<% end %>
+	<%= link_to "Apply to be a notetaker", signup_path, class: "btn btn-large btn-primary cus-user" %>
 </div>
 
 <%= link_to image_tag("rails.png", alt: "McGill OSD EZ Notes"), 'http://www.mcgill.ca/osd/' %>

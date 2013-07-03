@@ -1,0 +1,54 @@
+<% provide(:title, 'Notetaker Application 3') %>
+<h4 class="center"> Do you take notes by hand or on a computer?</h4>
+<div class="row">
+	<div class="span6 offset5 control-group">
+		<label class="radio inline control-label">
+			<div class="controls">
+				<input type="radio" name="optionsRadios" id="byHandOptionsRadio" value="By Hand"> 
+			</div>
+			By Hand
+		</label>
+		<label class="radio inline control-label">
+			<div class="controls">
+				<input type="radio" name="optionsRadios" id="byComputerOptionsRadio" value="On a Computer" checked> 
+			</div>
+			On a Computer
+		</label>
+	</div>
+</div>
+<div class="alert alert-info">
+	<h4> Please provide us a sample of your notes</h4>
+
+	<h4> If you write your notes by hand you will need to scan a copy of your notes first</h4>
+</div>
+
+<div class="row">
+	<div class="span6 offset3">
+		<%= form_tag('/static_pages') do %>
+
+	      <%= label_tag 'File Name' %>
+	      <%= file_field_tag 'file', accept: 'application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document'%>
+
+	      <%= label_tag 'Course Name' %>
+	      <%= text_field_tag 'Course Name', nil, placeholder: 'Enter course name here' %>
+
+	      <%= label_tag 'Comments' %>
+	      <%= text_area_tag 'Comments', nil, rows: 10, cols: 25 %>
+	   <% end %>
+	</div>
+</div>
+
+
+
+<ul class="pager">
+	<li class="previous"> 
+		<%= link_to "Previous", signup2_path, class: "cus-right" %> 
+	</li>
+	<li class="next">
+		<%= link_to "Next", signup4_path, class: "cus-left" %>
+	</li>
+</ul>
+
+<div class="progress progress-striped active">
+	<div class="bar" style="width: 60%"></div>
+</div>
