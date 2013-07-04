@@ -1,24 +1,27 @@
 <% provide(:title, '') %>
 <div class="center hero-unit">
+	<h1>Welcome to McGill OSD</h1>   
+	<h1>EZ Notes</h1>
+	<br>
+	<h2> The online service for uploading and accessing your course notes. </h2>
 
-	<h1>Welcome to McGill OSD EZ Notes</h1>
-	<br>
+	
+	<div class="row">
+		<p> Please log in with your McGill ID and password </p>
+		<div class="span4 offset3">
+			
+			<%= form_for(:static_pages, url: signin_path) do |f| %>
 
-	<h2>
-		The online service for uploading and accessing your course notes.
-	</h2>
-	<br>
-	<br>
-	<p> 
-		Please log in with your McGill ID and password 
-	</p>
+				<%= f.text_field :email, placeholder: 'firstname.lastname@mail.mcgill.ca' %>
 
-	<%= link_to "Sign in", '#', class: "btn btn-large btn-primary cus-user" %>
-	<br>
-	<br>
-	<h3 class="cus-attention">Important!</h3>
-	<div class="alert alert-info">
-		
+				<%= f.password_field :password, placeholder: 'McGill password' %>
+
+				<%= f.submit "Sign in", class: "btn btn-large btn-primary cus-user" %>
+			<% end %>
+			<h3 class="cus-attention">Important!</h3>
+		</div>
+	</div>
+	<div class="alert alert-info">			
 		<p>
 			This system is only for note takers and students who have already registered
 			with the OSD. If you wish to apply to be a note taker we welcome you to apply.
@@ -29,7 +32,8 @@
 			<p> <%= link_to "Contact us", contact_path, class: "cus-mail-alt" %> </p>
 		</p>
 	</div>
-	<%= link_to "Apply to be a notetaker", signup_path, class: "btn btn-large btn-primary cus-user" %>
+	<%= link_to "Apply to be a notetaker", signup_path, 
+		class: "btn btn-large btn-primary cus-user" %>	
 </div>
 
 <%= link_to image_tag("rails.png", alt: "McGill OSD EZ Notes"), 'http://www.mcgill.ca/osd/' %>
