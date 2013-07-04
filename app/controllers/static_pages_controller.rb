@@ -24,4 +24,13 @@ class StaticPagesController < ApplicationController
 	def signup4
 	end
 
+	def notetaker
+	end
+	
+	def notetaker2
+	end
+	
+	def upload
+	end
+
 end

@@ -1,0 +1,27 @@
+<% provide(:title, 'Note Taker') %>
+<h1> Upload Notes for ABCD #### </h1>
+<div class="alert alert-info">			
+	<p>
+		Please upload all of your most recent notres here. In the comments field you can
+		make note of anything the students receiving your notes should be made aware of.
+	</p>
+</div>
+
+<div class="row">
+	<div class="span6 offset3">
+		<%= form_for(:static_pages, url: upload_path) do |f| %>
+
+	      <%= f.label :file_name, 'File Name' %>
+	      <%= f.file_field :file_name, accept: 'application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document'%>
+
+	      <%= f.label :lecture_title, 'Lecture Title' %>
+	      <%= f.text_field :lecture_title, placeholder: 'Enter lecture title here' %>
+	     	<%= f.label :lecture_date, 'Lecture Date' %>
+	      <%= f.text_field 'Lecture Date', placeholder: 'Enter lecture Date here' %>
+
+	      <%= f.label :comments, 'Comments' %>
+	      <%= f.text_area :comments, rows: 10, cols: 25 %>
+	      <%= f.submit "upload", class: "cus-upload btn btn-small btn-primary" %>
+	   <% end %>
+	</div>
+</div>

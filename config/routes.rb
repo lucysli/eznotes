@@ -3,7 +3,12 @@ EZNotes::Application.routes.draw do
 
   root to: 'static_pages#home'
 
+  match '/notetaker', to: 'static_pages#notetaker', via:'get'
+  match '/notetaker2', to: 'static_pages#notetaker2', via:'get'
+
   match '/signin', to: 'static_pages#home',  via:'post'
+  match '/upload', to: 'static_pages#notetaker2', via:'post'
+
   match '/signup', to: 'static_pages#signup',	via:'get'
   match '/signup2', to: 'static_pages#signup2',	via:'get'
   match '/signup3', to: 'static_pages#signup3',	via:'get'
