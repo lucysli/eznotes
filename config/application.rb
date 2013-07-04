@@ -27,6 +27,6 @@ module EZNotes
     config.active_support.escape_html_entities_in_json = true
 
     # This ensures bootstrap-sass is compatible with the asset pipeline in rails 4
-    config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
+    config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif *.woff *.eot *.svg *.ttf)
   end
 end
