@@ -24,7 +24,4 @@ class StaticPagesController < ApplicationController
 	def signup4
 	end
 
-	def create
-		render 'signup4'
-	end
 end
