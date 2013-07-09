@@ -38,21 +38,6 @@ describe "Static pages" do
     it_should_behave_like "all static pages"
   end
 
-  describe "signup page" do
-    
-    before { visit signup_path }
-    let(:page_title) { 'Notetaker Application' }
-
-    it_should_behave_like "all static pages"
-
-    it "should have the right links in the pager" do
-      click_link "Next"
-      expect(page).to have_title(full_title('Notetaker Application 2'))
-      click_link "Previous"
-      expect(page).to have_title(full_title(''))
-    end
-  end
-
   describe "signup page 2" do
     
     before { visit signup2_path }

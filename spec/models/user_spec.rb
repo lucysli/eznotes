@@ -2,13 +2,15 @@ require 'spec_helper'
 
 describe User do
 	before do
-		@user = User.new(name: "Example User", email: "example.user@mail.mcgill.ca") 
+		@user = User.new(name: "Example User", email: "example.user@mail.mcgill.ca",
+						 student_id: "260012345") 
 	end
 
 	subject { @user }
 
 	it { should respond_to(:name) }
 	it { should respond_to(:email) }
+	it { should respond_to(:student_id) }
 
 	it { should be_valid }
 
@@ -22,8 +24,38 @@ describe User do
 		it { should_not be_valid }
   	end
 
+  	describe "when student id is not present" do
+		before { @user.student_id = " " }
+		it { should_not be_valid }
+  	end
+
   	describe "when name is too long" do
   		before { @user.name = "a" * 51 }
+  		it { should_not be_valid }
+  	end
+
+  	describe "when student id is too long" do
+  		before { @user.student_id = "2" * 10 }
+  		it { should_not be_valid }
+  	end
+
+  	describe "when student id is too short" do
+  		before { @user.student_id = "2" * 8 }
+  		it { should_not be_valid } 
+  	end
+
+  	describe "when student ID is already taken" do
+  		before do
+  		  user_with_same_id = @user.dup
+  		  user_with_same_id.email = "a" + @user.email
+  		  user_with_same_id.save
+  		end
+
+  		it { should_not be_valid }
+  	end
+
+  	describe "when student id is not numerical" do
+  		before { @user.student_id = ("2" * 8) + "a" }
   		it { should_not be_valid }
   	end
 

@@ -1,7 +1,7 @@
 EZNotes::Application.routes.draw do
-  get "users/new"
-
+  resources :users
   root to: 'static_pages#home'
+  match '/signup', to: 'users#new', via: 'get'
 
   match '/notetaker', to: 'static_pages#notetaker', via:'get'
   match '/notetaker2', to: 'static_pages#notetaker2', via:'get'
@@ -9,7 +9,6 @@ EZNotes::Application.routes.draw do
   match '/signin', to: 'static_pages#home',  via:'post'
   match '/upload', to: 'static_pages#notetaker2', via:'post'
 
-  match '/signup', to: 'static_pages#signup',	via:'get'
   match '/signup2', to: 'static_pages#signup2',	via:'get'
   match '/signup3', to: 'static_pages#signup3',	via:'get'
   match '/signup4', to: 'static_pages#signup4',	via:'get'
