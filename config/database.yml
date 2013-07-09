@@ -25,6 +25,7 @@ test: &test
 
 production:
   adapter: postgresql
+  encoding: unicode
   database: EZNotes_production
   pool: 5
   timeout: 5000
