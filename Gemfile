@@ -7,6 +7,9 @@ gem 'bootstrap-sass', '2.3.2.0'
 
 gem 'rails_12factor', group: :production
 
+# gem for authentication to ldap server
+gem 'net-ldap', '0.3.1'
+
 # Gem Postgres in order to work with heroku
 # We will be using postgres in development testing and deployment
 gem 'pg', '0.15.1'

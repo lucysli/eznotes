@@ -9,15 +9,7 @@
 	<div class="row">
 		<p> Please log in with your McGill Email and password </p>
 		<div class="span4 offset3">
-			
-			<%= form_for(:static_pages, url: signin_path) do |f| %>
-
-				<%= f.text_field :email, placeholder: 'firstname.lastname@mail.mcgill.ca' %>
-
-				<%= f.password_field :password, placeholder: 'McGill password' %>
-
-				<%= f.submit "Sign in", class: "btn btn-large btn-primary cus-user" %>
-			<% end %>
+			<%= link_to "Sign in", signin_path, class: "btn btn-large btn-primary cus-login" %>
 			<h3 class="cus-attention">Important!</h3>
 		</div>
 	</div>

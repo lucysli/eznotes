@@ -52,7 +52,7 @@ GEM
     coffee-script (2.2.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.6.2)
+    coffee-script-source (1.6.3)
     diff-lcs (1.2.4)
     erubis (2.7.0)
     execjs (1.4.0)
@@ -96,9 +96,10 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.1)
     mime-types (1.23)
-    mini_portile (0.5.0)
+    mini_portile (0.5.1)
     minitest (4.7.5)
     multi_json (1.7.7)
+    net-ldap (0.3.1)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     pg (0.15.1)
@@ -205,6 +206,7 @@ DEPENDENCIES
   guard-spork (= 1.5.1)
   jbuilder (= 1.0.2)
   jquery-rails (= 2.2.1)
+  net-ldap (= 0.3.1)
   pg (= 0.15.1)
   rails (= 4.0.0)
   rails_12factor

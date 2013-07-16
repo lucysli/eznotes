@@ -4,33 +4,28 @@
 			<%= link_to "#{full_title(yield(:title))}", '#', id: "logo" %>
 			<nav>
 				<ul class="nav pull-right">
-					<li>
-						<%= link_to "Home", root_path, class: "cus-home" %> 
-	
-					</li>
-					<li>
-						<%= link_to "Help", help_path, class: "cus-help-circled" %>
-					</li>
-					<li>
-						<%= link_to "Sign in", '#', class: "cus-user" %>					
-					</li>
-					<li>
-						<%= link_to 'Users', '#', class: "cus-users" %>
-					</li>
-					<li id="fat-menu" class="dropdown">
-						<a href="#" class="dropdown-toggle cus-cog" data-toggle="dropdown">
-							Account <b class="caret"></b>
-						</a>
-						<ul class="dropdown-menu">
-							<li><%= link_to "Add/drop a course", '#', class: "cus-plus-circled" %></li>
-							<li><%= link_to "Payroll information", '#', class: "cus-credit-card" %></li>
-							<li><%= link_to "Inbox", '#', class: "cus-mail" %></li>
-							<li class="divider"></li>
-							<li>
-								<%= link_to "Sign out", '#', class: "cus-logout" %>
-							</li>
-						</ul>
-					</li>
+					<li><%= link_to "Home", root_path, class: "cus-home" %></li>
+					<li><%= link_to "Help", help_path, class: "cus-help-circled" %></li>
+					<% if signed_in? %>
+						<li><%= link_to "Users", '#', class: "cus-users" %></li>
+						<li id="fat-menu" class="dropdown">
+							<a href="#" class="dropdown-toggle cus-cog" data-toggle="dropdown">
+								Account <b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu">
+								<li><%= link_to "Profile", current_user, class: "cus-user" %></li>
+								<li><%= link_to "Add/drop a course", '#', class: "cus-plus-circled" %></li>
+								<li><%= link_to "Payroll information", '#', class: "cus-credit-card" %></li>
+								<li><%= link_to "Inbox", '#', class: "cus-mail" %></li>
+								<li class="divider"></li>
+								<li>
+									<%= link_to "Sign out", signout_path, method: "delete", class: "cus-logout" %>
+								</li>
+							</ul>
+						</li>
+					<% else %>
+						<li><%= link_to "Sign in", signin_path, class: "cus-login" %></li>
+					<% end %>
 				</ul>
 			</nav>
 		</div>
