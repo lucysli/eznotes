@@ -25,6 +25,9 @@ group :development, :test do
 	gem 'spork-rails', github: 'railstutorial/spork-rails'
 	gem 'guard-spork', '1.5.1'
 	gem 'childprocess', '0.3.9'
+	gem 'better_errors'
+	gem 'binding_of_caller'
+	gem 'meta_request'
 end
 
 
