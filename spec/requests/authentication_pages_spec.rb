@@ -158,8 +158,9 @@ describe "Authentication" do
 
 			describe "submitting a DELETE request to the Users#destroy action to delete oneself" do
 				before { delete user_path(admin) }
-				specify { expect(response).to redirect_to(user_path(admin)) }
 				it { should have_error_message('Admin User cannot delete himself/herself!') }
+				specify { expect(response).to redirect_to(user_path(admin)) }
+				
 			end
 		end
 	end

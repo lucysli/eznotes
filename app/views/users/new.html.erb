@@ -1,19 +1,23 @@
-<% provide(:title, 'Notetaker Application') %>
+<h4>First, tell us a bit about yourself</h4>
 <div class="row">
 	<div class="span6 offset3">
 		<%= form_for(@user) do |f| %>
 			<%= render 'shared/error_messages' %>
-			
-	      	<%= f.label :name %>
-	      	<%= f.text_field :name %>
+			<%= f.label :name %>
+			<%= f.text_field :name %>
 
-	      	<%= f.label :email, "McGill Email" %>
-	      	<%= f.text_field :email %>
+			<%= f.label :email, "McGill Email" %>
+			<%= f.text_field :email %>
 
-	      	<%= f.label :student_id, "McGill Student ID" %>
-	      	<%= f.text_field :student_id %>
+			<%= f.label :student_id, "McGill Student ID" %>
+			<%= f.text_field :student_id %>
 
-	      	<%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
+	      	<%= button_tag(type: 'submit', name: "cancel_button" , class: "btn btn-large btn-primary") do %>
+	      		<i class="cus-cancel"></i> Cancel
+	      	<% end %>
+	      	<%= button_tag(type: 'submit', class: "btn btn-large btn-primary") do %>
+	      		<i class="cus-ok"></i> Next
+			<% end %>
 	   <% end %>
 	</div>
 </div>
