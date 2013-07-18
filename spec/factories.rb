@@ -1,7 +1,11 @@
 FactoryGirl.define do
 	factory :user do
-		name 			"Example User"
-		email 			"example.user@mail.mcgill.ca"
-		student_id      "260012345"
+		sequence(:name)			{ |n| "Firstname Lastname #{n}" }
+		sequence(:email)		{ |n| "Firstname.Lastname#{n}@mail.mcgill.ca" }
+		sequence(:student_id)	{ |n| (n.to_s*9)[0..8] }
+
+		factory :admin do
+			admin true
+		end
 	end
 end

@@ -1,0 +1,9 @@
+<li>
+	<%= user.student_id %>
+	<%= link_to user.name, user %>
+	<%= user.email %>
+	<% if current_user.admin? && !current_user?(user) %>
+		| <%= link_to "delete", user, method: :delete,
+									  data: { confirm: "Are you sure?" } %>
+	<% end %>
+</li>
