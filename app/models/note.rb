@@ -29,7 +29,10 @@ class Note < ActiveRecord::Base
                             url:    '/notes/:id/:filename/'
 
   validates_attachment :file, presence: true,
-  :content_type => { content_type: [ 'application/pdf', 'application/msword', 'image/png' ] },
+  :content_type => { content_type: [ 'application/pdf', 
+                                     'application/msword', 
+                                     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                     'image/png' ] },
   message: "Only PDFs and Word documents allowed"
 
 end

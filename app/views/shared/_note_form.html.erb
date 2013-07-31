@@ -2,7 +2,10 @@
    <%= render 'shared/error_messages', object: f.object %>
    <div class="field">
       <%= f.label :file, class: "cus-attach" %>
-      <%= f.file_field :file %>
+      <%= f.file_field :file, accept: 'application/pdf, 
+                                     application/msword, 
+                                     application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+                                     image/png' %>
    </div>
    <div class="field">
       <%= f.label :lecture_title, "Lecture Title", class: "cus-pencil" %>
