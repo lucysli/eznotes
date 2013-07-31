@@ -1,31 +1,8 @@
 <% provide(:title, '') %>
-<div class="center hero-unit">
-	<h1>Welcome to McGill OSD</h1>   
-	<h1>EZ Notes</h1>
-	<br>
-	<h2> The online service for uploading and accessing your course notes. </h2>
+<% if signed_in? %>
+	<%= render 'shared/signed_in' %>
+<% else %>
+	<%= render 'shared/not_signed_in' %>
+	<%= link_to image_tag("rails.png", alt: "McGill OSD EZ Notes"), 'http://www.mcgill.ca/osd/' %>
+<% end %>
 
-	
-	<div class="row">
-		<p> Please log in with your McGill Email and password </p>
-		<div class="span4 offset3">
-			<%= link_to "Sign in", signin_path, class: "btn btn-large btn-primary cus-login" %>
-			<h3 class="cus-attention">Important!</h3>
-		</div>
-	</div>
-	<div class="alert alert-info">			
-		<p>
-			This system is only for note takers and students who have already registered
-			with the OSD. If you wish to apply to be a note taker we welcome you to apply.
-		</p>
-		<p>
-			If you are a student registered with the office for Students with Disabilities
-			and you require note taking, log-in as normal. If you encounter problems please
-			<p> <%= link_to "Contact us", contact_path, class: "cus-mail-alt" %> </p>
-		</p>
-	</div>
-	<%= link_to "Apply to be a notetaker", signup_path, 
-		class: "btn btn-large btn-primary cus-user" %>	
-</div>
-
-<%= link_to image_tag("rails.png", alt: "McGill OSD EZ Notes"), 'http://www.mcgill.ca/osd/' %>

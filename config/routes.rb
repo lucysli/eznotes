@@ -1,7 +1,11 @@
 EZNotes::Application.routes.draw do
   resources :users
-  resources :sessions, only: [:new, :create, :destroy]
+  resources :sessions,  only: [:new, :create, :destroy]
+  resources :notes,     only: [:create, :destroy]
+  
   root to: 'static_pages#home'
+
+  match '/notes/:id/:style.:extension', to: 'notes#download', via: 'get'
 
   match '/signup',  to: 'users#new',          via: 'get'
   match '/signin',  to: 'sessions#new',       via: 'get'

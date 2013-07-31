@@ -2,13 +2,16 @@
 <h3>Please log in with your McGill Email and password</h3>
 
 <div class="row">
-	<div class="span6 offset3">
+	<div class="span4 offset3">
 		<%= form_for(:session, url: sessions_path) do |f| %>
 
-			<%= f.label :email %>
-			<%= f.text_field :email, placeholder: 'firstname.lastname@mail.mcgill.ca' %>
+			<%= f.label :email, class: "cus-mail-alt" %>
+			<div class="input-append">
+				<%= f.text_field :email, placeholder: 'firstname.lastname' %>
+				<span class="add-on">@mail.mcgill.ca</span>
+			</div>
 
-			<%= f.label :password %>
+			<%= f.label :password, class: "cus-lock" %>
 			<%= f.password_field :password, placeholder: 'McGill password'%>
 
 			<%= button_tag(type: 'submit', class: "btn btn-medium btn-primary") do %>

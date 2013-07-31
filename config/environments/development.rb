@@ -27,4 +27,9 @@ EZNotes::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 
+  #config.serve_static_assets = true
+
+  # Tell paperclip where it can find imageMagicks convert utility
+  Paperclip.options[:command_path] = "/usr/local/bin/"
+
 end

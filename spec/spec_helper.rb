@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'spork'
+require 'paperclip/matchers'
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
 
@@ -50,6 +51,9 @@ Spork.prefork do
     #     --seed 1234
     config.order = "random"
     config.include Capybara::DSL
+
+    # include module for doing testing of paperclip attachments
+    config.include Paperclip::Shoulda::Matchers
   end
 end
 

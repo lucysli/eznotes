@@ -67,7 +67,6 @@ h2 {
   margin-bottom: 30px;
   text-align: center;
   font-weight: normal;
-  color: $grayLight;
 }
 
 h3 {
@@ -76,7 +75,6 @@ h3 {
   margin-top: 15px;
   text-align: center;
   font-weight: bolder;
-  color: $red;
 }
 
 p {
@@ -186,6 +184,7 @@ input {
   height: auto !important;
 }
 
+
 #error_explanation {
   color: #f00;
   ul {
@@ -212,4 +211,48 @@ input {
       border-bottom: 1px solid $grayLighter;
     }
   }
+}
+
+/* notes */
+
+.notes {
+  list-style: none;
+  margin: 10px 0 0 0;
+
+  li {
+    padding: 10px 0;
+    border-top: 1px solid #e8e8e8;
+  }
+}
+.comments {
+  display: block;
+}
+.date {
+  display: block;
+}
+.title {
+  display: block;
+}
+.timestamp {
+  color: $grayLight;
+}
+.download {
+  color: $orange;
+}
+.delete {
+  color: $redMediumLight;
+}
+aside {
+  textarea {
+    height: 100px;
+    margin-bottom: 5px;
+  }
+}
+
+/* note JQuery/javascript/coffeescript countdown */
+
+.countdown {
+  display: inline;
+  padding-left: 10px;
+  color: $grayLight;
 }

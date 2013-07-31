@@ -1,0 +1,20 @@
+<li id="<%= feed_item.id %>">
+   <span class="user">
+      <%= link_to feed_item.user.name, feed_item.user %>
+   </span>
+   <span class="title">
+      <%= feed_item.lecture_title %>
+   </span>
+   <span class="date">
+      <%= feed_item.lecture_date %>
+   </span>
+   <span class="comments">
+      <%= wrap(feed_item.comments) %>
+   </span>
+   <span class="timestamp">
+      Uploaded <%= time_ago_in_words(feed_item.created_at) %> ago.
+   </span>
+   <% if current_user?(feed_item.user) %>
+      <%= render partial: 'shared/delete_note_link', locals: { object: feed_item } %>
+   <% end %>
+</li>

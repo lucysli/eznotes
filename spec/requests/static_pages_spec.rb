@@ -14,6 +14,36 @@ describe "Static pages" do
     let(:page_title) { '' }
 
     it_should_behave_like "all static pages"
+
+    describe "for signed-in users" do
+      let(:user) { FactoryGirl.create(:user) }
+      before(:each) do
+        31.times { FactoryGirl.create(:note, user: user, comments: "Lorem ipsum") }
+        sign_in user
+        visit root_path 
+      end
+      after(:each) do
+        user.feed.delete_all
+      end
+
+      it "should render the user's feed" do
+        user.feed.paginate(page: 1).each do |item|
+          expect(page).to have_selector("li##{item.id}", text: item.lecture_title)
+          expect(page).to have_selector("li##{item.id}", text: item.lecture_date)
+          expect(page).to have_selector("li##{item.id}", text: item.comments)
+        end
+      end
+
+      describe "the side bar" do
+        it "should have correct note count and pluralize" do
+          expect(page).to have_content("31 notes uploaded")
+        end
+      end
+
+      describe "pagination" do
+        it { should have_selector('div.pagination') }   
+      end
+    end
 	end
 
   describe "Help page" do

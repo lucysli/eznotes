@@ -55,6 +55,8 @@ describe "User pages" do
 
 	describe 'profile page' do
 		let(:user) { FactoryGirl.create(:user) }
+		let!(:m1) { FactoryGirl.create(:note, user: user, comments: "Foo") }
+    	let!(:m2) { FactoryGirl.create(:note, user: user, comments: "Bar") }
 		before do
 			sign_in user
 			visit user_path(user) 
@@ -62,6 +64,12 @@ describe "User pages" do
 
 		it { should have_content(full_title(user.name)) }
 		it { should have_title(full_title(user.name)) }
+
+		describe "notes" do
+      	it { should have_content(m1.comments) }
+      	it { should have_content(m2.comments) }
+      	it { should have_content(user.notes.count) }
+      end
 	end
 
 	describe "signup" do

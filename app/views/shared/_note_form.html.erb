@@ -1,0 +1,22 @@
+<%= form_for(@note) do |f| %>
+   <%= render 'shared/error_messages', object: f.object %>
+   <div class="field">
+      <%= f.label :file, class: "cus-attach" %>
+      <%= f.file_field :file %>
+   </div>
+   <div class="field">
+      <%= f.label :lecture_title, "Lecture Title", class: "cus-pencil" %>
+      <%= f.text_field :lecture_title, placeholder: "Lecture Title" %>
+   </div>
+   <div class="field">
+      <%= f.label :lecture_date, "Lecture Date", class: "cus-check" %>
+      <%= f.date_field :lecture_date %>
+   </div>
+   <div class="field">
+      <%= f.label :comments, "Comments", class: "cus-comment-empty countdown" %>
+      <%= f.text_area :comments, placeholder: "Comments" %>
+   </div>
+   <%= button_tag(type: 'submit', class: "btn btn-large btn-primary") do %>
+      <i class="cus-upload"></i> Upload
+   <% end %>
+<% end %>

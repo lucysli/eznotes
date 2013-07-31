@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id             :integer          not null, primary key
+#  name           :string(255)
+#  email          :string(255)
+#  created_at     :datetime
+#  updated_at     :datetime
+#  student_id     :string(255)
+#  remember_token :string(255)
+#  admin          :boolean          default(FALSE)
+#
+
 require 'spec_helper'
 
 describe User do
@@ -14,6 +28,8 @@ describe User do
   it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
   it { should respond_to(:admin) }
+  it { should respond_to(:notes) }
+  it { should respond_to(:feed) }
 
 	it { should be_valid }
   it { should_not be_admin }
@@ -135,5 +151,39 @@ describe User do
     describe "remember token" do
       before { @user.save }
       its(:remember_token) { should_not be_blank }
+    end
+
+    describe "note associations" do
+
+      before { @user.save }
+      let!(:older_note) do
+        FactoryGirl.create(:note, user: @user, created_at: 1.day.ago)
+      end
+      let!(:newer_note) do
+        FactoryGirl.create(:note, user: @user, created_at: 1.hour.ago)
+      end
+
+      it "should have the right notes in the right order" do
+        expect(@user.notes.to_a).to eq [newer_note, older_note]
+      end
+
+      it "should destroy associated notes" do
+        notes = @user.notes.to_a
+        @user.destroy
+        expect(notes).not_to be_empty
+        notes.each do |note|
+          expect(Note.where(id: note.id)).to be_empty
+        end
+      end
+
+      describe "status" do
+        let(:unfollowed_note) do
+          FactoryGirl.create(:note, user: FactoryGirl.create(:user))
+        end
+
+        its(:feed) { should include(newer_note) }
+        its(:feed) { should include(older_note) }
+        its(:feed) { should_not include(unfollowed_note) }
+      end
     end
 end

@@ -1,21 +1,21 @@
+<% provide(:title, 'Notetaker Application') %>
 <h4>First, tell us a bit about yourself</h4>
 <div class="row">
 	<div class="span6 offset3">
 		<%= form_for(@user) do |f| %>
-			<%= render 'shared/error_messages' %>
-			<%= f.label :name %>
-			<%= f.text_field :name %>
+			<%= render 'shared/error_messages', object: f.object %>
+			<%= f.label :name, class: "cus-user"%>
+			<%= f.text_field :name, placeholder: "John Doe" %>
 
-			<%= f.label :email, "McGill Email" %>
-			<%= f.text_field :email %>
-
-			<%= f.label :student_id, "McGill Student ID" %>
-			<%= f.text_field :student_id %>
-
-	      	<%= button_tag(type: 'submit', name: "cancel_button" , class: "btn btn-large btn-primary") do %>
-	      		<i class="cus-cancel"></i> Cancel
-	      	<% end %>
-	      	<%= button_tag(type: 'submit', class: "btn btn-large btn-primary") do %>
+			<%= f.label :email, "McGill Email", class: "cus-mail-alt" %>
+			<div class="input-append">
+				<%= f.text_field :email, placeholder: "john.doe"%>
+				<span class="add-on">@mail.mcgill.ca</span>
+			</div>
+			<%= f.label :student_id, "McGill Student ID", class: "cus-credit-card" %>
+			<%= f.text_field :student_id, placeholder: "123456789" %>
+	      <%= link_to 'Cancel', root_path, class: "btn btn-large btn-inverse cus-cancel" %>
+	      <%= button_tag(type: 'submit', class: "btn btn-large btn-primary") do %>
 	      		<i class="cus-ok"></i> Next
 			<% end %>
 	   <% end %>

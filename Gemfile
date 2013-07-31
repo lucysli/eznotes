@@ -18,6 +18,12 @@ gem 'net-ldap', '0.3.1'
 # We will be using postgres in development testing and deployment
 gem 'pg', '0.15.1'
 
+# Gem to handle file attachments
+gem 'paperclip', '~> 3.0'
+
+# annotate database models
+gem 'annotate', ">=2.5.0"
+
 # gems used only in development and testing
 group :development, :test do
 	gem 'rspec-rails', '2.13.2'
@@ -28,6 +34,10 @@ group :development, :test do
 	gem 'better_errors'
 	gem 'binding_of_caller'
 	gem 'meta_request'
+end
+
+group :development do
+	gem 'rails-erd'
 end
 
 
