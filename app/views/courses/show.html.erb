@@ -1,0 +1,23 @@
+<% provide(:title, @course.course_title) %>
+<div class="row">
+   <aside class="span4">
+      <section>
+         <h1> <%= @course.term %> </h1>
+         <%= render @course %>
+      </section>
+      <section>
+         <%= render 'shared/stats' %>
+      </section>
+      <section>
+         <%= render 'shared/note_form' %>
+      </section>
+   </aside>
+   <div class="span8">
+      <% if @course.notes.any? %>
+         <h3>
+           <%= pluralize(@course.notes.count, "note") %> uploaded.
+         </h3>
+         <%= render 'shared/feed' %>
+    <% end %>
+   </div>
+</div>

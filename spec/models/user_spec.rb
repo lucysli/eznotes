@@ -30,6 +30,8 @@ describe User do
   it { should respond_to(:admin) }
   it { should respond_to(:notes) }
   it { should respond_to(:feed) }
+  it { should respond_to(:registrations) }
+  it { should respond_to(:registered_courses) }
 
 	it { should be_valid }
   it { should_not be_admin }
@@ -156,11 +158,12 @@ describe User do
     describe "note associations" do
 
       before { @user.save }
+      let(:course) { FactoryGirl.create(:course) }
       let!(:older_note) do
-        FactoryGirl.create(:note, user: @user, created_at: 1.day.ago)
+        FactoryGirl.create(:note, user: @user, course: course, created_at: 1.day.ago)
       end
       let!(:newer_note) do
-        FactoryGirl.create(:note, user: @user, created_at: 1.hour.ago)
+        FactoryGirl.create(:note, user: @user, course: course, created_at: 1.hour.ago)
       end
 
       it "should have the right notes in the right order" do
@@ -178,12 +181,30 @@ describe User do
 
       describe "status" do
         let(:unfollowed_note) do
-          FactoryGirl.create(:note, user: FactoryGirl.create(:user))
+          FactoryGirl.create(:note, user: FactoryGirl.create(:user), course: course)
         end
 
         its(:feed) { should include(newer_note) }
         its(:feed) { should include(older_note) }
         its(:feed) { should_not include(unfollowed_note) }
       end
+    end
+
+    describe "registering for courses" do
+      let(:course) { FactoryGirl.create(:course) }
+      before do
+        @user.save
+        @user.register!(course)             
+      end
+
+      it { should be_registered_with(course) }  
+      its(:registered_courses) { should include(course) }   
+
+      describe "and unregistering" do
+        before { @user.unregister!(course) }
+
+        it { should_not be_registered_with(course) }
+        its(:registered_courses) { should_not include(course) }
+      end 
     end
 end

@@ -1,0 +1,32 @@
+<% provide(:title, "#{@term}" + ' Courses') %>
+<h1 id="heading"><%= @term %> Courses</h1>
+<div class="row">
+   <aside class="span2">
+      <section>
+         <%= render 'all_courses' %>
+         <%= render 'fall_courses' %>
+         <%= render 'winter_courses' %>
+         <%= render 'summer_courses' %>
+      </section>
+   </aside>
+   <div class="span10" id="courses">
+      <% if @courses %>
+         <%= will_paginate @courses, param_name: :all_page %>
+         <%= render @courses %> 
+         <%= will_paginate @courses, param_name: :all_page %>
+      <% elsif @fall_courses %>
+         <%= will_paginate @fall_courses, param_name: :fall_page %>
+         <%= render @fall_courses %> 
+         <%= will_paginate @fall_courses, param_name: :fall_page %>
+      <% elsif @winter_courses %>
+         <%= will_paginate @winter_courses, param_name: :winter_page %>
+         <%= render @winter_courses %> 
+         <%= will_paginate @winter_courses, param_name: :winter_page %>
+      <% elsif @summer_courses %>
+         <%= will_paginate @summer_courses, param_name: :summer_page %>
+         <%= render @summer_courses %> 
+         <%= will_paginate @summer_courses, param_name: :summer_page %>
+      <% else %>
+      <% end %>
+   </div>
+</div>

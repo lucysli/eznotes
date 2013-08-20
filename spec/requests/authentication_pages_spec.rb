@@ -29,7 +29,7 @@ describe "Authentication" do
          let(:user) { FactoryGirl.create(:user) }
          before { sign_in user }
 
-         it { should have_title(full_title(user.name)) }
+         it { should have_title(full_title('')) }
          it { should have_link('Users',         href: users_path) }
          it { should have_link('Profile',    href: user_path(user)) }
          it { should have_link('Settings',      href: edit_user_path(user)) }
@@ -72,7 +72,7 @@ describe "Authentication" do
                   end
 
                   it "should render the default (profile) page" do
-                     expect(page).to have_title(full_title(user.name))
+                     expect(page).to have_title(full_title(''))
                   end
                end
             end
@@ -112,6 +112,30 @@ describe "Authentication" do
                before { delete note_path(FactoryGirl.create(:note)) }
                specify { expect(response).to redirect_to(signin_path) }
             end
+         end
+
+         describe "in the Courses controller" do
+            describe "submitting to the create action" do
+               before { post courses_path }
+               specify { expect(response).to redirect_to(signin_path) }
+            end    
+
+            describe "submitting to the destroy action" do
+               before { delete course_path(FactoryGirl.create(:course)) }
+               specify { expect(response).to redirect_to(signin_path) }
+            end         
+         end
+
+         describe "in the Registrations controller" do
+            describe "submitting to the create action" do
+               before { post registrations_path }
+               specify { expect(response).to redirect_to(signin_path) }
+            end
+
+            describe "submitting to the destroy action" do
+               before { delete registration_path(1) }
+               specify { expect(response).to redirect_to(signin_path) }
+            end            
          end
       end
 
@@ -174,7 +198,7 @@ describe "Authentication" do
 
          describe "submitting a DELETE request to the Users#destroy action to delete oneself" do
             before { delete user_path(admin) }
-            it { should have_error_message("Admin User cannot delete himself/herself!") }
+            it { should have_error_message('Admin User cannot delete himself/herself!') }
             specify { expect(response).to redirect_to(user_path(admin)) }        
          end
       end

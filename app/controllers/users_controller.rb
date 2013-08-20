@@ -22,7 +22,7 @@ class UsersController < ApplicationController
 		if @user.save
       sign_in @user
       flash[:success] = "Welcome to EZ Notes!"
-			redirect_to @user
+			redirect_to root_path
 		else
 			render 'new'
 		end
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
       # Handle a successful update
       flash[:success] = "Profile updated"
       sign_in @user
-      redirect_to @user
+      redirect_to root_path
     else
       render 'edit'
     end

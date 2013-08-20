@@ -1,0 +1,12 @@
+<div class="stats">
+   <strong id="registered" class="stat">
+      <%= pluralize(@course.registered_users.count, "student") %>
+      registered
+   </strong>
+   
+   <strong id="notes" class="stat">
+      <%= pluralize(@course.notes.count, "note") %>
+      uploaded
+   </strong>
+   
+</div>

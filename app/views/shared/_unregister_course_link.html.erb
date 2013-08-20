@@ -1,0 +1,5 @@
+<%= form_for(current_user.registrations.find_by(course_id: object),
+             html: { method: :delete },
+             data: { confirm: "Are you sure?" }) do |f| %>
+   <%= f.submit "Unregister", class: "btn btn-small btn-danger" %>
+<% end %>

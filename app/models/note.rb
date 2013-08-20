@@ -13,12 +13,15 @@
 #  file_content_type :string(255)
 #  file_file_size    :integer
 #  file_updated_at   :datetime
+#  course_id         :integer
 #
 
 class Note < ActiveRecord::Base
   belongs_to :user
+  belongs_to :course
   default_scope -> { order('created_at DESC') }
   validates :user_id, presence: true
+  validates :course_id, presence: true
   validates :comments, length: { maximum: 140 }
   validates :lecture_title, presence: true
   validates :lecture_date, presence: true

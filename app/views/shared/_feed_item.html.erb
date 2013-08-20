@@ -14,7 +14,12 @@
    <span class="timestamp">
       Uploaded <%= time_ago_in_words(feed_item.created_at) %> ago.
    </span>
-   <% if current_user?(feed_item.user) %>
-      <%= render partial: 'shared/delete_note_link', locals: { object: feed_item } %>
-   <% end %>
+   <div class="center">
+      <span class="download">
+         <%= link_to('download file', feed_item.file.url, class: "cus-download download", alt: 'download', target: "_blank") %>
+      </span> 
+      <% if current_user?(feed_item.user) %>
+         <%= render partial: 'shared/delete_note_link', locals: { object: feed_item } %>
+      <% end %>
+   </div>
 </li>

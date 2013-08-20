@@ -1,5 +1,6 @@
 <%= form_for(@note) do |f| %>
    <%= render 'shared/error_messages', object: f.object %>
+   <div><%= f.hidden_field :course_id, value: @course.id %></div>
    <div class="field">
       <%= f.label :file, class: "cus-attach" %>
       <%= f.file_field :file, accept: 'application/pdf, 

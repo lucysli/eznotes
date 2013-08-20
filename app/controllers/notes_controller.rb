@@ -7,16 +7,17 @@ class NotesController < ApplicationController
       @note = current_user.notes.build(note_params)
       if @note.save
          flash[:success] = "Note uploaded!"
-         redirect_to root_url
       else
+         flash[:error] = "Could not upload Note!"
          @feed_items = [ ]
-         render 'static_pages/home'
       end
+      
+      redirect_to course_path(Course.find(params[:note][:course_id]))
    end
 
    def destroy
       @note.destroy
-      redirect_to root_url
+      redirect_to course_path(Course.find(@note.course_id))
    end
 
    def download
@@ -27,7 +28,7 @@ class NotesController < ApplicationController
    private
 
       def note_params
-         params.require(:note).permit(:file, :comments, :lecture_title, :lecture_date)
+         params.require(:note).permit(:course_id, :file, :comments, :lecture_title, :lecture_date)
       end
 
       def downloadable?(user)

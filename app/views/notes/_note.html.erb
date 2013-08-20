@@ -1,5 +1,8 @@
 <li class="span8">
    <span class="notes">
+      <h4> Course: </h4>
+      <% course = Course.find_by id: note.course_id %>
+      <%= link_to course.subject_code + " #{course.course_num}", course %>
       <h4> Lecture Title: </h4> <%= note.lecture_title %>
       <h4> Lecture Date: </h4> <%= note.lecture_date %>
       <span class="comments">

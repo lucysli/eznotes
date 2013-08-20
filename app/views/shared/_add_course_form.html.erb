@@ -1,0 +1,21 @@
+<h5 class="center"> Register courses you are enrolled in </h5>
+<%= form_tag('/registrations') do %>
+      <%= label_tag :subject_code %>
+      <%= select_tag :subject_code, options_for_select(@subject_codes),include_blank: false, rel: 'autocomplete' %>
+
+      <%= label_tag :course_num %>
+      <%= select_tag :course_num, options_for_select(@course_nums),
+         include_blank: false, rel: 'autocomplete' %>
+
+      <%= label_tag :section %>
+      <%= select_tag :section, options_for_select(@sections),
+         include_blank: false, rel: 'autocomplete' %>
+
+      <%= label_tag :term %>
+      <%= select_tag :term, 
+      options_for_select([["fall"], ["winter"], ["summer"]]) %>
+
+      <%= button_tag(type: 'submit', class: "btn btn-small btn-primary btn-block") do %>
+         <i class="cus-upload"></i> Register
+      <% end %> 
+<% end %>

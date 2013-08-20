@@ -1,0 +1,25 @@
+<div id="<%= course_feed_item.id %>" class="pull-right span4">
+   <dl>
+      <dt>
+         <%= course_feed_item.subject_code %> 
+         <%= course_feed_item.course_num %>
+         <%= course_feed_item.section %>
+      </dt> 
+      <dd>
+         <%= course_feed_item.course_title %>
+      </dd>
+   </dl>
+   <div class="btn-toolbar">
+      <div class="btn-group">
+         <%= link_to "View Course", course_feed_item, class: "btn btn-small btn-primary cus-doc-text" %>
+      </div>
+      <div class="btn-group">
+         <% if current_user.registered_with?(course_feed_item)%>
+            <%= render partial: 'shared/unregister_course_link', locals: { object: course_feed_item } %>
+         <% end %>
+      </div>
+   </div>
+   <div class="timestamp">
+      Registered <%= time_ago_in_words(current_user.registrations.find_by(course_id: course_feed_item).created_at) %> ago.
+   </div>
+</div>

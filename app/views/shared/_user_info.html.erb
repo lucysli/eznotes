@@ -5,6 +5,9 @@
 <span>
    <%= link_to "view my profile", current_user, class: "cus-eye" %>
 </span>
-<span class="badge badge-info cus-doc-text">
+<span  class="badge badge-info cus-doc-text">
    <%= pluralize(current_user.notes.count, "note") + " uploaded" %>
+</span>
+<span id="registered_courses" class="badge badge-info cus-doc-inv">
+   <%= "Registered for " + pluralize(current_user.registered_courses.count, "course") %>
 </span>

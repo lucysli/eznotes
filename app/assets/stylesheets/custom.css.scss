@@ -170,6 +170,25 @@ aside {
   }
 }
 
+.stats {
+  overflow: auto;
+  strong {
+    float: left;
+    padding: 0 10px;
+    border-left: 1px solid $grayLighter;
+    color: gray;
+    &:first-child {
+      padding-left: 0;
+      border: 0;
+    }
+    &:hover {
+      text-decoration: none;
+      color: $blue;
+    }
+    display: block;
+  }
+}
+
 /* forms */
 
 input, textarea, select, .uneditable-input {
@@ -249,6 +268,17 @@ aside {
   }
 }
 
+/* courses */
+.courses {
+  list-style: none;
+  margin: 10px 0 0 0;
+
+  li {
+    padding: 10px 0;
+    border-top: 1px solid #e8e8e8;
+  }
+}
+
 /* note JQuery/javascript/coffeescript countdown */
 
 .countdown {
@@ -256,3 +286,5 @@ aside {
   padding-left: 10px;
   color: $grayLight;
 }
+
+/* edit user form */

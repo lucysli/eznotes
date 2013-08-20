@@ -55,8 +55,10 @@ describe "User pages" do
 
 	describe 'profile page' do
 		let(:user) { FactoryGirl.create(:user) }
-		let!(:m1) { FactoryGirl.create(:note, user: user, comments: "Foo") }
-    	let!(:m2) { FactoryGirl.create(:note, user: user, comments: "Bar") }
+		let(:course_m1) { FactoryGirl.create(:course) }
+		let(:course_m2) { FactoryGirl.create(:course) }
+		let!(:m1) { FactoryGirl.create(:note, user: user, course: course_m1, comments: "Foo") }
+    	let!(:m2) { FactoryGirl.create(:note, user: user, course: course_m2, comments: "Bar") }
 		before do
 			sign_in user
 			visit user_path(user) 
@@ -66,8 +68,16 @@ describe "User pages" do
 		it { should have_title(full_title(user.name)) }
 
 		describe "notes" do
+			it { should have_content(course_m1.subject_code + " " + course_m1.course_num) }
+			it { should have_content(m1.lecture_title) }
+			it { should have_content(m1.lecture_date) }
       	it { should have_content(m1.comments) }
-      	it { should have_content(m2.comments) }
+
+			it { should have_content(course_m2.subject_code + " " + course_m2.course_num) }
+      	it { should have_content(m2.lecture_title) }
+			it { should have_content(m2.lecture_date) }
+			it { should have_content(m2.comments) }
+
       	it { should have_content(user.notes.count) }
       end
 	end
@@ -107,7 +117,7 @@ describe "User pages" do
 				let(:user) { User.find_by(email: 'example.user@mail.mcgill.ca') }
 
 				it { should have_link('Sign out') }
-				it { should have_title(user.name) }
+				it { should have_title(full_title('')) }
 				it { should have_success_message('Welcome') }
 			end
 		end
@@ -144,8 +154,8 @@ describe "User pages" do
 			  click_button "Save changes"
 			end
 
-			it { should have_title(new_name) }
-			it { should have_success_message('') }
+			it { should have_title(full_title('')) }
+			it { should have_success_message('Profile updated') }
 			it { should have_link('Sign out', href: signout_path) }
 			specify { expect(user.reload.name).to eq new_name }
 		end

@@ -8,40 +8,101 @@ describe "Static pages" do
     it { should have_title(full_title(page_title)) }
   end
 
+  shared_examples "course feed" do |term|
+    it "should render the user's registered #{term} courses" do
+      course_feed.each do |item|
+        expect(page).to have_selector("div##{item.id}", text: item.subject_code)
+        expect(page).to have_selector("div##{item.id}", text: item.course_num)
+        expect(page).to have_selector("div##{item.id}", text: item.section)
+        expect(page).to have_selector("div##{item.id}", text: item.course_title)
+      end
+    end
+  end
+
 	describe "Home page" do
 
     before { visit root_path }
+
     let(:page_title) { '' }
 
     it_should_behave_like "all static pages"
 
     describe "for signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
+
       before(:each) do
-        31.times { FactoryGirl.create(:note, user: user, comments: "Lorem ipsum") }
+        10.times { user.register!(FactoryGirl.create(:course)) }
         sign_in user
         visit root_path 
       end
+
       after(:each) do
-        user.feed.delete_all
+        user.fall_course_feed.delete_all
+        user.winter_course_feed.delete_all
+        user.summer_course_feed.delete_all
       end
 
-      it "should render the user's feed" do
-        user.feed.paginate(page: 1).each do |item|
-          expect(page).to have_selector("li##{item.id}", text: item.lecture_title)
-          expect(page).to have_selector("li##{item.id}", text: item.lecture_date)
-          expect(page).to have_selector("li##{item.id}", text: item.comments)
+      describe "the user's registered fall courses" do
+        it_behaves_like "course feed", "fall" do
+          let(:course_feed) { user.fall_course_feed }
+        end
+      end
+
+      describe "the user's registered winter courses" do
+        it_behaves_like "course feed", "winter" do
+          let(:course_feed) { user.winter_course_feed }
+        end
+      end
+
+      describe "the user's registered summer courses" do
+        it_behaves_like "course feed", "summer" do
+          let(:course_feed) { user.summer_course_feed }
         end
       end
 
       describe "the side bar" do
-        it "should have correct note count and pluralize" do
-          expect(page).to have_content("31 notes uploaded")
+        it "should have correct course count and pluralize" do
+          expect(page).to have_content("Registered for 10 courses")
         end
       end
 
-      describe "pagination" do
-        it { should have_selector('div.pagination') }   
+      describe "register/unregister buttons" do
+        let(:course) { FactoryGirl.create(:course) }
+
+        describe "registering for a course" do
+          before do
+            select course.subject_code, from: 'subject_code'
+            select course.course_num, from: 'course_num'
+            select course.section, from: 'section'
+            select course.term, from: 'term'
+          end
+
+          it "should increment the users registered course count" do
+            expect do
+              click_button "Register"
+            end.to change(user.registered_courses, :count).by(1)
+          end
+
+          it "should increment the courses registered user count" do
+            expect do
+              click_button "Register"
+            end.to change(course.registered_users, :count).by(1)
+          end
+        end
+
+        describe "unregistering a course" do
+          it "should decrement the users registered course count" do
+            expect do
+              page.first(:button, "Unregister").click
+            end.to change(user.registered_courses, :count).by(-1)
+          end
+
+          it "should decrement the course's registered user count" do
+            expect do
+              page.first(:button, "Unregister").click
+            end.to change(course.registered_users, :count).by(-1)
+          end 
+        end
       end
     end
 	end
@@ -66,53 +127,6 @@ describe "Static pages" do
     let(:page_title) { 'Contact' }
 
     it_should_behave_like "all static pages"
-  end
-
-  describe "signup page 2" do
-    
-    before { visit signup2_path }
-    let(:page_title) { 'Notetaker Application 2' }
-
-    it_should_behave_like "all static pages"
-
-    it "should have the right links in the pager" do
-      click_link "Next"
-      expect(page).to have_title(full_title('Notetaker Application 3'))
-      click_link "Previous"
-      expect(page).to have_title(full_title('Notetaker Application'))
-    end
-  end
-
-  describe "signup page 3" do
-    
-    before { visit signup3_path }
-    let(:page_title) { 'Notetaker Application 3' }
-
-    it_should_behave_like "all static pages"
-
-    it "should have the right links in the pager" do
-      click_link "Next"
-      expect(page).to have_title(full_title('Notetaker Application 4'))
-      
-      click_link "Previous"
-      expect(page).to have_title(full_title('Notetaker Application 2'))
-    end
-  end
-
-  describe "signup page 4" do
-    
-    before { visit signup4_path }
-    let(:page_title) { 'Notetaker Application 4' }
-
-    it_should_behave_like "all static pages"
-
-    it "should have the right links in the pager" do
-
-      click_link "Previous"
-      expect(page).to have_title(full_title('Notetaker Application 3'))
-      click_link "Next"
-      expect(page).to have_title(full_title('Notetaker Application 4'))
-    end
   end
 
   it "should have the right links on the layout" do

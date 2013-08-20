@@ -13,18 +13,21 @@
 #  file_content_type :string(255)
 #  file_file_size    :integer
 #  file_updated_at   :datetime
+#  course_id         :integer
 #
 
 require 'spec_helper'
 
 describe Note do
   let(:user) { FactoryGirl.create(:user) }
+  let(:course) { FactoryGirl.create(:course) }
   before { @note = user.notes.build(
                      file: File.new(Rails.root.join('public', 'assets', 'sample.pdf')),
                      lecture_title: "CHEM 200 intro to hydrogen", 
                      lecture_date: Date.today,
                      comments: "This is the notes for lasjdfkl", 
-                     user_id: user.id) }
+                     user_id: user.id,
+                     course_id: course.id) }
 
   subject { @note }
 
@@ -34,6 +37,9 @@ describe Note do
   it { should respond_to(:comments) }
   it { should respond_to(:user_id) }
   it { should respond_to(:user) }
+  it { should respond_to(:course_id) }
+  it { should respond_to(:course) }
+  its(:course) { should eq course }
   its(:user) { should eq user }
 
   it { should be_valid }
@@ -47,7 +53,10 @@ describe Note do
    it { should_not be_valid }
   end
 
-
+  describe "when course_id is not present" do
+    before { @note.course_id = nil }
+    it { should_not be_valid }
+  end
 
   describe "when file is not the correct format" do
    it { should validate_attachment_content_type(:file).
@@ -56,12 +65,22 @@ describe Note do
   end
 
   describe "when lecture title is not present" do
+    before { @note.lecture_title = nil }
+    it { should_not be_valid }
+  end
+
+  describe "with blank lecture title" do
     before { @note.lecture_title = " " }
     it { should_not be_valid }
   end
 
   describe "when lecture date is not present" do
-    before { @note.lecture_date = " " }
+    before { @note.lecture_date = nil }
+    it { should_not be_valid }
+  end
+
+  describe "with blank lecture date" do
+    before { @note.lecture_title = " " }
     it { should_not be_valid }
   end
 

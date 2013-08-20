@@ -9,8 +9,10 @@
   </aside>
   <div class="span8">
     <% if @user.notes.any? %>
-      <h3>Notes (<%= @user.notes.count %>)</h3>
-      <ol class="thumbnails">
+      <h3>
+        <%= pluralize(@user.notes.count, "Note") %> uploaded.
+      </h3>
+      <ol class="notes">
         <%= render @notes %>
       </ol>
       <%= will_paginate @notes %>

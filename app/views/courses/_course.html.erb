@@ -1,0 +1,16 @@
+<dl>
+   <dt>
+      <%= link_to course.subject_code + 
+          " #{course.course_num}" + 
+          " #{course.section}", course %> 
+   </dt> 
+   <dd>
+      <%= course.course_title %>
+      <% if current_user.admin? %>
+         <%= link_to "delete", course, method: :delete,
+             data: { confirm: "Are you sure?" }, class: "cus-trash delete" %>
+      <% end %>
+
+   </dd>
+</dl>
+

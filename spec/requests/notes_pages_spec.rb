@@ -5,10 +5,14 @@ describe "Notes Pages" do
    subject { page }
 
    let(:user) { FactoryGirl.create(:user) }
+   let(:course) { FactoryGirl.create(:course) }
    before { sign_in user }
 
    describe "note upload" do
-      before { visit root_path }
+      before do 
+         user.register!(course)
+         visit course_path(course)
+      end
 
       describe "with invalid information" do
          
@@ -37,7 +41,7 @@ describe "Notes Pages" do
    end
 
    describe "note destruction" do
-      before { FactoryGirl.create(:note, user: user) }
+      before { FactoryGirl.create(:note, user: user, course: course) }
 
       describe "as correct user" do
          before { visit root_path }
