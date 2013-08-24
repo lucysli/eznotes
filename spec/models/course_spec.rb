@@ -2,13 +2,14 @@
 #
 # Table name: courses
 #
-#  id              :integer          not null, primary key
-#  course_title    :string(255)
-#  subject_code    :string(255)
-#  course_num      :integer
-#  multi_term_code :string(255)
-#  created_at      :datetime
-#  updated_at      :datetime
+#  id           :integer          not null, primary key
+#  course_title :string(255)
+#  subject_code :string(255)
+#  course_num   :string(255)
+#  created_at   :datetime
+#  updated_at   :datetime
+#  term         :string(255)
+#  section      :string(255)
 #
 
 require 'spec_helper'
@@ -32,6 +33,8 @@ describe Course do
 
   it { should respond_to(:notes) }
   it { should respond_to(:feed) }
+
+  it { should respond_to(:user_id) }
 
   describe "when course_title is not present" do
      before { @course.course_title = nil }
@@ -119,8 +122,41 @@ describe Course do
     it { should allow_value("452J3").for(:course_num) }
   end
 
-  describe "when subject code and course num and term and section is already in table" do
-   it { should validate_uniqueness_of(:subject_code).scoped_to(:course_num, :term, :section).case_insensitive }
+  describe "when course is already in table" do
+    before do
+      duplicate_course = @course.dup
+      duplicate_course.course_title = "new title"
+      duplicate_course.save
+    end
+    it { should_not be_valid }
+  end
+
+  describe "when subject code is the same but" do
+    let(:duplicate_course) { duplicate_course = @course.dup }
+
+    describe "when course num differs" do
+      before do
+        duplicate_course.course_num = (@course.course_num.to_i + 1).to_s
+        duplicate_course.save
+      end
+      it { should be_valid }
+    end
+
+    describe "when section differs" do
+      before do
+        duplicate_course.section = "002"
+        duplicate_course.save
+      end
+      it { should be_valid }
+    end
+
+    describe "when term differs" do
+      before do
+        duplicate_course.term = "winter"
+        duplicate_course.save
+      end
+      it { should be_valid }
+    end
   end
 
    describe "subject code with mixed case" do
@@ -204,5 +240,26 @@ describe Course do
      user.register!(@course)
    end
    its(:registered_users) { should include(user) }
+   its(:note_taker) { should_not eq user }
+  end
+
+  describe "notetaker" do
+    let(:notetaker) { FactoryGirl.create(:notetaker) }
+    before do
+      @course.user_id = notetaker.id
+      @course.save
+    end
+    it { should be_valid }
+    its(:note_taker) { should eq notetaker }
+
+    describe "assigning a regular user as a notetaker for a course" do
+      let(:user) { FactoryGirl.create(:user) }
+      before do
+        @course.user_id = user.id
+        @course.save
+      end
+      it { should_not be_valid }
+      its(:note_taker) { should_not eq user }
+    end
   end
 end

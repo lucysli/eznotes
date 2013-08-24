@@ -1,6 +1,7 @@
 class CoursesController < ApplicationController
-   before_action :signed_in_user, only: [:show, :index, :create, :destroy]
-   before_action :admin_user,     only: [:index]
+   before_action :signed_in_user, only: [:show, :index ]
+   before_action :admin_user,     only: [:index, :destroy, :create]
+   before_action :registered_user, only: :show
 
    def show
       @course = Course.find(params[:id])
@@ -18,6 +19,7 @@ class CoursesController < ApplicationController
          @summer_courses = Course.summer_courses.paginate(page: params[:summer_page])
       else
          @courses = Course.all.paginate(page: params[:all_page])
+         @term = "All"
       end   
    end
    
@@ -52,6 +54,10 @@ class CoursesController < ApplicationController
 
       def admin_user
          redirect_to root_path, notice: "You are not authorized to view this page" unless current_user.admin?
+      end
+
+      def registered_user
+         redirect_to root_path, notice: "You must be registered for this course to view it" unless current_user.registered_with?(Course.find(params[:id]))
       end
 
 end

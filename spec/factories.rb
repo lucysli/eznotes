@@ -3,10 +3,16 @@ FactoryGirl.define do
 		sequence(:name)			 { |n| "Firstname Lastname #{n}" }
 		sequence(:email)		    { |n| "Firstname.Lastname#{n}@mail.mcgill.ca" }
 		sequence(:student_id)    { |n| (n.to_s*9)[0..8] }
+      password                 "foobar11"
+      password_confirmation    "foobar11"
 
 		factory :admin do
 			admin true
 		end
+
+      factory :notetaker do
+         note_taker true
+      end
 	end
 
    factory :course do
@@ -15,7 +21,17 @@ FactoryGirl.define do
       sequence(:course_num)            { |n| "#{n + 100 - 1}" }
       section                          "001"
       term                             "fall"
+
+      factory :realcourse do
+         course_title "Anthropology Beyond the Human."
+         subject_code "ANTH"
+         course_num "501"
+         section "002"
+         term "fall"
+      end
    end
+
+
 
    factory :note do
       file { File.new(Rails.root.join('public', 'assets', 'sample.pdf')) }
@@ -25,6 +41,4 @@ FactoryGirl.define do
       user
       course
    end
-
-
 end

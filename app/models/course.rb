@@ -16,7 +16,9 @@ class Course < ActiveRecord::Base
    has_many :notes, dependent: :destroy
    has_many :registrations, foreign_key: "course_id", dependent: :destroy
    has_many :registered_users, through: :registrations, source: :user
-   has_one  :note_taker, through: :registrations, class_name: "user"
+   belongs_to  :note_taker, -> { where note_taker: true },
+    class_name: "User", foreign_key: "user_id"
+
 
    before_save do
       subject_code.upcase!
@@ -64,6 +66,10 @@ class Course < ActiveRecord::Base
    def self.summer_courses
       # This is preliminary.
       Course.where("term= ?", "summer")
+   end
+
+   def assign_notetaker(user)
+      self.notetaker = notetaker
    end
 
 end

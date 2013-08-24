@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :signed_in_user,  only: [:index, :edit, :update, :show, :destroy]
   before_action :correct_user,    only: [:edit, :update, :show]
-  before_action :admin_user,      only: :destroy
+  before_action :admin_user,      only: [:destroy, :index]
   before_action :limit_user,      only: [:new, :create]
 
   def index
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     if @user.admin?
-      flash[:error] = "Admin User cannot delete himself/herself!"
+      flash[:error] = "Admin User cannot delete themselves!"
       redirect_to user_path(@user)
     else
       @user.destroy
@@ -57,7 +57,8 @@ class UsersController < ApplicationController
   private
 
     def user_params
-  		params.require(:user).permit(:name, :email, :student_id)
+  		params.require(:user).permit(:name, :email, :student_id, :password,
+                                   :password_confirmation, :note_taker)
   	end 
 
     # Before filters
@@ -68,7 +69,7 @@ class UsersController < ApplicationController
     end
 
     def admin_user
-      redirect_to(root_path) unless current_user.admin?
+      redirect_to root_path, notice: "You are not authorized to access this page." unless current_user.admin?
     end
 
     def limit_user

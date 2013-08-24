@@ -10,6 +10,7 @@ ready = ->
       input.attr('id', $(this).attr('id') )  
       input.attr('class', $(this).attr('class') )
       input.attr('data-provide', 'typeahead' )
+      input.attr('autocomplete', 'off' )
       input.val($(this).attr('data_default'))
       $(this).replaceWith(input)
         

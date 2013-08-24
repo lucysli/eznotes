@@ -9,7 +9,9 @@
          <%= render 'shared/stats' %>
       </section>
       <section>
-         <%= render 'shared/note_form' %>
+         <% if current_user.note_taker? and @course.note_taker and @course.note_taker == current_user %>
+            <%= render 'shared/note_form' %>
+         <% end %>
       </section>
    </aside>
    <div class="span8">

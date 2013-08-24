@@ -1,18 +1,19 @@
 class NotesController < ApplicationController
-   before_action :signed_in_user, only: [:create, :destroy]
-   before_action :login_required,  only: [:download]
+   before_action :signed_in_user, only: [:create, :destroy, :download]
    before_action :correct_user,  only: :destroy
+   before_action :note_taker, only: :create
 
    def create
       @note = current_user.notes.build(note_params)
       if @note.save
-         flash[:success] = "Note uploaded!"
+         flash[:success] = "Note uploaded!"  
+         redirect_to :back
       else
-         flash[:error] = "Could not upload Note!"
+         errors = @note.errors.full_messages.to_sentence.gsub(',',"\n")
+         flash[:error] = errors
          @feed_items = [ ]
+         redirect_to :back
       end
-      
-      redirect_to course_path(Course.find(params[:note][:course_id]))
    end
 
    def destroy
@@ -31,18 +32,14 @@ class NotesController < ApplicationController
          params.require(:note).permit(:course_id, :file, :comments, :lecture_title, :lecture_date)
       end
 
-      def downloadable?(user)
-         current_user?(user) && signed_in?
-      end
-
       # Before filters
-
-      def login_required
-         redirect_to root_path, notice: "You are not authorized to download this file." unless downloadable?(current_user)
-      end
 
       def correct_user
          @note = current_user.notes.find_by(id: params[:id])
-         redirect_to root_url if @note.nil?
+         redirect_to root_url, notice: "Cannot delete a note you did not upload" if @note.nil?
+      end
+
+      def note_taker
+         redirect_to root_url, notice: "You are not authorized to upload a file." unless current_user.note_taker?
       end
 end

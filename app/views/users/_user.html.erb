@@ -1,9 +1,19 @@
 <li>
+   (
+   <% if user.note_taker? %>
+      <strong><i class="cus-pencil"></i> NoteTaker</strong>
+   <% elsif user.admin?%>
+      <strong><i class="cus-cog-alt"></i> Admin</strong>
+   <% else %>
+      <strong><i class="cus-user"></i> NoteUser</strong>
+   <% end %>)
 	<%= user.student_id %>
-	<strong><%= user.name %></strong>
+	<strong><%= link_to user.name, user %></strong>
 	<%= user.email %>
+   
 	<% if current_user.admin? && !current_user?(user) %>
-		| <%= link_to "delete", user, method: :delete,
-									  data: { confirm: "Are you sure?" } %>
+		<%= link_to "delete", user, method: :delete,
+									  data: { confirm: "Are you sure?" }, 
+                             class: "cus-trash delete" %>
 	<% end %>
 </li>

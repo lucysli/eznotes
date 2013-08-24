@@ -115,15 +115,26 @@ describe "Authentication" do
          end
 
          describe "in the Courses controller" do
+            let(:realcourse) { FactoryGirl.create(:realcourse) }
             describe "submitting to the create action" do
                before { post courses_path }
                specify { expect(response).to redirect_to(signin_path) }
             end    
 
             describe "submitting to the destroy action" do
-               before { delete course_path(FactoryGirl.create(:course)) }
+               before { delete course_path(realcourse) }
                specify { expect(response).to redirect_to(signin_path) }
-            end         
+            end     
+
+            describe "visiting the show page" do
+               before { visit course_path(realcourse) }
+               it { should have_title(full_title('Sign in')) }
+            end
+
+            describe "visiting the user index" do
+               before { visit courses_path }
+               it { should have_title(full_title('Sign in')) }
+            end    
          end
 
          describe "in the Registrations controller" do
@@ -158,8 +169,8 @@ describe "Authentication" do
          end
 
          describe "visiting Users#show page" do
-            before { visit user_path(user) }
-            it { should_not have_title(full_title(user.name)) }
+            before { visit user_path(wrong_user) }
+            it { should_not have_title(full_title(wrong_user.name)) }
          end
       end
 
@@ -177,6 +188,7 @@ describe "Authentication" do
 
       describe "as signed in users" do
          let(:user) { FactoryGirl.create(:user) }
+         let(:realcourse) { FactoryGirl.create(:realcourse) }
          before { sign_in user, no_capybara: true }
 
          describe "submitting to the new action" do
@@ -188,6 +200,11 @@ describe "Authentication" do
             before { post users_path  }
             specify { expect(response).to redirect_to(root_path) }
          end
+
+         describe "visiting Courses#show page for a course you are not registered with" do
+            before { visit course_path(realcourse) }
+            it { should_not have_title(full_title(realcourse.course_title)) }
+         end
       end
 
       describe "as admin" do
@@ -198,8 +215,24 @@ describe "Authentication" do
 
          describe "submitting a DELETE request to the Users#destroy action to delete oneself" do
             before { delete user_path(admin) }
-            it { should have_error_message('Admin User cannot delete himself/herself!') }
             specify { expect(response).to redirect_to(user_path(admin)) }        
+         end
+      end
+
+      describe "as notetaker" do
+         let(:notetaker) { FactoryGirl.create(:notetaker) }
+         let(:realcourse) { FactoryGirl.create(:realcourse) }
+         let(:note) { FactoryGirl.create(:note) }
+
+         before do
+            sign_in notetaker, no_capybara: true 
+            notetaker.register!(realcourse)
+            visit course_path(realcourse)
+         end
+
+         describe "submitting a POST request to the Notes#create action to upload notes for a course you are not the notetaker of" do
+            before { post notes_path  }
+            specify { expect(response).to redirect_to(root_url) } 
          end
       end
    end

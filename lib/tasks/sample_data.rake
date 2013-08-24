@@ -17,15 +17,27 @@ def make_users
 	admin = User.create!(name: 		"Example User",
 			 		 			email: 		"example.user@mail.mcgill.ca",
 			 		 			student_id: "111111111",
+			 		 			password:	"foobar11",
+			 		 			password_confirmation: "foobar11",
 			 		 			admin: true)
-	99.times do |n|
+	50.times do |n|
 		name = Faker::Name.name
 		email = "example.user#{n+1}@mail.mcgill.ca"
 		id = (0..9).to_a.shuffle[0..8].join
+		password = "password"
 		User.create!(name: 			name,
 						 email: 			email,
-						 student_id: 	id)
+						 student_id: 	id,
+						 password:		password,
+						 password_confirmation: password)
 	end
+
+	notetaker = User.create!(name: 			"Note Taker",
+						 			 email: 		"note.taker@mail.mcgill.ca",
+						 			 student_id: "000000000",
+			 		 				 password:	"notetaker",
+			 		 				 password_confirmation: "notetaker",
+						 			 note_taker:   true)
 end
 
 def make_courses
@@ -56,29 +68,38 @@ def make_courses
 end
 
 def make_registrations
-	users = User.all
+	users = User.where("note_taker = ?", false)
 	courses = Course.all
+	notetaker = User.find_by email: "note.taker@mail.mcgill.ca"
 
 	users.each do |user|
-		(0..9).each do
-			user.register!(courses[rand(0..courses.size)])
+		(0..9).each do |n|
+			user.register!(courses[n])
 		end 
+	end
+
+	5.times do |n|
+		notetaker.register!(courses[n])
 	end
 	
 end
 
 def make_notes
-	users = User.all(limit: 6)
+	notetaker = User.find_by email: "note.taker@mail.mcgill.ca"
 	file = File.new(Rails.root.join('public', 'assets', 'sample.pdf'))
 	50.times do
 		comments = Faker::Lorem.sentence(5)
 		lecture_title = Faker::Lorem.word + " " + rand(100..999).to_s
 		lecture_date = random_date()
-		users.each { |user| user.notes.build(file: file,
-															comments: comments, 
-															lecture_title: lecture_title,
-															lecture_date: lecture_date,
-															course_id: user.registered_courses.sample.id) }
+		course = notetaker.registered_courses.sample
+		course.note_taker = notetaker
+		course.save
+		notetaker.notes.create!(file: file,
+									 comments: comments, 
+									 lecture_title: lecture_title,
+									 lecture_date: lecture_date,
+									 course_id: course.id) 
+
 	end
 end
 

@@ -19,14 +19,13 @@
 require 'spec_helper'
 
 describe Note do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:notetaker) { FactoryGirl.create(:notetaker) }
   let(:course) { FactoryGirl.create(:course) }
-  before { @note = user.notes.build(
+  before { @note = notetaker.notes.build(
                      file: File.new(Rails.root.join('public', 'assets', 'sample.pdf')),
                      lecture_title: "CHEM 200 intro to hydrogen", 
                      lecture_date: Date.today,
                      comments: "This is the notes for lasjdfkl", 
-                     user_id: user.id,
                      course_id: course.id) }
 
   subject { @note }
@@ -40,7 +39,7 @@ describe Note do
   it { should respond_to(:course_id) }
   it { should respond_to(:course) }
   its(:course) { should eq course }
-  its(:user) { should eq user }
+  its(:user) { should eq notetaker }
 
   it { should be_valid }
 

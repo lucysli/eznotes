@@ -1,4 +1,4 @@
-<% provide(:title, 'Notetaker Application') %>
+<% provide(:title, 'Registration') %>
 <h4>First, tell us a bit about yourself</h4>
 <div class="row">
 	<div class="span6 offset3">
@@ -14,9 +14,22 @@
 			</div>
 			<%= f.label :student_id, "McGill Student ID", class: "cus-credit-card" %>
 			<%= f.text_field :student_id, placeholder: "123456789" %>
+
+			<%= f.label :password, "McGill Password", class: "cus-lock" %>
+			<%= f.password_field :password %>
+
+			<%= f.label :password_confirmation, "Confirmation", class: "cus-lock" %>
+			<%= f.password_field :password_confirmation %>
+
+			<%= f.check_box :note_taker, class: "checkbox" %> 
+			<%= f.label :note_taker, "NoteTaker?", class: "cus-pencil checkbox inline"%>
+			
+			<br>
+			<br>
+
 	      <%= link_to 'Cancel', root_path, class: "btn btn-large btn-inverse cus-cancel" %>
 	      <%= button_tag(type: 'submit', class: "btn btn-large btn-primary") do %>
-	      		<i class="cus-ok"></i> Next
+	      	<i class="cus-ok"></i> Create my account
 			<% end %>
 	   <% end %>
 	</div>

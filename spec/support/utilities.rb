@@ -9,7 +9,7 @@ def sign_in(user, options={})
 	else
 		visit signin_path
 		fill_in "Email",	with: user.email
-		fill_in "Password",	with: user.email
+		fill_in "Password",	with: user.password
 		click_button "Sign in"
 	end
 end
@@ -23,6 +23,12 @@ end
 RSpec::Matchers.define :have_success_message do |message|
 	match do |page|
 		expect(page).to have_selector('div.alert.alert-success', text: message)
+	end
+end
+
+RSpec::Matchers.define :have_notice_message do |message|
+	match do |page|
+		expect(page).to have_selector('div.alert', text: message)
 	end
 end
 

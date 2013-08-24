@@ -4,13 +4,13 @@ describe "Notes Pages" do
 
    subject { page }
 
-   let(:user) { FactoryGirl.create(:user) }
+   let(:notetaker) { FactoryGirl.create(:notetaker) }
    let(:course) { FactoryGirl.create(:course) }
-   before { sign_in user }
+   before { sign_in notetaker }
 
    describe "note upload" do
       before do 
-         user.register!(course)
+         notetaker.register!(course)
          visit course_path(course)
       end
 
@@ -41,10 +41,10 @@ describe "Notes Pages" do
    end
 
    describe "note destruction" do
-      before { FactoryGirl.create(:note, user: user, course: course) }
+      before { FactoryGirl.create(:note, user: notetaker, course: course) }
 
       describe "as correct user" do
-         before { visit root_path }
+         before { visit course_path(course) }
 
          it "should delete a note" do
             expect { click_link "delete" }.to change(Note, :count).by(-1)

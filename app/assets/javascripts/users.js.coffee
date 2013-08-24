@@ -4,4 +4,7 @@
 
 # Edit user form 
 $ ->
-   $('.editUser').tooltip(title: "Modify your name", placement: "right")
+   $('.editUserName').tooltip(title: "Update your name", placement: "right")
+   $('.editUserID').tooltip(title: "Update your student ID", placement: "right")
+   $('.editUserPassword').tooltip(title: "Update your password", placement: "right")
+   $('.editUserConfirm').tooltip(title: "Confirm new password", placement: "right")

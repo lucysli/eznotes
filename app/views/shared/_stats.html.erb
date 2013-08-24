@@ -3,6 +3,15 @@
       <%= pluralize(@course.registered_users.count, "student") %>
       registered
    </strong>
+
+   <strong id="notetaker" class="stat">
+      <% if @course.note_taker %>
+         <%= pluralize(1, "notetaker") %>
+      <% else %>
+         <%= pluralize(0, "notetaker") %>
+      <% end %>
+      assigned
+   </strong>
    
    <strong id="notes" class="stat">
       <%= pluralize(@course.notes.count, "note") %>

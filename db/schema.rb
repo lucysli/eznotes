@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130808190451) do
+ActiveRecord::Schema.define(version: 20130822192720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20130808190451) do
     t.datetime "updated_at"
     t.string   "term"
     t.string   "section"
+    t.integer  "user_id"
   end
 
   add_index "courses", ["subject_code", "course_num", "term", "section"], name: "course_lookup_index", unique: true, using: :btree
@@ -63,7 +64,9 @@ ActiveRecord::Schema.define(version: 20130808190451) do
     t.datetime "updated_at"
     t.string   "student_id"
     t.string   "remember_token"
-    t.boolean  "admin",          default: false
+    t.boolean  "admin",           default: false
+    t.boolean  "note_taker",      default: false
+    t.string   "password_digest"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

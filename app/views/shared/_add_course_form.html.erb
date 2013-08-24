@@ -1,5 +1,5 @@
 <h5 class="center"> Register courses you are enrolled in </h5>
-<%= form_tag('/registrations') do %>
+<%= form_tag('/registrations', id: "add_course") do %>
       <%= label_tag :subject_code %>
       <%= select_tag :subject_code, options_for_select(@subject_codes),include_blank: false, rel: 'autocomplete' %>
 

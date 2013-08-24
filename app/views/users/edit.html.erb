@@ -4,8 +4,19 @@
 	<div class="span6 offset3" >
 		<%= form_for(@user) do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
+
 			<%= f.label :name %>
-			<%= f.text_field :name, class: "editUser" %>
+			<%= f.text_field :name, class: "editUserName" %>
+
+			<%= f.label :student_id, "McGill Student ID" %>
+			<%= f.text_field :student_id, class: "editUserID" %>
+
+			<%= f.label :password, "McGill Password" %>
+			<%= f.password_field :password, class: "editUserPassword" %>
+
+			<%= f.label :password_confirmation , "Confirm Password" %>
+			<%= f.password_field :password_confirmation, class: "editUserConfirm" %>
+
 			<%= button_tag(type: 'submit', class: "btn btn-large btn-primary") do %>
 				<i class="cus-floppy"></i> Save changes
 			<% end %>

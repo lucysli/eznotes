@@ -7,7 +7,10 @@
 					<li><%= link_to "Home", root_path, class: "cus-home" %></li>
 					<li><%= link_to "Help", help_path, class: "cus-help-circled" %></li>
 					<% if signed_in? %>
-						<li><%= link_to "Users", users_path, class: "cus-users" %></li>
+						<% if  current_user.admin? %>
+							<li><%= link_to "Users", users_path, class: "cus-users" %></li>
+							<li><%= link_to "Courses", courses_path, class: "cus-docs" %></li>
+						<% end %>
 						<li id="fat-menu" class="dropdown">
 							<a href="#" class="dropdown-toggle cus-cog" data-toggle="dropdown">
 								Account <b class="caret"></b>

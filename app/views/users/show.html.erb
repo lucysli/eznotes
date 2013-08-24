@@ -4,6 +4,14 @@
     <section>
       <h1>
         <%= @user.name %>
+        (
+        <% if current_user.note_taker? %>
+           <i class="cus-pencil"></i> NoteTaker
+        <% elsif current_user.admin?%>
+           <i class="cus-cog-alt"></i> Admin
+        <% else %>
+           <i class="cus-user"></i> NoteUser
+        <% end %>)
       </h1>
     </section>
   </aside>
