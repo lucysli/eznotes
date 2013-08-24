@@ -22,7 +22,7 @@ class NotesController < ApplicationController
    end
 
    def download
-      @note = current_user.notes.find(params[:id])
+      @note = Note.find(params[:id])
       send_file @note.file.path, type: @note.file_content_type, disposition: 'inline'
    end
 

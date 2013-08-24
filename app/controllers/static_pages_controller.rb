@@ -2,8 +2,7 @@ class StaticPagesController < ApplicationController
 
 	def home	
 		if signed_in?
-			@note = current_user.notes.build
-			@feed_items = current_user.feed.paginate(page: params[:page])
+			@feed_items = current_user.notes_feed.paginate(page: params[:page])
 			@fall_course_feed_items = current_user.fall_course_feed.paginate(page: params[:page])
 			@winter_course_feed_items = current_user.winter_course_feed.paginate(page: params[:page])
 			@summer_course_feed_items = current_user.summer_course_feed.paginate(page: params[:page])

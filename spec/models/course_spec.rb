@@ -10,6 +10,7 @@
 #  updated_at   :datetime
 #  term         :string(255)
 #  section      :string(255)
+#  user_id      :integer
 #
 
 require 'spec_helper'

@@ -35,7 +35,7 @@ describe User do
   it { should respond_to(:authenticate) }
   it { should respond_to(:admin) }
   it { should respond_to(:notes) }
-  it { should respond_to(:feed) }
+  it { should respond_to(:notes_feed) }
   it { should respond_to(:registrations) }
   it { should respond_to(:registered_courses) }
   it { should respond_to(:note_taker) }
@@ -60,22 +60,6 @@ describe User do
     end  
 
     it { should be_note_taker }  
-  end
-
-  describe "return value of authenticate method" do
-    before { @user.save }
-    let(:found_user) { User.find_by(email: @user.email) }
-
-    describe "with valid password" do
-      it { should eq found_user.authenticate(@user.password) }
-    end
-
-    describe "with invalid password" do
-      let(:user_for_invalid_password) { found_user.authenticate("invalid") }
-
-      it { should_not eq user_for_invalid_password }
-      specify { expect(user_for_invalid_password).to be_false }
-    end
   end
 
   describe "when password is not present" do
@@ -174,7 +158,14 @@ describe User do
 
 	describe "when email format is valid" do
     it "should be valid" do
-    	addresses = %w[first.last@mail.mcgill.ca first.m.last@mail.mcgill.ca first.middle.last@mail.mcgill.ca first.last2@mail.mcgill.ca]
+    	addresses = %w[first.last@mail.mcgill.ca 
+                     first.m.last@mail.mcgill.ca 
+                     first.middle.last@mail.mcgill.ca 
+                     first.last2@mail.mcgill.ca
+                     first.last@mcgill.ca
+                     first.m.last@mcgill.ca 
+                     first.middle.last@mcgill.ca 
+                     first.last2@mcgill.ca]
     		addresses.each do |valid_address|
      			@user.email = valid_address
       		expect(@user).to be_valid
@@ -236,9 +227,9 @@ describe User do
         FactoryGirl.create(:note, user: FactoryGirl.create(:user), course: course)
       end
 
-      its(:feed) { should include(newer_note) }
-      its(:feed) { should include(older_note) }
-      its(:feed) { should_not include(unfollowed_note) }
+      its(:notes_feed) { should include(newer_note) }
+      its(:notes_feed) { should include(older_note) }
+      its(:notes_feed) { should_not include(unfollowed_note) }
     end
   end
 
