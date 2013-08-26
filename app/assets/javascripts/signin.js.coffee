@@ -2,22 +2,27 @@
 appendEmailAddress = ->
    # get the value of the email field in the note taker signup form
    text = $('#session_email').val()
+   # if text is empty dont do anything
+   if text.length == 0
+      return
    # defined the pattern we want to match against
    # in this case we want to look for @mail.mcgill.ca
    # in the inputed text field
    emailPattern = /// # beginining of line
       .*              # one or more of anything
-      @mail.mcgill.ca # followed by an @mail.mcgill.ca sign
+      @ # followed by an @mail.mcgill.ca sign
       ///i            # endo of line ignore case
    
    # if the pattern is matched then simply do some clean up
    # and make sure nothing comes after it
    # otherwise append it to value of the field and update
+   index = text.indexOf "@"
+   # get the email address ending from the selector
+   emailAddress = $('.email_selector').val()
    if emailPattern.test(text)
-      index = text.indexOf "@mail.mcgill.ca"
-      $('#session_email').val(text.substring(0,index+15))
+      $('#session_email').val(text.substring(0,index) + emailAddress)
    else
-      $('#session_email').val(text + "@mail.mcgill.ca")
+      $('#session_email').val(text + emailAddress)
 
 # Taken from rails cast episode 390 about turbolinks
 
@@ -33,6 +38,7 @@ appendEmailAddress = ->
 # we’ve loaded the page via Turbolinks or not.
 ready = ->
    $('#session_email').focusout appendEmailAddress
+   $('.email_selector').change appendEmailAddress
    
 $(document).ready(ready)
 $(document).on('page:load', ready)

@@ -5,24 +5,24 @@
 		<%= form_for(@user) do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
 			<%= f.label :name, class: "cus-user"%>
-			<%= f.text_field :name, placeholder: "John Doe" %>
+			<%= f.text_field :name, placeholder: "John Doe", class: "newUserName" %>
 
 			<%= f.label :email, "McGill Email", class: "cus-mail-alt" %>
 			<div class="input-append">
-				<%= f.text_field :email, placeholder: "john.doe"%>
+				<%= f.text_field :email, placeholder: "john.doe", class: "newMcGillEmail" %>
 				<span class="add-on">@mail.mcgill.ca</span>
 			</div>
 			<%= f.label :student_id, "McGill Student ID", class: "cus-credit-card" %>
-			<%= f.text_field :student_id, placeholder: "123456789" %>
+			<%= f.text_field :student_id, placeholder: "123456789", class: "newUserID" %>
 
 			<%= f.label :password, "McGill Password", class: "cus-lock" %>
-			<%= f.password_field :password %>
+			<%= f.password_field :password, class: "newUserPassword" %>
 
 			<%= f.label :password_confirmation, "Confirmation", class: "cus-lock" %>
-			<%= f.password_field :password_confirmation %>
+			<%= f.password_field :password_confirmation, class: "newUserConfirm" %>
 
-			<%= f.check_box :note_taker, class: "checkbox" %> 
-			<%= f.label :note_taker, "NoteTaker?", class: "cus-pencil checkbox inline"%>
+			<%= f.check_box :note_taker, class: "checkbox newNotetaker" %> 
+			<%= f.label :note_taker, "NoteTaker?", class: "cus-pencil checkbox inline "%>
 			
 			<br>
 			<br>

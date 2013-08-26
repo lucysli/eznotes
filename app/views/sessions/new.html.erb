@@ -5,13 +5,16 @@
 	<div class="span4 offset3">
 		<%= form_for(:session, url: sessions_path) do |f| %>
 
-			<%= f.label :email, class: "cus-mail-alt" %>
+			<%= f.label :email, "McGill Email", class: "cus-mail-alt" %>
 			<div class="input-append">
 				<%= f.text_field :email, placeholder: 'firstname.lastname' %>
-				<span class="add-on">@mail.mcgill.ca</span>
+				<select class="email_selector span2 btn btn-primary" title="@mail.mcgill.ca" >
+                <option>@mail.mcgill.ca</option>
+                <option>@mcgill.ca</option>
+            </select>
 			</div>
 
-			<%= f.label :password, class: "cus-lock" %>
+			<%= f.label :password, "McGill Password", class: "cus-lock" %>
 			<%= f.password_field :password, placeholder: 'McGill password'%>
 
 			<%= button_tag(type: 'submit', class: "btn btn-medium btn-primary") do %>
