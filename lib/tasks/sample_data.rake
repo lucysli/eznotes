@@ -68,7 +68,7 @@ def make_courses
 end
 
 def make_registrations
-	users = User.where("note_taker = ?", false)
+	users = User.where("note_taker = ? AND admin = ?", false, false)
 	courses = Course.all
 	notetaker = User.find_by email: "note.taker@mail.mcgill.ca"
 

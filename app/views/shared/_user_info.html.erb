@@ -17,9 +17,11 @@
 <span>
    <%= link_to "view my profile", current_user, class: "cus-eye" %>
 </span>
-<span id="registered_courses" class="badge badge-info cus-doc-inv">
-   <%= "Registered for " + pluralize(current_user.registered_courses.count, "course") %>
-</span>
+<% if not current_user.admin? %>
+   <span id="registered_courses" class="badge badge-info cus-doc-inv">
+      <%= "Registered for " + pluralize(current_user.registered_courses.count, "course") %>
+   </span> 
+<% end %>
 <% if current_user.note_taker? %>
    <span id="notetaking_courses" class="badge badge-info cus-doc-inv">
       <%= "Notetaking for " + pluralize(current_user.notetaking_for.count, "course") %>

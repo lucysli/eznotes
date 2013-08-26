@@ -15,7 +15,8 @@
       </div>
       <div class="btn-group">
          <% if current_user.registered_with?(course_feed_item)%>
-            <%= render partial: 'shared/unregister_course_link', locals: { object: course_feed_item } %>
+            <%= link_to "Unregister", current_user.registrations.find_by(course_id: course_feed_item),
+             confirm: "Are you sure?", method: :delete, class: "btn btn-small btn-danger cus-unlink" %>
          <% end %>
       </div>
    </div>

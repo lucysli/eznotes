@@ -1,10 +1,16 @@
 <div class="stats">
    <strong id="registered" class="stat">
+      <% if @course.registered_users.count == 1 %>
+         <i class="cus-user"></i>
+      <% elsif @course.registered_users.count > 1 %>
+         <i class="cus-users"></i>
+      <% end %>
       <%= pluralize(@course.registered_users.count, "student") %>
       registered
    </strong>
 
    <strong id="notetaker" class="stat">
+      <i class="cus-pencil"></i>
       <% if @course.note_taker %>
          <%= pluralize(1, "notetaker") %>
       <% else %>
@@ -14,6 +20,14 @@
    </strong>
    
    <strong id="notes" class="stat">
+      <% if @course.notes.count == 0 %>
+         <i class="cus-doc"></i>
+      <% elsif  @course.notes.count == 1 %>
+         <i class="cus-doc-text"></i>
+      <% else %>
+         <i class="cus-docs"></i>
+      <% end %>
+      
       <%= pluralize(@course.notes.count, "note") %>
       uploaded
    </strong>

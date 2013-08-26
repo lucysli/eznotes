@@ -13,13 +13,17 @@ class CoursesController < ApplicationController
       @term = params[:term]
       if @term == "Fall"
          @fall_courses = Course.fall_courses.paginate(page: params[:fall_page])
+         @count = Course.fall_courses.count
       elsif @term == "Winter"
          @winter_courses = Course.winter_courses.paginate(page: params[:winter_page])
+         @count = Course.winter_courses.count
       elsif @term == "Summer"
          @summer_courses = Course.summer_courses.paginate(page: params[:summer_page])
+         @count = Course.summer_courses.count
       else
          @courses = Course.all.paginate(page: params[:all_page])
          @term = "All"
+         @count = Course.all.count
       end   
    end
    
