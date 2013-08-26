@@ -27,18 +27,21 @@ class User < ActiveRecord::Base
 
    VALID_EMAIL_REGEX = /\A\w+\.([\w]+\.)?\w+(@mail.mcgill.ca|@mcgill.ca)\z/i
    validates :email, presence: true, 
-                     format: { with: VALID_EMAIL_REGEX },
+                     format: { with: VALID_EMAIL_REGEX, 
+                        message: " is incorrect format must be of the form firstname.lastname@mail.mcgill.ca" },
                      uniqueness: { case_sensitive: false }
 
    VALID_ID_REGEX = /\A\d{9}\z/i
-   validates :student_id, presence: true,
-                          format: { with: VALID_ID_REGEX }, 
+   validates :student_id, presence: { message: "ID cannot be blank"} ,
+                          format: { with: VALID_ID_REGEX, 
+                           message: "ID is incorrect format; must be a 9 digit number" }, 
                           uniqueness: true,
                           length: { is: 9 }
 
-
    has_secure_password
-   validates :password, length: { minimum: 8 }
+   VALID_PASSWORD_REGEX = /\A[^\s']{8,}\z/
+   validates :password, length: { minimum: 8 },
+   format: { with: VALID_PASSWORD_REGEX, message: " is incorrect format; cannot have any spaces or quotes(')"}
 
    def notetaking_for
       notetaking = []
