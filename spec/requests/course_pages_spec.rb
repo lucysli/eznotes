@@ -50,6 +50,31 @@ describe "Course pages" do
                expect { click_link('delete') }.to change(Course, :count).by(-1)
             end
          end
+
+         describe "course import" do
+
+            describe "with invalid information" do
+         
+               it "should not import courses" do
+                  expect { click_button "Import" }.not_to change(Course, :count)
+               end
+
+               describe "error messages" do
+                  before { click_button "Import" }
+                  it { should have_content('error') }
+               end
+            end
+
+            describe "with valid information" do
+               before do
+                  attach_file 'courses', Rails.root.join('app', 'assets', 'files', 'Fall', 'all.csv')
+               end
+
+               it "should import courses" do
+                  expect { click_button "Import" }.to change(Course, :count).by(1072)
+               end
+            end
+         end
       end
    end
 
@@ -130,7 +155,7 @@ describe "Course pages" do
                  realcourse.save
                end
                it "should not have the note upload form" do
-                  expect(page).to have_selector("form#new_note")
+                  expect(page).not_to have_selector("form#new_note")
                end
             end
          end

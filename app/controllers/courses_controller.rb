@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
-   before_action :signed_in_user, only: [:show, :index ]
-   before_action :admin_user,     only: [:index, :destroy, :create]
+   before_action :signed_in_user 
+   before_action :admin_user,     only: [:index, :destroy, :create, :update]
    before_action :registered_user, only: :show
 
    def show
@@ -21,7 +21,7 @@ class CoursesController < ApplicationController
          @summer_courses = Course.summer_courses.paginate(page: params[:summer_page])
          @count = Course.summer_courses.count
       else
-         @courses = Course.all.paginate(page: params[:all_page])
+         @courses = Course.all.order("subject_code ASC, course_num ASC, section ASC").paginate(page: params[:all_page])
          @term = "All"
          @count = Course.all.count
       end   
@@ -40,10 +40,38 @@ class CoursesController < ApplicationController
       end
    end
 
+   def update
+      @course = Course.find(params[:id])
+      if @course.update_attributes(notetaker_params)
+         # Handle a successful update
+         if @course.note_taker 
+            message = "Assigned" 
+         else 
+            message = "Unassigned" 
+         end
+         flash[:success] =  "#{message} #{User.find(params[:user]).name} as the notetaker
+         to the #{@course.term} course #{@course.subject_code} #{@course.course_num} #{@course.section}: #{@course.course_title} "
+         redirect_to :back
+      else
+         flash[:error] = "Could not assign #{User.find(params[:user]).name} as the notetaker
+         to the  #{@course.term} course #{@course.subject_code} #{@course.course_num} #{@course.section}: #{@course.course_title} "
+         redirect_to :back
+      end
+   end
+
    def destroy
       @course = Course.find(params[:id])
       @course.destroy
       redirect_to courses_path
+   end
+
+   def delete_all
+      if Course.delete_all
+         flash[:success] = "Deleted all courses"
+         redirect_to :back
+      else
+         flash[:error] = "Could not delete courses"
+      end
    end
 
 
@@ -51,7 +79,11 @@ class CoursesController < ApplicationController
 
       def course_params
          params.require(:course).permit(:course_title, :subject_code, :course_num, 
-                                        :multi_term_code, :term)
+                                        :multi_term_code, :term, :user_id, :crn)
+      end
+
+      def notetaker_params
+         params.require(:course).permit(:user_id)
       end
 
       # Before filters
@@ -61,7 +93,7 @@ class CoursesController < ApplicationController
       end
 
       def registered_user
-         redirect_to root_path, notice: "You must be registered for this course to view it" unless current_user.registered_with?(Course.find(params[:id]))
+         redirect_to root_path, notice: "You must be registered for this course to view it" unless current_user.registered_with?(Course.find(params[:id])) or current_user.admin?
       end
 
 end

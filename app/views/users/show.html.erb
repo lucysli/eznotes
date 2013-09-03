@@ -5,15 +5,20 @@
       <h1>
         <%= @user.name %>
         (
-        <% if current_user.note_taker? %>
+        <% if @user.note_taker? %>
            <i class="cus-pencil"></i> NoteTaker
-        <% elsif current_user.admin?%>
+        <% elsif @user.admin?%>
            <i class="cus-cog-alt"></i> Admin
         <% else %>
            <i class="cus-user"></i> NoteUser
         <% end %>)
       </h1>
     </section>
+    <% if current_user.admin? %>
+      <section>
+        <%= render partial: 'shared/course_feed_item', collection: @user.registered_courses.paginate(page: params[:page]) %>
+      </section>
+    <% end %>
   </aside>
   <div class="span8">
     <% if @user.notes.any? %>

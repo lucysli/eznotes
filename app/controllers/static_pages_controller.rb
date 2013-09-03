@@ -9,6 +9,7 @@ class StaticPagesController < ApplicationController
 			@subject_codes = Course.uniq.order("subject_code").pluck(:subject_code)
 			@course_nums = Course.uniq.order("course_num").pluck(:course_num)
 			@sections = Course.uniq.order("section").pluck(:section)
+			@registered_courses = Course.all.where("id IN (?)", Registration.distinct.pluck(:course_id))
 		end
 	end
 

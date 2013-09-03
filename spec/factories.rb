@@ -21,6 +21,7 @@ FactoryGirl.define do
       sequence(:course_num)            { |n| "#{n + 100 - 1}" }
       section                          "001"
       term                             "fall"
+      sequence(:crn)                   { |n| n }      
 
       factory :realcourse do
          course_title "Anthropology Beyond the Human."
@@ -28,6 +29,7 @@ FactoryGirl.define do
          course_num "501"
          section "002"
          term "fall"
+         crn 14501
       end
    end
 

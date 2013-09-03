@@ -28,14 +28,22 @@ class RegistrationsController < ApplicationController
 
    def destroy
       @course = Registration.find(params[:id]).course
+      @user = User.find(params[:user])
       if @course then
-         if current_user.registered_with?(@course)
-            flash[:success] = "Unregistered for course 
+         if @user.registered_with?(@course)
+            flash[:success] = "Unregistered #{@user.name} from the course 
             #{@course.subject_code} 
             #{@course.course_num} 
             #{@course.section} 
             #{@course.course_title}!"
-            current_user.unregister!(@course)
+            @user.unregister!(@course)
+            # if the user unregistering from the course 
+            # is the note taker of the course
+            # make sure to unassign the user as the notetaker
+            if @course.note_taker?(@user)
+               @course.unassign_note_taker
+               @course.save
+            end
          else
             flash[:error] = "You are not registered with this course!"
          end

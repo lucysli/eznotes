@@ -11,12 +11,23 @@
 			<%= f.label :student_id, "McGill Student ID" %>
 			<%= f.text_field :student_id, class: "editUserID" %>
 
+			<% if current_user.admin? %>
+				<%= f.label :email, "McGill Email" %>
+				<%= f.text_field :email, class: "editEmail" %>
+			<% end %>
+
 			<%= f.label :password, "McGill Password" %>
 			<%= f.password_field :password, class: "editUserPassword" %>
 
 			<%= f.label :password_confirmation , "Confirm Password" %>
 			<%= f.password_field :password_confirmation, class: "editUserConfirm" %>
 
+			<% if current_user.admin? and not current_user?(@user) %>
+				<%= f.check_box :note_taker, class: "checkbox editNotetaker" %> 
+				<%= f.label :note_taker, "NoteTaker?", class: "cus-pencil checkbox inline "%>
+			<% end %>
+			<br>
+			<br>
 			<%= button_tag(type: 'submit', class: "btn btn-large btn-primary") do %>
 				<i class="cus-floppy"></i> Save changes
 			<% end %>

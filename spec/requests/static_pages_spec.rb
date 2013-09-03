@@ -41,6 +41,16 @@ describe "Static pages" do
             expect(page).not_to have_selector("form#add_course")
           end
         end
+
+        describe "the matching table" do
+          let(:registered_courses) { Course.registered_courses }
+          it "should have correct table" do
+            expect(page).to have_selector("table#matchingTable")
+            registered_courses.each do |course|
+              expect(page).to have_selector("tr##{item.id}")
+            end
+          end
+        end
       end
       
       describe "for non admin users" do
@@ -95,8 +105,8 @@ describe "Static pages" do
                 visit root_path
                 notetaker.register!(course)
                 notetaker.register!(course2)
-                course.assign_notetaker!(notetaker)
-                course2.assign_notetaker!(notetaker)
+                course.assign_note_taker(notetaker)
+                course2.assign_note_taker(notetaker)
               end
               it "should have correct course notetaking for count and pluralize" do
                 expect(page).to have_content("Notetaking for 2 courses")
@@ -205,8 +215,8 @@ describe "Static pages" do
     expect(page).to have_title(full_title('Contact'))
     click_link "Home"
     expect(page).to have_title(full_title(''))
-    click_link "Apply to be a notetaker"
-    expect(page).to have_title(full_title('Notetaker Application'))
+    click_link "Register as a Note Taker or a Note User"
+    expect(page).to have_title(full_title('Registration'))
     click_link "McGill EZ Notes"
     expect(page).to have_title(full_title(''))
   end

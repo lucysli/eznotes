@@ -5,8 +5,8 @@ describe "User pages" do
 	subject { page }
 
 	describe "index" do
-		describe "as non admin user" do
 
+		describe "as non admin user" do
 			it { should_not have_link('delete') }
 
 			describe "as note user" do
@@ -68,53 +68,11 @@ describe "User pages" do
 
 	describe "signup page" do
 		before { visit signup_path }
-		let(:submit) { "Create my account" }
 		let(:cancel) { "Cancel" }
 
 
 		it { should have_title(full_title('Registration')) }
-
-		describe "with invalid information" do
-			it "should not create a user" do
-				expect { click_button submit }.not_to change(User, :count)
-			end
-		end
-
-		describe "note users" do
-
-			describe "with valid information" do
-				before do
-				  fill_in "Name",				with: "Example User"
-				  fill_in "Email",			with: "example.user@mail.mcgill.ca"
-				  fill_in "Student ID",		with: "111111111"
-				  fill_in "Password",		with: "foobar11"
-				  fill_in "Confirmation",	with: "foobar11"
-				end
-
-				it "should create a note user" do
-					expect { click_button submit }.to change(User, :count).by(1)
-				end
-			end
-		end
-
-		describe "note takers" do
-
-			describe "with valid information" do
-				before do
-				  fill_in "Name",				with: "Example User"
-				  fill_in "Email",			with: "example.user@mail.mcgill.ca"
-				  fill_in "Student ID",		with: "111111111"
-				  fill_in "Password",		with: "foobar11"
-				  fill_in "Confirmation",	with: "foobar11"
-				  check 'Notetaker'
-				end
-
-				it "should create a note taker" do
-					expect { click_button submit }.to change(User, :count).by(1)
-				end
-			end
-		end
-
+		it { should have_content('First') }
 
 		describe "cancelling" do
 			it "should not create a user" do
@@ -124,18 +82,18 @@ describe "User pages" do
 	end
 
 	describe 'profile page' do
-		let(:user) { FactoryGirl.create(:user) }
+		let(:notetaker) { FactoryGirl.create(:notetaker) }
 		let(:course_m1) { FactoryGirl.create(:course) }
 		let(:course_m2) { FactoryGirl.create(:course) }
-		let!(:m1) { FactoryGirl.create(:note, user: user, course: course_m1, comments: "Foo") }
-    	let!(:m2) { FactoryGirl.create(:note, user: user, course: course_m2, comments: "Bar") }
+		let!(:m1) { FactoryGirl.create(:note, user: notetaker, course: course_m1, comments: "Foo") }
+    	let!(:m2) { FactoryGirl.create(:note, user: notetaker, course: course_m2, comments: "Bar") }
 		before do
-			sign_in user
-			visit user_path(user) 
+			sign_in notetaker
+			visit user_path(notetaker) 
 		end
 
-		it { should have_content(full_title(user.name)) }
-		it { should have_title(full_title(user.name)) }
+		it { should have_content(full_title(notetaker.name)) }
+		it { should have_title(full_title(notetaker.name)) }
 
 		describe "notes" do
 			it { should have_content(course_m1.subject_code + " " + course_m1.course_num) }
@@ -148,7 +106,7 @@ describe "User pages" do
 			it { should have_content(m2.lecture_date) }
 			it { should have_content(m2.comments) }
 
-      	it { should have_content(user.notes.count) }
+      	it { should have_content(notetaker.notes.count) }
       end
 	end
 
@@ -195,7 +153,7 @@ describe "User pages" do
 					it { should have_success_message('Welcome') }
 
 					it "should be a note user" do
-						expect { user.note_taker }.to eq false
+						expect(user).not_to be_note_taker
 					end
 				end
 			end
@@ -208,7 +166,7 @@ describe "User pages" do
 				  fill_in "Student ID",		with: "111111111"
 				  fill_in "Password",		with: "foobar11"
 				  fill_in "Confirmation",	with: "foobar11"
-				  check 'Notetaker'
+				  check 'NoteTaker?'
 				end
 
 				it "should create a note taker" do
@@ -224,7 +182,7 @@ describe "User pages" do
 					it { should have_success_message('Welcome') }
 
 					it "should be a notetaker" do
-						expect { user.note_taker }.to eq true
+						expect(user).to be_note_taker
 					end
 				end
 			end
@@ -270,19 +228,41 @@ describe "User pages" do
 		describe "forbidden attributes" do
 			describe "forbidden admin" do
 				let(:params) do
-					{ user: { admin: true } }
+					{ user: { admin: true, 
+								 password: user.password,
+								 password_confirmation: user.password } }
 				end
-				before { patch user_path(user), params }
+				before do
+					sign_in user, no_capybara: true
+					patch user_path(user), params 
+				end
 				specify { expect(user.reload).not_to be_admin }
 			end
 
 			describe "forbidden notetaker" do
 				let(:params) do
-					{ user: { note_taker: true } }
+					{ user: { note_taker: true, password: user.password,
+									password_confirmation: user.password } }
 				end
-				before { patch user_path(user), params }
+				before do
+					sign_in user, no_capybara: true
+					patch user_path(user), params 
+				end
 				specify { expect(user.reload).not_to be_note_taker }				
 			end
+
+			describe "forbidden email" do
+				let(:params) do
+					{ user: { email: "first.last@mail.mcgill.ca", password: user.password,
+									password_confirmation: user.password } }
+				end
+				before do
+					sign_in user, no_capybara: true
+					patch user_path(user), params 
+				end
+				specify { expect(user.reload.email).not_to eq "first.last@mail.mcgill.ca" }				
+			end
+
 		end
 	end
 end

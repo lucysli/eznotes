@@ -2,7 +2,8 @@ EZNotes::Application.routes.draw do
   resources :users 
   resources :sessions,  only: [:new, :create, :destroy]
   resources :notes,     only: [:create, :destroy]
-  resources :courses,   only: [:show, :index, :create, :destroy]
+  resources :courses,   only: [:show, :index, :create, :destroy, :update] 
+  resources :course_imports
   resources :registrations, only: [:create, :destroy]
   
   root to: 'static_pages#home'
@@ -12,6 +13,7 @@ EZNotes::Application.routes.draw do
   match '/signup',  to: 'users#new',          via: 'get'
   match '/signin',  to: 'sessions#new',       via: 'get'
   match '/signout', to: 'sessions#destroy',   via: 'delete'
+  match '/delete_all', to: 'courses#delete_all',        via: 'delete'
 
   match '/help', to: 'static_pages#help',	via:'get'
   match '/about', to: 'static_pages#about',	via:'get'

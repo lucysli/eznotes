@@ -11,6 +11,7 @@
 #  term         :string(255)
 #  section      :string(255)
 #  user_id      :integer
+#  crn          :integer
 #
 
 require 'spec_helper'
@@ -19,7 +20,7 @@ describe Course do
   
   before do
     @course = Course.new(course_title: "Advanced calculus", subject_code: "MATH", 
-                         course_num: "265", term: "fall", section: "001")
+                         course_num: "265", term: "fall", section: "001", crn: 346)
   end
 
   subject { @course }
@@ -37,6 +38,8 @@ describe Course do
 
   it { should respond_to(:user_id) }
 
+  it { should respond_to(:crn) }
+
   describe "when course_title is not present" do
      before { @course.course_title = nil }
      it { should_not be_valid }
@@ -45,6 +48,25 @@ describe Course do
   describe "with blank course title" do
      before { @course.course_title = " " }
      it { should_not be_valid }
+  end
+
+  describe "when crn is not present" do
+    before { @course.crn = nil }
+    it { should_not be_valid }
+  end
+
+  describe "when CRN is an integer" do
+    it { should validate_numericality_of(:crn).only_integer }
+  end
+
+  describe "when CRN is already in taken" do
+    before do
+      duplicate_course = @course.dup
+      duplicate_course.course_num = "243"
+      duplicate_course.course_title = "new title"
+      duplicate_course.save
+    end
+    it { should_not be_valid }
   end
 
   describe "when subject_code is not present" do
@@ -71,6 +93,7 @@ describe Course do
     it { should allow_value("MATH").for(:subject_code) }
     it { should allow_value("CHEM").for(:subject_code) }
     it { should allow_value("SOCI").for(:subject_code) }
+    it { should allow_value("BUS2").for(:subject_code) }
   end
 
   describe "when course_num is not present" do
@@ -88,7 +111,7 @@ describe Course do
     it { should be_valid }
   end
 
-  describe "with course num that is less than 3 character2" do
+  describe "with course num that is less than 3 characters" do
     before { @course.course_num = "12" }
     it { should_not be_valid }
   end
@@ -134,6 +157,9 @@ describe Course do
 
   describe "when subject code is the same but" do
     let(:duplicate_course) { duplicate_course = @course.dup }
+
+
+    before { duplicate_course.crn = @course.crn + 1 }
 
     describe "when course num differs" do
       before do
@@ -256,10 +282,10 @@ describe Course do
     describe "assigning a regular user as a notetaker for a course" do
       let(:user) { FactoryGirl.create(:user) }
       before do
-        @course.user_id = user.id
+        @course.assign_note_taker(user)
         @course.save
       end
-      it { should_not be_valid }
+      #it { should_not be_valid }
       its(:note_taker) { should_not eq user }
     end
   end

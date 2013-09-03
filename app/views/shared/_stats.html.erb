@@ -1,11 +1,24 @@
 <div class="stats">
-   <strong id="registered" class="stat">
-      <% if @course.registered_users.count == 1 %>
+   <strong id="noteusers" class="stat">
+      <% @registered_note_users =  @course.registered_users.where("note_taker = ?", false) %>
+      <% if @registered_note_users.count <= 1 %>
          <i class="cus-user"></i>
-      <% elsif @course.registered_users.count > 1 %>
+      <% elsif @registered_note_users.count > 1 %>
          <i class="cus-users"></i>
       <% end %>
-      <%= pluralize(@course.registered_users.count, "student") %>
+      <%= pluralize(@registered_note_users.count, "noteuser") %>
+      registered
+   </strong>
+
+   <strong id="notetakers" class="stat">
+      <% @registered_note_takers =  
+      @course.registered_users.count - @registered_note_users.count %>
+      <% if @registered_note_takers <= 1 %>
+         <i class="cus-user"></i>
+      <% elsif @registered_note_takers > 1 %>
+         <i class="cus-users"></i>
+      <% end %>
+      <%= pluralize(@registered_note_takers, "notetaker") %>
       registered
    </strong>
 

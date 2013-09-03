@@ -1,5 +1,9 @@
 <% provide(:title, "#{@term}" + ' Courses') %>
 <h1 id="heading"><%= @term %> Courses (<%= @count %>)</h1>
+<form class="form-search">
+   <label for="filter" class="cus-doc-text-inv">Filter</label>
+   <input type="text" name="filter" value="" id="course_filter" class="input-large search-query" />
+</form>
 <div class="row">
    <aside class="span2">
       <section>
@@ -7,6 +11,12 @@
          <%= render 'fall_courses' %>
          <%= render 'winter_courses' %>
          <%= render 'summer_courses' %>
+      </section>
+      <section>
+         <div class="btn-group btn-group-vertical">
+            <%= link_to "Import Courses", new_course_import_path, class: "btn btn-small btn-primary cus-upload" %>
+            <%= link_to "Delete All Courses", 'delete_all', method: :delete, data: { confirm: "Are you sure?" },class: "btn btn-small btn-danger cus-trash" %>
+         </div>
       </section>
    </aside>
    <div class="span10" id="courses">

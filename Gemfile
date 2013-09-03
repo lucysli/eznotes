@@ -29,7 +29,7 @@ gem 'annotate', ">=2.5.0"
 group :development, :test do
 	gem 'rspec-rails', '2.13.2'
 	gem 'guard-rspec', '2.5.0'
-	gem 'spork-rails', github: 'railstutorial/spork-rails'
+	gem 'spork-rails', github: 'sporkrb/spork-rails'
 	gem 'guard-spork', '1.5.1'
 	gem 'childprocess', '0.3.9'
 	gem 'better_errors'
@@ -48,15 +48,14 @@ gem 'coffee-rails', 	'4.0.0'
 gem 'jquery-rails', 	'2.2.1'
 gem 'jquery-ui-rails'
 gem 'turbolinks',		'1.1.1'
-gem 'jbuilder',			'1.0.2'
-gem "roo"
+gem 'jbuilder',		'1.0.2'
 
 group :doc do
 	gem 'sdoc',	'0.3.20', require: false
 end
 
 group :test do
-	gem 'selenium-webdriver',	'2.0.0'
+	gem 'selenium-webdriver',	'~>2.35.1'
 	gem 'capybara', 			'2.1.0'
 	gem 'factory_girl_rails',	'4.2.1'
 	gem 'shoulda-matchers'

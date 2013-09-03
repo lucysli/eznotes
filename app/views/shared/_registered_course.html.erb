@@ -1,0 +1,38 @@
+<% @notetakers = registered_course.registered_users.where("note_taker = ?", true) %>
+
+<% if registered_course.note_taker %>
+<% @class = "success"  %>
+<% elsif @notetakers.empty? %>
+<% @class = "error"  %>
+<% else %>
+<% @class = "warning"  %>
+<% end %>
+
+<tr id="<%= registered_course.id %>" class="<%= @class %>">
+   <td><%= registered_course.term.upcase %></td>
+   <td>
+      <%= link_to "#{registered_course.subject_code} 
+                   #{registered_course.course_num} 
+                   #{registered_course.section}", 
+                   registered_course %>
+   </td>
+   <td>
+      <%= registered_course.registered_users.where("note_taker = ?", false).count %>
+   </td>
+   <td>
+      <% if @notetakers.empty? %>
+         0
+      <% else %> 
+         <% @notetakers.each do |notetaker| %>
+            <p> <%= link_to notetaker.name, notetaker %> </p>
+         <% end %>
+      <% end %>
+   </td>
+   <td>
+      <% if registered_course.note_taker %>
+         <%= link_to registered_course.note_taker.name, registered_course.note_taker %>
+      <% else %>
+        None Assigned
+      <% end %>
+   </td>
+</tr>

@@ -3,6 +3,20 @@ require 'spec_helper'
 describe "Authentication" do 
    subject { page }
 
+   shared_examples "authentication signin" do 
+      before { sign_in user }
+      it { should have_link('Profile',       href: user_path(user)) }
+      it { should have_link('Settings',      href: edit_user_path(user)) }
+      it { should have_link('Sign out',      href: signout_path) }
+      it { should_not have_link('Sign in',   href: signin_path) }
+      it { should have_title(full_title('')) }
+
+      describe "followed by signout" do
+         before { click_link "Sign out" }
+         it { should have_link('Sign in') }
+      end
+   end
+
    describe "signin page" do
     before { visit signin_path }
 
@@ -26,19 +40,28 @@ describe "Authentication" do
       end
 
       describe "with valid information" do
-         let(:user) { FactoryGirl.create(:user) }
-         before { sign_in user }
 
-         it { should have_title(full_title('')) }
-         it { should have_link('Users',         href: users_path) }
-         it { should have_link('Profile',    href: user_path(user)) }
-         it { should have_link('Settings',      href: edit_user_path(user)) }
-         it { should have_link('Sign out',      href: signout_path) }
-         it { should_not have_link('Sign in',   href: signin_path) }
+         describe "as admin user" do         
+            it_behaves_like "authentication signin" do
+               let(:user) { FactoryGirl.create(:admin) }
+               it { should have_link('Users',         href: users_path) }
+               it { should have_link('Courses',       href: courses_path) }
+            end
+         end
 
-         describe "followed by signout" do
-            before { click_link "Sign out" }
-            it { should have_link('Sign in') }
+         describe "as non admin user" do
+
+            describe "as noteuser" do
+               it_should_behave_like "authentication signin" do
+                  let(:user) { FactoryGirl.create(:user) }
+               end
+            end
+
+            describe "as notetaker" do
+               it_should_behave_like "authentication signin" do
+                  let(:user) { FactoryGirl.create(:notetaker) }
+               end
+            end
          end
       end
    end
@@ -126,12 +149,17 @@ describe "Authentication" do
                specify { expect(response).to redirect_to(signin_path) }
             end     
 
+            describe "submitting to the update action" do
+               before { patch course_path(realcourse) }
+               specify { expect(response).to redirect_to(signin_path) }
+            end 
+
             describe "visiting the show page" do
                before { visit course_path(realcourse) }
                it { should have_title(full_title('Sign in')) }
             end
 
-            describe "visiting the user index" do
+            describe "visiting the course index" do
                before { visit courses_path }
                it { should have_title(full_title('Sign in')) }
             end    
@@ -222,17 +250,15 @@ describe "Authentication" do
       describe "as notetaker" do
          let(:notetaker) { FactoryGirl.create(:notetaker) }
          let(:realcourse) { FactoryGirl.create(:realcourse) }
-         let(:note) { FactoryGirl.create(:note) }
 
          before do
             sign_in notetaker, no_capybara: true 
             notetaker.register!(realcourse)
-            visit course_path(realcourse)
          end
 
          describe "submitting a POST request to the Notes#create action to upload notes for a course you are not the notetaker of" do
             before { post notes_path  }
-            specify { expect(response).to redirect_to(root_url) } 
+            specify { expect(response).to redirect_to(root_path) } 
          end
       end
    end

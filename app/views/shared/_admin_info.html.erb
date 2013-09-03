@@ -1,0 +1,18 @@
+<table cellpadding="1" cellspacing="1" id="matchingTable" class="table table-bordered table-hover">
+   <caption class="alert alert-info"> 
+      For every course that has registered users, display the number of registered noteusers and registered notetakers if any 
+      and if there is a notetaker assigned to the course.
+   </caption>
+   <thead>
+      <tr>
+         <th class="sortable cus-sort-name-up sorted-asc">Term</th>
+         <th class="sortable cus-sort-name-up sorted-asc">Course</th>
+         <th class="sortable cus-sort-name-up sorted-asc">Registered NoteUsers</th>
+         <th class="sortable cus-sort-name-up sorted-asc">Registered NoteTakers</th>
+         <th class="sortable cus-sort-name-up sorted-asc">Assigned NoteTaker</th>
+      </tr>
+   </thead>
+   <tbody>
+      <%= render partial: 'shared/registered_course', collection: @registered_courses %>
+   </tbody>
+</table>

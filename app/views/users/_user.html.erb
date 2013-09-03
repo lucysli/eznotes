@@ -8,7 +8,7 @@
       <strong><i class="cus-user"></i> NoteUser</strong>
    <% end %>)
 	<%= user.student_id %>
-	<strong><%= link_to user.name, user %></strong>
+	<strong><%= link_to user.name, edit_user_path(user) %></strong>
 	<%= user.email %>
    
 	<% if current_user.admin? && !current_user?(user) %>

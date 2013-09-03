@@ -9,18 +9,31 @@
          <%= course_feed_item.course_title %>
       </dd>
    </dl>
-   <div class="btn-toolbar">
-      <div class="btn-group">
-         <%= link_to "View Course", course_feed_item, class: "btn btn-small btn-primary cus-doc-text" %>
-      </div>
-      <div class="btn-group">
-         <% if current_user.registered_with?(course_feed_item)%>
-            <%= link_to "Unregister", current_user.registrations.find_by(course_id: course_feed_item),
-             confirm: "Are you sure?", method: :delete, class: "btn btn-small btn-danger cus-unlink" %>
+   <div class="btn-group btn-group-vertical">
+      
+      <%= link_to "View Course", course_feed_item, class: "btn btn-small btn-primary cus-doc-text" %>
+
+      <% if @user.registered_with?(course_feed_item)%>
+         <%= link_to "Unregister", registration_path(@user.registrations.find_by(course_id: course_feed_item), user: @user),
+          confirm: "Are you sure?", method: :delete, class: "btn btn-small btn-danger cus-unlink" %>
+      <% end %>
+      <% if current_user.admin? and @user.note_taker? %>
+         <% if course_feed_item.note_taker.nil? %> 
+               <%= link_to "Assign As Notetaker", 
+                   course_path(course_feed_item, 
+                   course: { user_id: @user }, user: @user ), method: :put, 
+                   class: "btn btn-small btn-success cus-check-empty" %>
+         <% else %>
+            <% if course_feed_item.note_taker?(@user) %>
+                  <%= link_to "UnAssign As Notetaker", 
+                      course_path(course_feed_item, 
+                      course: { user_id: nil }, user: @user ), method: :put, 
+                      class: "btn btn-small btn-success cus-check" %>
+            <% end %>
          <% end %>
-      </div>
+      <% end %>
    </div>
    <div class="timestamp">
-      Registered <%= time_ago_in_words(current_user.registrations.find_by(course_id: course_feed_item).created_at) %> ago.
+      Registered <%= time_ago_in_words(@user.registrations.find_by(course_id: course_feed_item).created_at) %> ago.
    </div>
 </div>

@@ -5,7 +5,7 @@ describe "Notes Pages" do
    subject { page }
 
    let(:notetaker) { FactoryGirl.create(:notetaker) }
-   let(:course) { FactoryGirl.create(:course) }
+   let(:course) { FactoryGirl.create(:course, note_taker: notetaker) }
    before { sign_in notetaker }
 
    describe "note upload" do

@@ -1,5 +1,5 @@
 class NotesController < ApplicationController
-   before_action :signed_in_user, only: [:create, :destroy, :download]
+   before_action :signed_in_user
    before_action :correct_user,  only: :destroy
    before_action :note_taker, only: :create
 
@@ -36,10 +36,11 @@ class NotesController < ApplicationController
 
       def correct_user
          @note = current_user.notes.find_by(id: params[:id])
-         redirect_to root_url, notice: "Cannot delete a note you did not upload" if @note.nil?
+         redirect_to root_path, notice: "Cannot delete a note you did not upload" if @note.nil?
       end
 
       def note_taker
-         redirect_to root_url, notice: "You are not authorized to upload a file." unless current_user.note_taker?
+         @course = Course.find(params[:course_id])
+         redirect_to root_path, notice: "You are not authorized to upload a file." unless (current_user.note_taker? and @course.note_taker?(current_user))
       end
 end

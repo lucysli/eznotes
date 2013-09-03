@@ -1,0 +1,2 @@
+module CourseImportsHelper
+end

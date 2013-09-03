@@ -1,0 +1,39 @@
+<div class="row">
+   <h1>Course Import</h1>
+   <div class="alert alert-block alert-info span12">
+      <p>
+         A CSV can be used to import records. You can download the courses CSV files from Mcgill <a href="https://horizon.mcgill.ca/pban1/bwckschd.p_disp_dyn_sched" target="_blank"> Minvera schedule </a>. Just select the term you are interested and click submit. On the next page choose the faculty and click Get Course Sections. Or better yet select all the subjects using shift click and click get course sections that should give you all the course sections in one shot. Finally if there any results scroll to the bottom and click Download Results.
+      </p>
+
+      <p>
+         The following columns are allowed.
+         <ul>
+           <% Course.columns.each do |column| %>
+             <% if column.name.in? ["crn", "course_title", "subject_code", "course_num", "term", "section"] %>
+               <li>
+                 <strong><%= column.name %></strong> -
+                 <%= column.type.to_s.titleize %> type
+               </li>
+             <% end %>
+           <% end %>
+         </ul>
+      </p>
+
+      <p>
+         If a <strong>CRN</strong> is supplied in the file(which if downloaded from mcgill that should be the case)it will update the matching record instead of creating a new one.
+      </p>
+   </div>
+
+   <div class="span12">
+      <%= form_for @course_import do |f| %>
+         <%= render 'shared/error_messages', object: f.object %>
+
+         <%= f.file_field :file, accept: 'text/csv', multiple: true %>
+         <%= f.select :term, 
+            options_for_select([["fall"], ["winter"], ["summer"]])%>
+         <%= button_tag(type: 'submit', class: "btn btn-large btn-primary") do %>
+            <i class="cus-upload"></i> Import
+         <% end %> 
+      <% end %>
+   </div>
+</div>

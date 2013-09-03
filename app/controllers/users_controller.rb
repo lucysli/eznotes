@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   end
 
   def create
-		@user = User.new(user_params)
+		@user = User.new(create_params)
 		if @user.save
       sign_in @user
       flash[:success] = "Welcome to EZ Notes!"
@@ -32,12 +32,21 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(user_params)
-      # Handle a successful update
-      flash[:success] = "Profile updated"
-      sign_in @user
-      redirect_to root_path
+    if @user.authenticate(params[:password])
+      if @user.update_attributes(update_params)
+        # Handle a successful update
+        flash[:success] = "Profile updated"
+        if current_user.admin? and not current_user?(@user)
+          redirect_to :back
+        else
+          sign_in @user
+          redirect_to root_path
+        end
+      else
+        render 'edit'
+      end
     else
+      flash.now[:error] = "Invalid password"
       render 'edit'
     end
   end
@@ -56,16 +65,26 @@ class UsersController < ApplicationController
 
   private
 
-    def user_params
-  		params.require(:user).permit(:name, :email, :student_id, :password,
+    def update_params
+      if current_user.admin?
+  		  params.require(:user).permit(:name, :email, :student_id, :password,
                                    :password_confirmation, :note_taker)
+      else
+        params.require(:user).permit(:name, :student_id, :password,
+                                   :password_confirmation)
+      end
   	end 
+
+    def create_params
+      params.require(:user).permit(:name, :email, :student_id, :password,
+                                   :password_confirmation, :note_taker)
+    end
 
     # Before filters
 
     def correct_user
       @user = User.find(params[:id])
-      redirect_to root_path, notice: "You are not authorized to access this page." unless current_user?(@user)
+      redirect_to root_path, notice: "You are not authorized to access this page." unless current_user?(@user) or current_user.admin?
     end
 
     def admin_user

@@ -4,7 +4,14 @@
       <section>
          <%= render 'shared/user_info' %>
       </section>
+      <section>
+         <form class="form-search">
+            <label for="filter" class="cus-zoom-in">Filter</label>
+            <input type="text" name="filter" value="" id="filter" class="input-medium search-query" />
+         </form>
+      </section>
    </aside>
+   <%= render 'shared/admin_info' %>
 </div>
 <% else %>
 <div class="row">

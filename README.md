@@ -460,3 +460,34 @@ Now if you run guard it will automatically start a Spork server which will reduc
 
 -------------------------------------------
 # Staging and Production Environments #
+Running Ubuntu server 12.04.3 LTS AMD 64
+Apache 2
+PostGRES
+Passenger
+RVM
+
+Server has a partition(split in half) has both windows 7 and linux installed. Linux parition is 103GB
+The parititioning schemse is as follows
+3 physical volumes and one logical volume
+2 partitions(PV) for windows one is fat32 
+the other is the windows installation at 139GB
+
+2 partitions(1PV and 1LV) for ubuntu server
+
+there is a physical boot partition of 250MB
+then the there is a logical volume group with 3 logical volumes installed. one is root with size 30GB the other is swap at 8GB and the remaining diskspace is var which will contain the data for website i.e web site files databases and log files
+
+
+Server machine has a static ip address
+Server is a dell machine
+64-bit
+Installing Ubuntu server 12.04.3 LTS AMD 64 was done following the following tutorials below:
+
+<http://www.designervisuals.com/Manual_Partitioning_of_Ubuntu_Web_Server_using_LVM.html>
+
+<http://www.designervisuals.com/Manual_Partitioning_Ubuntu_Web_Server.html>
+
+<http://net.tutsplus.com/tutorials/php/how-to-setup-a-dedicated-web-server-for-free/>
+
+Set up of server is done following the tutorial below:
+<http://www.web-l.nl/posts/21-production-rails-on-ubuntu-12-04-lts>
