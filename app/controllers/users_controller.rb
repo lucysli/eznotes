@@ -28,25 +28,31 @@ class UsersController < ApplicationController
 		end
   end
 
+  def create_admin
+    @user = User.new(admin_params)
+    @user.admin = true
+    if @user.save
+      redirect_to :back
+    else
+      flash[:error] = "Could not create admin user"
+      redirect_to :back
+    end
+  end
+
   def edit
   end
 
   def update
-    if @user.authenticate(params[:password])
-      if @user.update_attributes(update_params)
-        # Handle a successful update
-        flash[:success] = "Profile updated"
-        if current_user.admin? and not current_user?(@user)
-          redirect_to :back
-        else
-          sign_in @user
-          redirect_to root_path
-        end
+    if @user.update_attributes(update_params)
+      # Handle a successful update
+      flash[:success] = "Profile updated"
+      if current_user.admin? and not current_user?(@user)
+        redirect_to :back
       else
-        render 'edit'
+        sign_in @user
+        redirect_to root_path
       end
     else
-      flash.now[:error] = "Invalid password"
       render 'edit'
     end
   end
@@ -80,11 +86,25 @@ class UsersController < ApplicationController
                                    :password_confirmation, :note_taker)
     end
 
+    def admin_params
+      params.permit(:name, :email, :student_id, :password,
+                                   :password_confirmation, :admin)
+    end
+
     # Before filters
 
     def correct_user
-      @user = User.find(params[:id])
-      redirect_to root_path, notice: "You are not authorized to access this page." unless current_user?(@user) or current_user.admin?
+      if User.exists?(params[:id])
+        @user = User.find(params[:id])
+        redirect_to root_path, notice: "You are not authorized to access this page." unless current_user?(@user) or current_user.admin?
+      else
+        if current_user.admin?
+          flash[:error] = "User does not exist"
+        else
+          flash[:notice] = "You are not authorized to access this page."
+        end
+        redirect_to root_path
+      end
     end
 
     def admin_user
@@ -92,7 +112,7 @@ class UsersController < ApplicationController
     end
 
     def limit_user
-      if signed_in?
+      if signed_in? and not current_user.admin?
         redirect_to root_path, notice: "You are not authorized to perform this action."
       end
     end

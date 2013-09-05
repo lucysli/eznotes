@@ -1,4 +1,5 @@
 <% @notetakers = registered_course.registered_users.where("note_taker = ?", true) %>
+<% @noteusers = registered_course.registered_users.where("note_taker = ?", false) %>
 
 <% if registered_course.note_taker %>
 <% @class = "success"  %>
@@ -17,12 +18,20 @@
                    registered_course %>
    </td>
    <td>
-      <%= registered_course.registered_users.where("note_taker = ?", false).count %>
+      <% if @noteusers.empty? %>
+         0
+      <% else %> 
+        <strong class="muted"> <%= @noteusers.count %> registered </strong>
+        <% @noteusers.each do |noteuser| %>
+          <p> <%= link_to noteuser.name, noteuser %> </p>
+        <% end %>
+      <% end %>
    </td>
    <td>
       <% if @notetakers.empty? %>
          0
-      <% else %> 
+      <% else %>
+        <strong class="muted"> <%= @notetakers.count %> registered </strong>
          <% @notetakers.each do |notetaker| %>
             <p> <%= link_to notetaker.name, notetaker %> </p>
          <% end %>

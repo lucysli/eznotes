@@ -39,6 +39,7 @@ end
 
 group :development do
 	gem 'rails-erd'
+	gem 'capistrano'
 end
 
 

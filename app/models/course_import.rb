@@ -52,6 +52,11 @@ class CourseImport
           course_num = "0" + course_num
         end
         section = row[3]
+        if section.length == 1
+          section = "00" + section
+        elsif section.length == 2
+          section = "0" + section
+        end
         course_title = row[6]
         # some strange course nums can exist like inter university transfer
         # like EXAR and IPAR so we should not add the course and skip it

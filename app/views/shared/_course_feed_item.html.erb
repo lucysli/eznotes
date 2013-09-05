@@ -7,6 +7,9 @@
       </dt> 
       <dd>
          <%= course_feed_item.course_title %>
+         <% if course_feed_item.note_taker?(current_user) and current_user.note_taker? %>
+            You are currently the note taker for this course.
+         <% end %>
       </dd>
    </dl>
    <div class="btn-group btn-group-vertical">

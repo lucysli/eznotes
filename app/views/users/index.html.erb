@@ -4,11 +4,44 @@
    <label for="filter" class="cus-users">Filter</label>
    <input type="text" name="filter" value="" id="user_filter" class="input-large search-query" />
 </form>
+<div class="row">
+   <aside class="span3">
+      <section>
+         <h2> Add Admin User </h2>
+         <%= form_tag('/create_admin', method: :put ) do %>
+            <%= label_tag :name do %>
+               <i class="cus-user"></i> Name
+            <% end %>
+            <%= text_field_tag :name%>
 
-<%= will_paginate %>
+            <%= label_tag :email, "McGill Email", class: "cus-mail-alt" %>
+            <div class="input-append">
+               <%= text_field_tag :email %>
+               <span class="add-on">@mcgill.ca</span>
+            </div>
+            <%= label_tag :student_id, "McGill Student ID", class: "cus-credit-card" %>
+            <%= text_field_tag :student_id %>
 
-<ul class="users">
-	<%= render @users %>
-</ul>
+            <%= label_tag :password, "McGill Password", class: "cus-lock" %>
+            <%= password_field_tag :password %>
 
-<%= will_paginate %>
+            <%= label_tag :password_confirmation, "Confirmation", class: "cus-lock" %>
+            <%= password_field_tag :password_confirmation %>
+
+            <%= button_tag(type: 'submit', class: "btn btn-large btn-primary") do %>
+               <i class="cus-ok"></i> Create Account
+            <% end %>
+         <% end %>
+      </section>
+   </aside>
+   <div class="span9">
+      <%= will_paginate %>
+
+      <ul class="users">
+         <%= render @users %>
+      </ul>
+
+      <%= will_paginate %>
+   </div>
+</div>
+

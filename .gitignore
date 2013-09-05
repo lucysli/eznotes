@@ -24,3 +24,6 @@ doc/
 
 # Ignore uploads directory
 assets/*
+
+# Ignore config database.yml
+/config/database.yml

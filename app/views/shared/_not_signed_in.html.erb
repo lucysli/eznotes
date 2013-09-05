@@ -1,32 +1,19 @@
 <div class="center hero-unit">
    <h1>Welcome to McGill OSD</h1>   
    <h1>EZ Notes</h1>
-   <br>
+   <div class="alert alert-danger"> 
+   Please register with the new <strong>2013</strong> system!
+   </div>
+   <div class="alert alert-info">This site works best in chrome web browser </div>
    <h2 class="text-info"> The online service for uploading and accessing your course notes. </h2>
 
-   
-   <div class="row">
-      <div class="span4 offset3">
-         <%= link_to "Sign in", signin_path, class: "btn btn-large btn-primary cus-login" %>
-         <h3 class="cus-attention text-error">Important!</h3>
-      </div>
+   <div class="btn-group">
+   <%= link_to(signup_path, class: "btn btn-large btn-danger cus-pencil") do %>
+            Register as a <span class="register"> NoteTaker </span>
+   <% end %>
+   <%= link_to(signup_path, class: "btn btn-large btn-success cus-user") do %>
+            Register as a <span class="register"> NoteUser </span>
+   <% end %>
    </div>
-   <div class="alert alert-info">         
-      <p>
-         This system is only for note takers and students who have already registered
-         with the OSD. If you wish to apply to be a note taker we welcome you to apply.
-      </p>
-      <p>
-         If you are a student registered with the office for Students with Disabilities
-         and you require note taking, log-in as normal. If you encounter problems please
-         <p> <%= link_to "Contact us", contact_path, class: "cus-mail-alt" %> </p>
-      </p>
-   </div>
-   <%= link_to(signup_path, class: "btn btn-large btn-primary") do %>
-
-      <i class="cus-pencil"></i> 
-      Register as a Note Taker or a Note User
-      <i class="cus-user"></i> 
-
-   <% end %>   
+         
 </div>

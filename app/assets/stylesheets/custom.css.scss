@@ -57,7 +57,7 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
 	font-size: 3em;
 	letter-spacing: -2px;
-	margin-bottom: 1em;
+	margin-bottom: 0.5em;
 	text-align: center;
 }
 
@@ -80,6 +80,11 @@ h3 {
 p {
   font-size: 1.1em;
   line-height: 1.7em;
+}
+
+.register {
+  font-style: italic;
+  font-weight: 900;
 }
 
 /* header */
@@ -190,6 +195,7 @@ aside {
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
+  height: 100%;
   padding: 10px;
   margin-bottom: 15px;
   @include box_sizing;

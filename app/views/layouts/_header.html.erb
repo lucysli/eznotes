@@ -1,10 +1,15 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
 	<div class="navbar-inner">
 		<div class="container">
-			<%= link_to "#{full_title(yield(:title))}", '#', id: "logo" %>
+			<% homelink, otherlink = full_title(yield(:title)).split('|') %>
+			<%= link_to homelink, root_path, id: "logo" %>
+			<% if otherlink %>
+				<%= link_to "|" + otherlink, request.path, id: "logo" %>
+			<% end %>
 			<nav>
 				<ul class="nav pull-right">
 					<li><%= link_to "Home", root_path, class: "cus-home" %></li>
+					<li><%= link_to "Contact Us", contact_path, class: "cus-mail-alt" %></li>
 					<li><%= link_to "Help", help_path, class: "cus-help-circled" %></li>
 					<% if signed_in? %>
 						<% if  current_user.admin? %>

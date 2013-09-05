@@ -4,9 +4,14 @@ class CoursesController < ApplicationController
    before_action :registered_user, only: :show
 
    def show
-      @course = Course.find(params[:id])
-      @note = current_user.notes.build
-      @feed_items = @course.feed.paginate(page: params[:page])
+      if Course.exists?(params[:id])
+         @course = Course.find(params[:id])
+         @note = current_user.notes.build
+         @feed_items = @course.feed.paginate(page: params[:page])
+      else
+         flash[:error] = "Course does not exist"
+         redirect_to root_url
+      end
    end
 
    def index
@@ -93,7 +98,7 @@ class CoursesController < ApplicationController
       end
 
       def registered_user
-         redirect_to root_path, notice: "You must be registered for this course to view it" unless current_user.registered_with?(Course.find(params[:id])) or current_user.admin?
+         redirect_to root_path, notice: "You must be registered for this course to view it" unless current_user.admin? or (Course.exists?(params[:id]) and current_user.registered_with?(Course.find(params[:id])))
       end
 
 end
