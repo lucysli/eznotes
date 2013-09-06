@@ -110,6 +110,7 @@ GEM
       jquery-rails
       railties (>= 3.1.0)
     json (1.8.0)
+    libv8 (3.16.14.3)
     listen (1.3.0)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -178,6 +179,7 @@ GEM
       ffi (>= 0.5.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    ref (1.0.5)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
@@ -195,6 +197,8 @@ GEM
       rspec-mocks (~> 2.13.0)
     ruby-graphviz (1.0.9)
     rubyzip (0.9.9)
+    rvm-capistrano (1.5.0)
+      capistrano (>= 2.15.4)
     sass (3.2.10)
     sass-rails (4.0.0)
       railties (>= 4.0.0.beta, < 5.0)
@@ -220,6 +224,9 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    therubyracer (0.12.0)
+      libv8 (~> 3.16.14.0)
+      ref
     thor (0.18.1)
     thread_safe (0.1.2)
       atomic
@@ -267,11 +274,13 @@ DEPENDENCIES
   rails-erd
   rails_12factor
   rspec-rails (= 2.13.2)
+  rvm-capistrano
   sass-rails (= 4.0.0)
   sdoc (= 0.3.20)
   selenium-webdriver (~> 2.35.1)
   shoulda-matchers
   spork-rails!
+  therubyracer
   turbolinks (= 1.1.1)
   uglifier (= 2.1.1)
   will_paginate (= 3.0.4)

@@ -9,6 +9,7 @@ gem 'bcrypt-ruby',	'~> 3.0.0'
 gem 'faker', '1.1.2'
 gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
+gem 'therubyracer'
 
 gem 'rails_12factor', group: :production
 
@@ -40,6 +41,7 @@ end
 group :development do
 	gem 'rails-erd'
 	gem 'capistrano'
+	gem 'rvm-capistrano'
 end
 
 
