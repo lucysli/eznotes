@@ -39,6 +39,7 @@ appendEmailAddress = ->
 ready = ->
    $('#session_email').focusout appendEmailAddress
    $('.email_selector').change appendEmailAddress
+   $('.admin_email').focusout appendEmailAddress
    
 $(document).ready(ready)
 $(document).on('page:load', ready)

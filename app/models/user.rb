@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
 
    before_save { email.downcase! }
    before_create :create_remember_token
+
+   default_scope -> { order('name ASC') }
       
    validates :name, presence: true, 
                     length: { maximum: 50 }

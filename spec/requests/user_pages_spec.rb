@@ -62,6 +62,10 @@ describe "User pages" do
 					end
 					it { should_not have_link("delete", href: user_path(admin)) }
 				end
+
+				describe "assign admin" do
+					it { should have_link("delete", href: user_path(User.first)) }
+				end
 			end
 		end
 	end

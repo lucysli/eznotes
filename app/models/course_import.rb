@@ -2,6 +2,10 @@ class CourseImport
   include ActiveModel::Model
   attr_accessor :file, :term
 
+  VALID_FILE_REGEX = /\A.+.csv\z/i
+  validates :file, presence: true, format: { with: VALID_FILE_REGEX }
+  validates :term, presence: true
+
   def initialize(attributes = {})
     attributes.each { |name, value| send("#{name}=", value) }
   end

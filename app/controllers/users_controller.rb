@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
   before_action :signed_in_user,  only: [:index, :edit, :update, :show, :destroy]
   before_action :correct_user,    only: [:edit, :update, :show]
-  before_action :admin_user,      only: [:destroy, :index]
+  before_action :admin_user,      only: [:create_admin, :destroy, :index]
   before_action :limit_user,      only: [:new, :create]
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.all
   end
 
   def show
@@ -32,9 +32,14 @@ class UsersController < ApplicationController
     @user = User.new(admin_params)
     @user.admin = true
     if @user.save
+      flash[:success] = "New Admin user [ #{@user.student_id} #{@user.name} #{@user.email} created"
       redirect_to :back
     else
-      flash[:error] = "Could not create admin user"
+      full_msg = " "
+      @user.errors.full_messages.each do |msg|
+        full_msg = full_msg + msg + ". "
+      end
+      flash[:error] = "Could not create admin user. #{full_msg}"
       redirect_to :back
     end
   end
@@ -59,7 +64,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    if @user.admin?
+    if @user.admin? and current_user?(@user)
       flash[:error] = "Admin User cannot delete themselves!"
       redirect_to user_path(@user)
     else

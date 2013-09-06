@@ -5,6 +5,7 @@ class RegistrationsController < ApplicationController
    end
 
    def create
+      course_string = "#{params[:subject_code]} #{params[:course_num]} #{params[:section]}"
       @course = Course.find_by   subject_code: params[:subject_code],
                                  course_num: params[:course_num],
                                  term: params[:term],
@@ -21,7 +22,7 @@ class RegistrationsController < ApplicationController
             end 
          end
       else
-         flash[:error] = "Course does not exist"
+         flash[:error] = "Course #{course_string} does not exist. Please verify"
       end
       redirect_to root_url 
    end

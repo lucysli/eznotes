@@ -8,7 +8,8 @@
       <%= course.course_title %>
       <% if current_user.admin? %>
          <%= link_to "delete", course, method: :delete,
-             data: { confirm: "Are you sure?" }, class: "cus-trash delete" %>
+             data: { confirm: "Delete Course: 
+              #{course.subject_code} #{course.course_num} #{course.section} #{course.course_title}" }, class: "cus-trash delete" %>
       <% end %>
 
    </dd>

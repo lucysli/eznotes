@@ -52,6 +52,13 @@ ready = ->
    $('.editUserPassword').tooltip(title: "Input your password to authenticate changes", placement: "right")
    $('.editUserConfirm').tooltip(title: "Confirm your password", placement: "right")
 
+   # Add Admin form 
+   $('.newAdminName').tooltip(title: "Enter the full name of the new admin user", placement: "left")
+   $('.newAdminEmail').tooltip(title: "Enter the email of the new admin user", placement: "left")
+   $('.newAdminID').tooltip(title: "Enter the 9 digit McGill ID of the new admin user", placement: "left")
+   $('.newAdminPassword').tooltip(title: "Enter the password minimum 8 characters", placement: "left")
+   $('.newAdminConfirm').tooltip(title: "Confirm the new password", placement: "left")
+
    # Admin filter search field
    $('#filter').tooltip(title: "input search text to filter data in table. Press esc key to reset", placement: "right")
    $('#course_filter').tooltip(title: "input search text to filter course data. Press esc key to reset", placement: "right")
@@ -60,6 +67,7 @@ ready = ->
    $('ul.users li').addClass('visible')
    $('#user_filter').show()
    $('#user_filter').keyup filtering
+
    
 $(document).ready(ready)
 $(document).on('page:load', ready)
