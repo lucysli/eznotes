@@ -10,7 +10,6 @@
       </section>
       <section>
          <% if current_user.note_taker? and @course.note_taker and @course.note_taker == current_user %>
-            <%= render 'shared/note_form' %>
          <% end %>
       </section>
    </aside>
