@@ -233,6 +233,24 @@ describe "Authentication" do
             before { visit course_path(realcourse) }
             it { should_not have_title(full_title(realcourse.course_title)) }
          end
+
+         describe "in the password reset controller" do
+
+            describe "submitting to the create action" do
+               before { post password_resets_path }
+               specify { expect(response).to redirect_to(root_path) }
+            end 
+
+            describe "visiting PasswordReset#edit page" do
+               before { visit edit_password_reset_path("blah") }
+               it { should_not have_title(full_title('Password Reset')) }
+            end
+
+            describe "submitting to the update action" do
+               before { patch password_reset_path(1) }
+               specify { expect(response).to redirect_to(root_path) }
+            end  
+         end
       end
 
       describe "as admin" do

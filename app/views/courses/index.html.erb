@@ -1,42 +1,31 @@
-<% provide(:title, "#{@term}" + ' Courses') %>
-<h1 id="heading"><%= @term %> Courses (<%= @count %>)</h1>
-<form class="form-search">
-   <label for="filter" class="cus-doc-text-inv">Filter</label>
-   <input type="text" name="filter" value="" id="course_filter" class="input-large search-query" />
-</form>
+<% provide(:title, 'Courses') %>
+<h1 id="heading"> Courses (<%= @courses.count %>)</h1>
+
 <div class="row">
-   <aside class="span2">
-      <section>
-         <%= render 'all_courses' %>
-         <%= render 'fall_courses' %>
-         <%= render 'winter_courses' %>
-         <%= render 'summer_courses' %>
-      </section>
-      <section>
-         <div class="btn-group btn-group-vertical">
-            <%= link_to "Import Courses", new_course_import_path, class: "btn btn-small btn-primary cus-upload" %>
-            <%= link_to "Delete All Courses", 'delete_all', method: :delete, data: { confirm: "Are you sure?" },class: "btn btn-small btn-danger cus-trash" %>
-         </div>
-      </section>
-   </aside>
-   <div class="span10" id="courses">
-      <% if @courses %>
-         <%= will_paginate @courses, param_name: :all_page %>
-         <%= render @courses %> 
-         <%= will_paginate @courses, param_name: :all_page %>
-      <% elsif @fall_courses %>
-         <%= will_paginate @fall_courses, param_name: :fall_page %>
-         <%= render @fall_courses %> 
-         <%= will_paginate @fall_courses, param_name: :fall_page %>
-      <% elsif @winter_courses %>
-         <%= will_paginate @winter_courses, param_name: :winter_page %>
-         <%= render @winter_courses %> 
-         <%= will_paginate @winter_courses, param_name: :winter_page %>
-      <% elsif @summer_courses %>
-         <%= will_paginate @summer_courses, param_name: :summer_page %>
-         <%= render @summer_courses %> 
-         <%= will_paginate @summer_courses, param_name: :summer_page %>
-      <% else %>
+<aside class="span2">
+   <section>
+      <div class="btn-group btn-group-vertical">
+         <%= link_to "Import Courses", new_course_import_path, class: "btn btn-small btn-primary cus-upload" %>
+         <%= link_to "Delete All Courses", 'delete_all', method: :delete, data: { confirm: "WARNING This will delete all courses hence will also delete all course registrations made by students and all notes associated with the course." },class: "btn btn-small btn-danger cus-trash" %>
+      </div>
+   </section>
+</aside>
+<div class="span10" id="courses">
+   <%= form_tag courses_path, method: 'get', html: { class: "form-inline" } do %>
+      <%= text_field_tag :search, params[:search], class: "input-large" %>
+      <%= button_tag(type: 'submit', class: "btn btn-medium btn-primary") do %>
+         <i class="cus-eye"></i> Search
       <% end %>
-   </div>
+   <% end %>
+
+
+
+   
+   <%= will_paginate @courses %>
+
+   <%= render @courses %> 
+
+   <%= will_paginate @courses %>
+</div>
+   
 </div>

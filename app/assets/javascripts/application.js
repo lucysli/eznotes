@@ -14,5 +14,9 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require turbolinks
-//= require_tree .
 //= require jquery.ui.autocomplete
+//= require jquery.tokeninput
+//= require jqBootstrapValidation
+//= require_tree .
+
+

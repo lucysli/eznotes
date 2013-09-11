@@ -3,25 +3,45 @@
 
 <div class="row">
 	<div class="span4 offset3">
-		<%= form_for(:session, url: sessions_path) do |f| %>
+		<%= form_for(:session, url: sessions_path, html: { class: "form-horizontal" } ) do |f| %>
 
-			<%= f.label :email, "McGill Email", class: "cus-mail-alt" %>
-			<div class="input-append">
-				<%= f.text_field :email, placeholder: 'firstname.lastname' %>
-				<select class="email_selector span2 btn btn-primary" title="@mail.mcgill.ca" >
-                <option>@mail.mcgill.ca</option>
-                <option>@mcgill.ca</option>
-            </select>
+			<div class="control-group">
+				<%= f.label :email, "McGill Email", class: "cus-mail-alt control-label" %>
+				<div class="controls">
+					<div class="input-append">
+						<%= f.text_field :email, required: true, 
+							:'data-validation-email-message' => "Please enter a valid email", 
+							:'data-validation-regex-regex' => "^[a-zA-Z0-9\-]+\\.([a-zA-Z0-9]+\\.)?[a-zA-Z0-9\-]+(@mail.mcgill.ca|@mcgill.ca)$", 
+							:'data-validation-regex-message' => "Must be of the form 
+							firstname.lastname@mail.mcgill.ca or firstname.lastname@mcgill.ca",  placeholder: 'firstname.lastname', class: "input-large" %>
+						<select class="email_selector add-on" title="@mail.mcgill.ca" >
+		                <option>@mail.mcgill.ca</option>
+		                <option>@mcgill.ca</option>
+		            </select>
+					</div>
+				</div>
 			</div>
 
-			<%= f.label :password, "McGill Password", class: "cus-lock" %>
-			<%= f.password_field :password, placeholder: 'McGill password'%>
+			<div class="control-group">
+				<%= f.label :password, "McGill Password", class: "cus-lock control-label" %>
+				<div class="controls">
+					<%= f.password_field :password, required: true, minLength: "8",
+						:'data-validation-regex-regex' => "^[^\\s']+$", 
+						:'data-validation-regex-message' => "Password is incorrect format; cannot have any spaces or quotes(')", placeholder: 'McGill password', class: "input-large" %>
+				</div>
+			</div>
 
-			<%= button_tag(type: 'submit', class: "btn btn-medium btn-primary") do %>
-				<i class="cus-login"></i> Sign in
-			<% end %>
+			<div class="control-group">
+				<div class="controls">
+					<%= button_tag(type: 'submit', class: "btn btn-medium btn-primary") do %>
+						<i class="cus-login"></i> Sign in
+					<% end %>
+				</div>
+			</div>
 		<% end %>
 
-		<p>New User? <%= link_to "Sign up now!", signup_path, class: "cus-user" %></p>
+		<p>New User? <%= link_to "Sign up now!", signup_noteuser_path, class: "cus-user" %></p>
+		<p>New NoteTaker? <%= link_to "Sign up now!", signup_notetaker_path, class: "cus-pencil" %></p>
+		<p><%= link_to "Forgotten password? Click to reset", new_password_reset_path, class: "cus-lock-open" %> </p>
 	</div>
 </div>

@@ -15,21 +15,7 @@ class CoursesController < ApplicationController
    end
 
    def index
-      @term = params[:term]
-      if @term == "Fall"
-         @fall_courses = Course.fall_courses.paginate(page: params[:fall_page])
-         @count = Course.fall_courses.count
-      elsif @term == "Winter"
-         @winter_courses = Course.winter_courses.paginate(page: params[:winter_page])
-         @count = Course.winter_courses.count
-      elsif @term == "Summer"
-         @summer_courses = Course.summer_courses.paginate(page: params[:summer_page])
-         @count = Course.summer_courses.count
-      else
-         @courses = Course.all.order("subject_code ASC, course_num ASC, section ASC").paginate(page: params[:all_page])
-         @term = "All"
-         @count = Course.all.count
-      end   
+      @courses = Course.search(params[:search]).paginate(per_page: 10, page: params[:page])
    end
    
    def create
@@ -50,6 +36,12 @@ class CoursesController < ApplicationController
       if @course.update_attributes(notetaker_params)
          # Handle a successful update
          if @course.note_taker 
+            @course.note_taker.send_assigned_to_course_message(@course)
+            @course.registered_users.where("note_taker = ?", false).each do |user|
+               if not user.note_taker?
+                  user.send_notetaker_assigned(@course)
+               end
+            end
             message = "Assigned" 
          else 
             message = "Unassigned" 

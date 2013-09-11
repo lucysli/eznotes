@@ -10,5 +10,7 @@
  *
  *= require_self
  *= require_tree .
+ *= require token-input-facebook
+ *= require token-input-bootstrappy
  *= require jquery.ui.autocomplete
  */

@@ -273,7 +273,9 @@ describe Course do
   describe "notetaker" do
     let(:notetaker) { FactoryGirl.create(:notetaker) }
     before do
-      @course.user_id = notetaker.id
+      @course.save
+      notetaker.register!(@course)
+      @course.assign_note_taker(notetaker)
       @course.save
     end
     it { should be_valid }

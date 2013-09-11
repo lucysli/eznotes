@@ -23,11 +23,13 @@ class User < ActiveRecord::Base
    before_create :create_remember_token
 
    default_scope -> { order('name ASC') }
+
+   attr_reader :course_tokens
       
    validates :name, presence: true, 
                     length: { maximum: 50 }
 
-   VALID_EMAIL_REGEX = /\A(\w|\-)+\.([\w]+\.)?\w+(@mail.mcgill.ca|@mcgill.ca)\z/i
+   VALID_EMAIL_REGEX = /\A(\w|\-)+\.([\w]+\.)?(\w|\-)+(@mail.mcgill.ca|@mcgill.ca)\z/i
    validates :email, presence: true, 
                      format: { with: VALID_EMAIL_REGEX, 
                         message: " is incorrect format must be of the form firstname.lastname@mail.mcgill.ca" },
@@ -41,9 +43,15 @@ class User < ActiveRecord::Base
                           length: { is: 9 }
 
    has_secure_password
-   VALID_PASSWORD_REGEX = /\A[^\s']{8,}\z/
+   VALID_PASSWORD_REGEX = /\A[^\s']+\z/
    validates :password, length: { minimum: 8 },
-   format: { with: VALID_PASSWORD_REGEX, message: " is incorrect format; cannot have any spaces or quotes(')"}
+   format: { with: VALID_PASSWORD_REGEX, message: " is incorrect format; cannot have any spaces or quotes(')"},
+   if: :password_required?
+
+
+   def course_tokens=(ids)
+      self.course_ids = ids.split(",")
+   end
 
    def notetaking_for
       notetaking = []
@@ -91,9 +99,40 @@ class User < ActiveRecord::Base
       Digest::SHA1.hexdigest(token.to_s)
    end
 
+   def send_password_reset
+      generate_reset_token(:password_reset_token)
+      self.password_reset_sent_at = Time.zone.now
+      save!
+      UserMailer.password_reset(self).deliver
+   end
+
+   def send_new_registration_message
+      UserMailer.new_registration(self).deliver
+   end
+
+   def send_assigned_to_course_message(course)
+      UserMailer.assign_notetaker(self, course).deliver
+   end
+
+   def send_notetaker_assigned(course)
+      UserMailer.notify_users(self, course).deliver
+   end
+
+   protected
+
+      def password_required?
+         !persisted? || !password.nil? || !password_confirmation.nil?
+      end
+
    private
 
       def create_remember_token
          self.remember_token = User.encrypt(User.new_remember_token)
+      end
+
+      def generate_reset_token(column)
+         begin
+            self[column] = SecureRandom.urlsafe_base64
+         end while User.exists?(column => self[column])
       end
 end

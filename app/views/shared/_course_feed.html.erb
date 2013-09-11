@@ -1,19 +1,15 @@
 <% @user = current_user %>
-<div class="tabbable">
-   <ul class="nav nav-tabs">
-      <li class="active"><a href="#Fall" data-toggle="tab">Fall</a></li>
-      <li><a href="#Winter" data-toggle="tab">Winter</a></li>
-      <li><a href="#Summer" data-toggle="tab">Summer</a></li>
-   </ul>
-   <div class="tab-content">
-      <div class="tab-pane active" id="Fall">
-         <%= render partial: 'shared/course_feed_item', collection: @fall_course_feed_items %>
-      </div>
-      <div class="tab-pane" id="Winter">
-         <%= render partial: 'shared/course_feed_item', collection: @winter_course_feed_items %>
-      </div>
-      <div class="tab-pane" id="Summer">
-         <%= render partial: 'shared/course_feed_item', collection: @summer_course_feed_items %>
-      </div>
-   </div>
+
+<div class="span3" id="Fall">
+   <h4>FALL</h4>
+   <%= render partial: 'shared/course_feed_item', collection: @fall_course_feed_items %>
 </div>
+<div class="span3 offset1" id="Winter">
+   <h4>WINTER</h4>
+   <%= render partial: 'shared/course_feed_item', collection: @winter_course_feed_items %>
+</div>
+<div class="span3 offset1" id="Summer">
+   <h4>SUMMER</h4>
+   <%= render partial: 'shared/course_feed_item', collection: @summer_course_feed_items %>
+</div>
+

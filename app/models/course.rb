@@ -95,4 +95,22 @@ class Course < ActiveRecord::Base
       self.note_taker = nil
    end
 
+   def self.search(search)
+      if search
+         query = search.split
+         where("subject_code ILIKE ? or
+                course_num ILIKE ? or
+                course_title ILIKE ? or
+                (subject_code ILIKE ? and
+                 course_num ILIKE ?)", 
+                "%#{search}%",
+                "%#{search}%",
+                "%#{search}%",
+                "%#{query[0]}%",
+                "%#{query[1]}%")
+      else
+         scoped
+      end
+   end
+
 end

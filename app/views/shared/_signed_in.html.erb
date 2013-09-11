@@ -13,19 +13,34 @@
    </aside>
    <%= render 'shared/admin_info' %>
 </div>
-<% else %>
+<% else %> 
+<div class="pull-right">
+<%= render 'shared/add_course_form' %>
+</div>
+<div class="span4">
+<aside>
+   <section>
+      <%= render 'shared/user_info' %>
+   </section>
+</aside>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <div class="row">
-   <aside class="span3">
-      <section>
-         <%= render 'shared/user_info' %>
-      </section>
-      <section>
-         <%= render 'shared/add_course_form' %>
-      </section>
-   </aside>
-   <div id="registration" class="span9">
-      <h3 class="center">Registered Courses</h3>
+   <hr>
+   <div class="span12">
       <%= render 'shared/course_feed' %>
    </div>
 </div>
+            
 <% end %>

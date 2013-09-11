@@ -1,0 +1,28 @@
+<% provide(:title, 'Password Reset') %>
+<h1>Reset Password</h1>
+
+<%= form_for @user, url: password_reset_path(params[:id], html: { class: "form-horizontal" }) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="control-group">
+    <%= f.label :password, class: "cus-lock control-label" %>
+    <div class="controls">
+      <%= f.password_field :password, required: true, 
+          minLength: "8",
+          :'data-validation-regex-regex' => "^[^\\s']+$", 
+          :'data-validation-regex-message' => "Password is incorrect format; cannot have any spaces or quotes(')"%>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :password_confirmation, class: "cus-lock control-label" %>
+    <div class="controls">
+      <%= f.password_field :password_confirmation,
+          :'data-validation-match-match' => "user[password]", 
+          :'data-validation-match-message' => "Password confirmation must match password" %>
+    </div>
+  </div>
+  <div class="actions">
+    <%= button_tag type: 'submit', class: "btn btn-large btn-primary" do %>
+      <i class="cus-floppy"></i> Update Password
+    <% end %>
+  </div>
+<% end %>

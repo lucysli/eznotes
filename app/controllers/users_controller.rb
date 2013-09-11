@@ -13,19 +13,28 @@ class UsersController < ApplicationController
     @notes = @user.notes.paginate(page: params[:page])
 	end
 
-  def new
+  def new_noteuser
     @user = User.new
+  end
+
+  def new_notetaker
+    @user = User.new(note_taker: true)
   end
 
   def create
 		@user = User.new(create_params)
 		if @user.save
+      @user.send_new_registration_message
       sign_in @user
       flash[:success] = "Welcome to EZ Notes!"
 			redirect_to root_path
 		else
-			render 'new'
-		end
+      if @user.note_taker
+        render 'new_notetaker'
+      else
+        render 'new_noteuser'
+		  end
+    end
   end
 
   def create_admin
@@ -78,11 +87,9 @@ class UsersController < ApplicationController
 
     def update_params
       if current_user.admin?
-  		  params.require(:user).permit(:name, :email, :student_id, :password,
-                                   :password_confirmation, :note_taker)
+  		  params.require(:user).permit(:name, :email, :student_id, :note_taker)
       else
-        params.require(:user).permit(:name, :student_id, :password,
-                                   :password_confirmation)
+        params.require(:user).permit(:name, :student_id)
       end
   	end 
 

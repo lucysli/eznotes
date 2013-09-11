@@ -1,0 +1,73 @@
+<h4>First, tell us a bit about yourself</h4>
+
+<div class="row">
+	<div class="span6">
+		<%= form_for @user, html: { class: "form-horizontal" } do |f| %>
+			<%= render 'shared/error_messages', object: f.object %>
+			<%= f.hidden_field :note_taker, value: locals[:note_taker] %>
+			<div class="control-group">
+				<%= f.label :name, class: "cus-user control-label"%>
+				<div class="controls">
+					<%= f.text_field :name, required: true, maxlength: "50", placeholder: "John Doe" %>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<%= f.label :email, "McGill Email", class: "cus-mail-alt control-label" %>
+				<div class="controls">
+					<div class="input-append">
+						<%= f.text_field :email, required: true, 
+							:'data-validation-email-message' => "Please enter a valid email", 
+							:'data-validation-regex-regex' => "^[a-zA-Z0-9\-]+\\.([a-zA-Z0-9]+\\.)?[a-zA-Z0-9\-]+@mail.mcgill.ca$", 
+							:'data-validation-regex-message' => "Must be of the form 
+							firstname.lastname@mail.mcgill.ca or firstname.middleinitial.lastname@mail.mcgill.ca", 
+							placeholder: "john.doe", class: "email", id: "signup_email" %>
+						<span class="add-on">@mail.mcgill.ca</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<%= f.label :student_id, "McGill Student ID", class: "cus-credit-card control-label" %>
+				<div class="controls">
+					<%= f.text_field :student_id, required: true, 
+					:'data-validation-regex-regex' => "^[0-9]+$", 
+					:'data-validation-regex-message' => "Student ID is incorrect format; must be a 9 digit number", 
+					maxLength: "9",
+					minLength: "9",
+					placeholder: "123456789" %>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<%= f.label :password, "McGill Password", class: "cus-lock control-label" %>
+				<div class="controls">
+					<%= f.password_field :password, required: true, minLength: "8",
+					:'data-validation-regex-regex' => "^[^\\s']+$", 
+					:'data-validation-regex-message' => "Password is incorrect format; cannot have any spaces or quotes(')" %>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<%= f.label :password_confirmation, "Confirmation", class: "cus-lock control-label" %>
+				<div class="controls">
+					<%= f.password_field :password_confirmation, 
+					:'data-validation-match-match' => "user[password]", 
+					:'data-validation-match-message' => "Password confirmation must match password" %>
+				</div>
+			</div>
+
+
+			<div class="btn-toolbar">
+				<div class="btn-group">
+			      <%= link_to 'Cancel', root_path, class: "btn btn-large btn-inverse cus-cancel" %>
+			   </div>
+			   <div class="btn-group">
+			      <%= button_tag(type: 'submit', class: "btn btn-large btn-primary") do %>
+			      	<i class="cus-ok"></i> Create my account
+					<% end %>
+				</div>
+			</div>
+	   <% end %>
+	</div>
+</div>

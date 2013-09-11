@@ -160,6 +160,12 @@ describe "User pages" do
 						expect(user).not_to be_note_taker
 					end
 				end
+
+				describe "#send new user registration email" do
+    				it "should deliver email to user" do
+      				last_email.to.should include (user.email)
+    				end
+  				end
 			end
 		end
 		describe "note takers" do

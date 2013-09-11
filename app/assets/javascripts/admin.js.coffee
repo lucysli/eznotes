@@ -35,6 +35,9 @@ filtering = ->
       filterSearch('tbody tr', $(this).val())
  
 
+search = ->
+   $.get $('#courses_search').attr('action'), $('#courses_search').serialize(), null, "script"
+   false
 
 # Taken from rails cast episode 390 about turbolinks
 
@@ -49,6 +52,10 @@ filtering = ->
 # This way the events for the comment field text area will be attached whether 
 # we’ve loaded the page via Turbolinks or not.
 ready = ->
+   $('#courses_search').tokenInput("/courses.json" , { 
+      theme: "facebook",
+      preventDuplicates: true} )
+   #$('#courses_search input').keyup search
    # default each row to visible
    $('tbody tr').addClass('visible')
    $('#filter').show()

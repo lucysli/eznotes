@@ -1,21 +1,14 @@
-<h5 class="center"> Register courses you are enrolled in </h5>
-<%= form_tag('/registrations', id: "add_course") do %>
-      <%= label_tag :subject_code %>
-      <%= select_tag :subject_code, options_for_select(@subject_codes),include_blank: false, rel: 'autocomplete' %>
+<h3> Register courses you are enrolled in </h3>
+<%= form_for current_user, url: registrations_path, method: :post do |f| %>
 
-      <%= label_tag :course_num %>
-      <%= select_tag :course_num, options_for_select(@course_nums),
-         include_blank: false, rel: 'autocomplete' %>
-
-      <%= label_tag :section %>
-      <%= select_tag :section, options_for_select(@sections),
-         include_blank: false, rel: 'autocomplete' %>
-
-      <%= label_tag :term %>
-      <%= select_tag :term, 
-      options_for_select([["fall"], ["winter"], ["summer"]]) %>
-
-      <%= button_tag(type: 'submit', class: "btn btn-small btn-primary btn-block") do %>
-         <i class="cus-link"></i> Register
-      <% end %> 
+   <p> 
+      <%= f.label :course_tokens, "Search", class: "cus-help registerCourses" %>
+      <%= f.text_field :course_tokens %> 
+   </p>
+   <p>     
+      <%= button_tag type: 'submit', class: "btn btn-medium btn-primary" do %>
+      <i class="cus-link"></i> Register
+      <% end %>
+   </p>
 <% end %>
+

@@ -2,29 +2,48 @@
 <h1>Update your profile</h1>
 <div class="row">
 	<div class="span6 offset3" >
-		<%= form_for(@user) do |f| %>
+		<%= form_for(@user, html: { class: "form-horizontal" } ) do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
 
-			<%= f.label :name %>
-			<%= f.text_field :name, class: "editUserName" %>
+			<div class="control-group">
+				<%= f.label :name, class: "cus-user control-label" %>
+				<div class="controls">
+					<%= f.text_field :name, required: true %>
+				</div>
+			</div>
 
-			<%= f.label :student_id, "McGill Student ID" %>
-			<%= f.text_field :student_id, class: "editUserID" %>
+			<div class="control-group">
+				<%= f.label :student_id, "Student ID", class: "cus-credit-card McGill Student ID control-label" %>
+				<div class="controls">
+					<%= f.text_field :student_id, required: true,
+					:'data-validation-regex-regex' => "^[0-9]+$", 
+					:'data-validation-regex-message' => "Student ID is incorrect format; must be a 9 digit number", 
+					maxLength: "9",
+					minLength: "9" %>
+				</div>
+			</div>
 
 			<% if current_user.admin? %>
-				<%= f.label :email, "McGill Email" %>
-				<%= f.text_field :email, class: "editEmail" %>
+				<div class="control-group">
+					<%= f.label :email, "McGill Email", class: "cus-mail-alt control-label" %>
+					<div class="controls">
+						<%= f.text_field :email, required: true, 
+							:'data-validation-email-message' => "Please enter a valid email", 
+							:'data-validation-regex-regex' => "^[a-zA-Z0-9\-]+\\.([a-zA-Z0-9]+\\.)?[a-zA-Z0-9\-]+(@mail.mcgill.ca|@mcgill.ca)$", 
+							:'data-validation-regex-message' => "Must be of the form 
+							firstname.lastname@mail.mcgill.ca or firstname.middleinitial.lastname@mail.mcgill.ca" %>
+					</div>
+				</div>
 			<% end %>
 
-			<%= f.label :password, "McGill Password" %>
-			<%= f.password_field :password, class: "editUserPassword" %>
-
-			<%= f.label :password_confirmation , "Confirm Password" %>
-			<%= f.password_field :password_confirmation, class: "editUserConfirm" %>
-
 			<% if current_user.admin? and not current_user?(@user) %>
-				<%= f.check_box :note_taker, class: "checkbox editNotetaker" %> 
-				<%= f.label :note_taker, "NoteTaker?", class: "cus-pencil checkbox inline "%>
+				<div class="control-group">
+					<div class="controls">
+						<%= f.label :note_taker, "NoteTaker?", class: "cus-pencil checkbox inline" %>
+					
+						<%= f.check_box :note_taker %> 
+					</div>
+				</div>
 			<% end %>
 			<br>
 			<br>

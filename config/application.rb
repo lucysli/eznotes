@@ -31,5 +31,7 @@ module EZNotes
     # This ensures bootstrap-sass is compatible with the asset pipeline in rails 4
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif *.woff *.eot *.svg *.ttf)
 
+    config.filter_parameters << :password
+
   end
 end

@@ -55,6 +55,12 @@ Spork.prefork do
 
     # include module for doing testing of paperclip attachments
     config.include Paperclip::Shoulda::Matchers
+
+    # In order to start each spec from a known state we will call
+    # reset_email in our mailer_macros so that the delivered emails 
+    # list is emptied before each spec is run
+    config.include(MailerMacros)
+    config.before(:each) { reset_email }
   end
 end
 

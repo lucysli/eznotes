@@ -1,30 +1,57 @@
 class RegistrationsController < ApplicationController
    before_action :signed_in_user
 
-   def new
+   def index
+      if params[:q]
+         query = params[:q].split
+         @courses = Course.where("subject_code ILIKE ? or
+                                  course_num ILIKE ? or
+                                  course_title ILIKE ? or
+                                  (subject_code ILIKE ? and
+                                  course_num ILIKE ?)", 
+                                  "%#{params[:q]}%",
+                                  "%#{params[:q]}%",
+                                  "%#{params[:q]}%",
+                                   "%#{query[0]}%",
+                                   "%#{query[1]}%")
+         @registrations = []
+         @courses.each do |course|
+            @registrations << { "id" => course.id, "name" => "#{course.term.upcase} | #{course.subject_code} #{course.course_num} #{course.section}: #{course.course_title}" }
+         end
+      end
+
+      respond_to do |format|
+         format.html { redirect_to root_path }
+         format.json { render :json => @registrations }
+      end 
    end
 
    def create
-      course_string = "#{params[:subject_code]} #{params[:course_num]} #{params[:section]}"
-      @course = Course.find_by   subject_code: params[:subject_code],
-                                 course_num: params[:course_num],
-                                 term: params[:term],
-                                 section: params[:section]                                             
-      if @course then
-         if current_user.registered_with?(@course)
-            flash[:error] = "Already registered with this course!"
-         else
+      
+      courses = params[:user][:course_tokens].split(',')
+
+      error_messages = ""
+
+      courses.each do |course|
+        @course = Course.find(course)     
+        if @course then
+          course_string = "#{@course.term.upcase} | #{@course.subject_code} #{@course.course_num} #{@course.section}: #{@course.course_title}"
+          if current_user.registered_with?(@course)
+            flash[:error] = "Already registered with course: #{course_string}!"
+            #current_user.errors.add :base, "Already registered with course: #{course_string}!"
+          else
             current_user.registrations.build(course_id: @course.id)
             if current_user.register!(@course)
-               flash[:success] = "Registered for course!"
+              flash[:success] = "Registered for course: #{course_string}!"
             else
-               flash[:error] = "Could not register for course!"
+              flash[:error] = "Could not register for course: #{course_string}!"
+              #current_user.errors.add :base, "Could not register for course: #{course_string}!"
             end 
-         end
-      else
-         flash[:error] = "Course #{course_string} does not exist. Please verify"
+          end
+        end
       end
-      redirect_to root_url 
+
+        redirect_to root_path
    end
 
    def destroy
@@ -32,11 +59,7 @@ class RegistrationsController < ApplicationController
       @user = User.find(params[:user])
       if @course then
          if @user.registered_with?(@course)
-            flash[:success] = "Unregistered #{@user.name} from the course 
-            #{@course.subject_code} 
-            #{@course.course_num} 
-            #{@course.section} 
-            #{@course.course_title}!"
+            flash[:success] = "Unregistered #{@user.name} from the course #{@course.subject_code} #{@course.course_num} #{@course.section} #{@course.course_title}!"
             @user.unregister!(@course)
             # if the user unregistering from the course 
             # is the note taker of the course

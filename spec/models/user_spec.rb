@@ -81,6 +81,16 @@ describe User do
     it { should be_invalid }
   end
 
+  describe "when password format is invalid" do
+    it "should be invalid" do
+      passwords = %w[password' '''''''''' #{"passw rd"} #{"pass  rd"}]
+        passwords.each do |invalid_password|
+          @user.password = invalid_password
+          expect(@user).not_to be_valid
+      end
+    end
+  end
+
   describe "return value of authenticate method" do
     before { @user.save }
     let(:found_user) { User.find_by(email: @user.email) }
@@ -249,5 +259,24 @@ describe User do
       it { should_not be_registered_with(course) }
       its(:registered_courses) { should_not include(course) }
     end 
+  end
+
+  describe "#send_password_reset" do
+    it "should generate a unique password_reset_token each time" do
+      @user.send_password_reset
+      last_token = @user.password_reset_token
+      @user.send_password_reset
+      @user.password_reset_token.should_not eq(last_token)
+    end
+
+    it "should save the time the password reset was sent" do
+      @user.send_password_reset
+      @user.reload.password_reset_sent_at.should be_present
+    end
+
+    it "should deliver email to user" do
+      @user.send_password_reset
+      last_email.to.should include (@user.email)
+    end
   end
 end

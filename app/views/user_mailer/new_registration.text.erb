@@ -1,0 +1,16 @@
+Hello <%= @user.name %>,
+
+You have successfully registered in our system
+<% if @user.note_taker %>
+as a notetaker. If you are chosen to be the note taker for
+courses that you have registered for, an email will be sent to you notifying you of this with further instructions.
+<% else %>
+as a noteuser requiring notes for your course's.
+Once a match has been made, an email will be sent to you.  Within this email, you will also find instructions on how to access your notes.
+<% end %>
+ 
+Please DO NOT REPLY to this email.
+
+Thank You
+
+EZNotes Mcgill OSD

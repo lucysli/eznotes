@@ -2,7 +2,7 @@
    <dt>
       <%= link_to course.subject_code + 
           " #{course.course_num}" + 
-          " #{course.section}", course %> 
+          " #{course.section}", course %> (<%= course.term.upcase %>)
    </dt> 
    <dd>
       <%= course.course_title %>

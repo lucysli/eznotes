@@ -1,4 +1,16 @@
+# coffescript to handle token input for registering for courses
+
 ready = ->
+   $('#user_course_tokens').tokenInput("/registrations.json", { 
+      crossDomain: false,
+      theme: "facebook",
+      preventDuplicates: true,
+      searchDelay: 500,
+      minChars: 3,
+      hintText: "Type in a search term(e.g MATH or MATH 123 or Linear algebra)",
+      } )
+
+   ###
    $('select[rel="autocomplete"]').each ->
       option = []
       $(this).find('option').each ->
@@ -17,6 +29,7 @@ ready = ->
       $(input).typeahead({
          source: option
       }); 
+   ###
 
 $(document).ready(ready)
 $(document).on('page:load', ready)

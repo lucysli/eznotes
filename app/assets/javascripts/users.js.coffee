@@ -39,18 +39,26 @@ filtering = ->
 # we’ve loaded the page via Turbolinks or not.
 ready = ->
    # Sign up form 
-   $('.newUserName').tooltip(title: "Enter your full name", placement: "right")
-   $('.newMcGillEmail').tooltip(title: "Enter your email", placement: "right")
-   $('.newUserID').tooltip(title: "Enter your 9 digit student ID", placement: "right")
-   $('.newUserPassword').tooltip(title: "Enter your password minimum 8 characters", placement: "right")
-   $('.newUserConfirm').tooltip(title: "Confirm your new password", placement: "right")
-   $('.newNotetaker').tooltip(title: "Check box if you are applying to be a notetaker", placement: "right")
+   $('.newUserName').tooltip(title: "Enter your full name", placement: "left")
+   $('.newMcGillEmail').tooltip(title: "Enter your email", placement: "left")
+   $('.newUserID').tooltip(title: "Enter your 9 digit student ID", placement: "left")
+   $('.newUserPassword').tooltip(title: "Enter your password minimum 8 characters", placement: "left")
+   $('.newUserConfirm').tooltip(title: "Confirm your new password", placement: "left")
+   $('.newNotetaker').tooltip(title: "Check box if you are applying to be a notetaker", placement: "left")
 
    # Edit user form
    $('.editUserName').tooltip(title: "Update your name", placement: "right")
    $('.editUserID').tooltip(title: "Update your student ID", placement: "right")
    $('.editUserPassword').tooltip(title: "Input your password to authenticate changes", placement: "right")
    $('.editUserConfirm').tooltip(title: "Confirm your password", placement: "right")
+
+   # Reset password from
+   $('.emailReset').tooltip(title: "Please input your McGill Email that you registered with", placement: "right")
+
+   # Register courses form
+   $('.registerCourses').tooltip(title: "Add your courses. 
+                  You can register for more than one course at the same time.
+                  Please take note of the semester and course section", placement: "left", trigger: "click")
 
    # Add Admin form 
    $('.newAdminName').tooltip(title: "Enter the full name of the new admin user", placement: "left")
