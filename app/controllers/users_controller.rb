@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :signed_in_user,  only: [:index, :edit, :update, :show, :destroy]
   before_action :correct_user,    only: [:edit, :update, :show]
   before_action :admin_user,      only: [:create_admin, :destroy, :index]
-  before_action :limit_user,      only: [:new, :create]
+  before_action :limit_user,      only: [:new_noteuser, :new_notetaker, :create]
 
   def index
     @users = User.all
@@ -87,7 +87,7 @@ class UsersController < ApplicationController
 
     def update_params
       if current_user.admin?
-  		  params.require(:user).permit(:name, :email, :student_id, :note_taker)
+  		  params.require(:user).permit(:name, :email, :student_id, :note_taker, :approved)
       else
         params.require(:user).permit(:name, :student_id)
       end

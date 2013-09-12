@@ -13,6 +13,11 @@ FactoryGirl.define do
       factory :notetaker do
          note_taker true
       end
+
+      factory :approved_notetaker do
+         note_taker true
+         approved true
+      end
 	end
 
    factory :course do

@@ -111,7 +111,7 @@ class Course < ActiveRecord::Base
                 "%#{query[0]}%",
                 "%#{query[1]}%").order('term ASC, subject_code ASC, course_num ASC, section ASC')
       else
-         scoped
+         all
       end
    end
 

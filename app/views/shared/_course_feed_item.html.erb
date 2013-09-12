@@ -18,7 +18,7 @@
 
       <% if @user.registered_with?(course_feed_item)%>
          <%= link_to "Unregister", registration_path(@user.registrations.find_by(course_id: course_feed_item), user: @user),
-          confirm: "Are you sure?", method: :delete, class: "btn btn-small btn-danger cus-unlink" %>
+          data: { confirm: "Unregister from the course: #{course_feed_item.term.upcase} | #{course_feed_item.subject_code} #{course_feed_item.course_num} #{course_feed_item.section} #{course_feed_item.course_title}?" }, method: :delete, class: "btn btn-small btn-danger cus-unlink" %>
       <% end %>
       <% if current_user.admin? and @user.note_taker? %>
          <% if course_feed_item.note_taker.nil? %> 

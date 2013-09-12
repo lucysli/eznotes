@@ -55,7 +55,7 @@
 
           <td>
             <%= link_to "Unregister", registration_path(@user.registrations.find_by(course_id: registered_course), user: @user),
-              confirm: "Are you sure?", method: :delete, class: "btn btn-small btn-danger cus-unlink" %>
+              data: { confirm: "Unregister #{@user.name} from the course: #{registered_course.term.upcase} | #{registered_course.subject_code} #{registered_course.course_num} #{registered_course.section} #{registered_course.course_title}?" }, method: :delete, class: "btn btn-small btn-danger cus-unlink" %>
           </td>
           <% if @user.note_taker? %>
             <td>

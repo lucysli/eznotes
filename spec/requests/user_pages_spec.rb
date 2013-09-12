@@ -5,6 +5,7 @@ describe "User pages" do
 	subject { page }
 
 	describe "index" do
+		let(:notetaker) { FactoryGirl.create(:notetaker) }
 
 		describe "as non admin user" do
 			it { should_not have_link('delete') }
@@ -15,17 +16,20 @@ describe "User pages" do
 				  sign_in user
 				  visit users_path
 				end
+				after { User.delete_all }
+
 				it { should_not have_title(full_title('All users')) }
 				it { should_not have_content('All users') }
 				it { should have_notice_message('You are not authorized to access this page.') }
 			end
 
 			describe "as note taker" do
-				let(:notetaker) { FactoryGirl.create(:notetaker) }
+
 				before do
 				  sign_in notetaker
 				  visit users_path
 				end
+
 				it { should_not have_title(full_title('All users')) }
 				it { should_not have_content('All users') }
 				it { should have_notice_message('You are not authorized to access this page.') }
@@ -33,6 +37,7 @@ describe "User pages" do
 		end
 		describe "as an admin user" do
 			let(:admin) { FactoryGirl.create(:admin) }
+			
 
 			before(:each) do
 				sign_in admin
@@ -43,16 +48,18 @@ describe "User pages" do
 			it { should have_content('All users') }
 
 			describe "pagination" do
-				before(:all) { 30.times { FactoryGirl.create(:user) } }
+				before do
+					6.times { FactoryGirl.create(:user) } 
+				end
 				after(:all) { User.delete_all }
 
-				it { should have_selector('div.pagination') }
 
 				it "should list each user" do
-					User.paginate(page: 1).each do |user|
-						expect(page).to have_selector('li', text: user.name)
+					User.all.each do |user|
+						expect(page).to have_selector('li', text: "(NoteUser)")
 					end
 				end
+
 				describe "delete links" do
 					it { should have_link("delete", href: user_path(User.first)) }
 					it "should be able to delete another user" do
@@ -63,8 +70,67 @@ describe "User pages" do
 					it { should_not have_link("delete", href: user_path(admin)) }
 				end
 
-				describe "assign admin" do
-					it { should have_link("delete", href: user_path(User.first)) }
+				describe "approving notetakers links" do
+
+					it { should have_link("Approve", href: user_path(notetaker)) }
+
+					describe "should be able to approve a notetaker" do
+						before do
+							click_link("approve", match: :first)
+						end
+
+						specify { expect(notetaker.reload).to be_approved }
+
+						it { should have_success_message('Profile updated') }
+						it { should_not have_link("Approve", href: user_path(notetaker)) }
+						it { should have_link("Unapprove", href: user_path(notetaker)) }
+					end
+
+					it { should_not have_link("Approve", href: user_path(admin)) }
+				end
+			end
+
+			describe "add admin" do
+				let(:submit) { "Create Account" }
+				describe "with invalid information" do
+					it "should not create an admin user" do
+						expect { click_button submit }.not_to change(User, :count)
+					end
+				end
+
+				describe "after submission" do
+					before { click_button submit }
+
+					it { should have_title('All users') }
+					it { should have_content('error') }
+					it { should have_error_message('Could not create') }
+				end
+
+				describe "with valid information" do
+					before do
+					  fill_in "Name",				with: "Admin User"
+					  fill_in "Email",			with: "admin.user@mcgill.ca"
+					  fill_in "Student ID",		with: "021231230"
+					  fill_in "Password",		with: "adminuser"
+					  fill_in "Confirmation",	with: "adminuser"
+					end
+
+					it "should create an admin" do
+						expect { click_button submit }.to change(User, :count).by(1)
+					end
+
+					describe "after saving the admin" do
+						before { click_button submit }
+						let(:admin) { User.find_by(email: 'admin.user@mcgill.ca') }
+
+						it { should have_title(full_title('All users')) }
+						it { should have_success_message('New Admin') }
+
+						it "should be an admin user" do
+							expect(admin).to be_admin
+							expect(admin).not_to be_note_taker
+						end
+					end
 				end
 			end
 		end

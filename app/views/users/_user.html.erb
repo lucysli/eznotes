@@ -9,11 +9,25 @@
    <% end %>)
 	<%= user.student_id %>
 	<strong><%= link_to user.name, edit_user_path(user) %></strong>
+  <% if user.note_taker?  %>
+    <% if user.approved?  %>
+      <i class="cus-check"> </i>
+    <% else %>
+      <i class="cus-check-empty"> </i>
+    <% end %>
+  <% end %>
 	<%= user.email %>
    
 	<% if current_user.admin? && !current_user?(user) %>
 		<%= link_to "delete", user, method: :delete,
 									  data: { confirm: "delete user #{user.student_id} #{user.name}" }, 
                              class: "cus-trash delete" %>
+    <% if user.note_taker? %>
+      <% if user.approved? %>
+        <%= link_to "Unapprove", user_path(user, user: { :approved => false }), method: :put, class: "cus-thumbs-down approve" %>
+      <% else %>
+        <%= link_to "Approve", user_path(user, user: { :approved => true }), method: :put, class: "cus-thumbs-up approve" %>
+      <% end %>
+    <% end %>
 	<% end %>
 </li>

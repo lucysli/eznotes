@@ -33,13 +33,21 @@
       <% else %>
         <strong class="muted"> <%= @notetakers.count %> registered </strong>
          <% @notetakers.each do |notetaker| %>
-            <p> <%= link_to notetaker.name, notetaker %> </p>
+            <p> 
+              <%= link_to notetaker.name, notetaker %> 
+              <% if notetaker.approved? %>
+                <i class="cus-thumbs-up"></i>
+              <% end %>
+            </p>
          <% end %>
       <% end %>
    </td>
    <td>
       <% if registered_course.note_taker %>
          <%= link_to registered_course.note_taker.name, registered_course.note_taker %>
+          <% if registered_course.note_taker.approved? %>
+            <i class="cus-thumbs-up"></i>
+          <% end %>
       <% else %>
         None Assigned
       <% end %>
