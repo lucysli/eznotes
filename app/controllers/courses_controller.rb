@@ -33,6 +33,7 @@ class CoursesController < ApplicationController
 
    def update
       @course = Course.find(params[:id])
+      notetaker = @course.note_taker
       if @course.update_attributes(notetaker_params)
          # Handle a successful update
          if @course.note_taker 
@@ -44,6 +45,7 @@ class CoursesController < ApplicationController
             end
             message = "Assigned" 
          else 
+            notetaker.send_unassigned_from_course_message(@course)
             message = "Unassigned" 
          end
          flash[:success] =  "#{message} #{User.find(params[:user]).name} as the notetaker

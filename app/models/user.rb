@@ -118,6 +118,10 @@ class User < ActiveRecord::Base
       UserMailer.notify_users(self, course).deliver
    end
 
+   def send_unassigned_from_course_message(course)
+      UserMailer.unassign_notetaker(self, course).deliver
+   end
+
    protected
 
       def password_required?

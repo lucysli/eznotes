@@ -59,14 +59,15 @@ class RegistrationsController < ApplicationController
       @user = User.find(params[:user])
       if @course then
          if @user.registered_with?(@course)
-            flash[:success] = "Unregistered #{@user.name} from the course #{@course.subject_code} #{@course.course_num} #{@course.section} #{@course.course_title}!"
+            flash[:success] = "Unregistered #{@user.name} from the course #{@course.term.upcase} | #{@course.subject_code} #{@course.course_num} #{@course.section} #{@course.course_title}!"
             @user.unregister!(@course)
             # if the user unregistering from the course 
             # is the note taker of the course
             # make sure to unassign the user as the notetaker
             if @course.note_taker?(@user)
-               @course.unassign_note_taker
-               @course.save
+              @course.unassign_note_taker
+              @user.send_unassigned_from_course_message(@course)
+              @course.save
             end
          else
             flash[:error] = "You are not registered with this course!"

@@ -32,4 +32,12 @@ class UserMailer < ActionMailer::Base
 
     mail to: user.email, subject: "You Have Been Matched[McGill OSD EZnotes]"
   end
+
+  def unassign_notetaker(notetaker, course)
+    @notetaker = notetaker
+    @course = course
+
+    mail to: notetaker.email, subject: "You Have Been Unassigned[McGill OSD EZnotes]"
+  end
+
 end

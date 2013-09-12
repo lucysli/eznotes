@@ -67,4 +67,41 @@ describe UserMailer do
         #{course.section}: #{course.course_title}")
     end
   end
+
+  describe "unassign_notetaker" do
+    let(:notetaker) { FactoryGirl.create(:notetaker) }
+    let(:user) { FactoryGirl.create(:user) }
+    let(:course) { FactoryGirl.create(:course) }
+    let(:mail) { UserMailer.unassign_notetaker(notetaker, course) }
+    let(:mail_users) { UserMailer.warn_users(user, course) }
+
+    before do
+      notetaker.register!(course)
+      user.register!(course)
+      course.assign_note_taker(notetaker)
+      course.unassign_note_taker
+      course.save
+    end
+
+    it "sends notetaker you have been unassigned to course message" do
+      mail.subject.should eq("You Have Been Unassigned[McGill OSD EZnotes]")
+      mail.to.should eq([notetaker.email])
+      mail.from.should eq(["mcgill.osd.eznotes@gmail.com"])
+      mail.body.encoded.should match(notetaker.name)
+      mail.body.encoded.should match("#{course.term.upcase} | 
+        #{course.subject_code} #{course.course_num} 
+        #{course.section}: #{course.course_title}")
+    end
+
+    it "should send all note users registered with course message when a notetaker is unassigned" do
+
+      mail_users.subject.should eq("NoteTaker Has Been Unassigned[McGill OSD EZnotes]")
+      mail_users.to.should eq([user.email])
+      mail_users.from.should eq(["mcgill.osd.eznotes@gmail.com"])
+      mail_users.body.encoded.should match(user.name)
+      mail_users.body.encoded.should match("#{course.term.upcase} | 
+        #{course.subject_code} #{course.course_num} 
+        #{course.section}: #{course.course_title}")
+    end
+  end
 end
