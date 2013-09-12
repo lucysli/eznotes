@@ -22,7 +22,7 @@ class UserMailer < ActionMailer::Base
     @notetaker = notetaker
     @course = course
 
-    mail to: notetaker.email, subject: "Course Assignment[McGill OSD EZnotes]"
+    mail to: notetaker.email, subject: "You Have Been Matched[McGill OSD EZnotes]"
 
   end
 
@@ -30,6 +30,6 @@ class UserMailer < ActionMailer::Base
     @user = user
     @course = course
 
-    mail to: user.email, subject: "Course Assignment[McGill OSD EZnotes]"
+    mail to: user.email, subject: "You Have Been Matched[McGill OSD EZnotes]"
   end
 end

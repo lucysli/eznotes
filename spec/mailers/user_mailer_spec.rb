@@ -47,7 +47,7 @@ describe UserMailer do
     end
 
     it "sends notetaker you have been assigned to course message" do
-      mail.subject.should eq("Course Assignment[McGill OSD EZnotes]")
+      mail.subject.should eq("You Have Been Matched[McGill OSD EZnotes]")
       mail.to.should eq([notetaker.email])
       mail.from.should eq(["mcgill.osd.eznotes@gmail.com"])
       mail.body.encoded.should match(notetaker.name)
@@ -58,7 +58,7 @@ describe UserMailer do
 
     it "should send all note users registered with course message when a notetaker is assigned" do
 
-      mail_users.subject.should eq("Course Assignment[McGill OSD EZnotes]")
+      mail_users.subject.should eq("You Have Been Matched[McGill OSD EZnotes]")
       mail_users.to.should eq([user.email])
       mail_users.from.should eq(["mcgill.osd.eznotes@gmail.com"])
       mail_users.body.encoded.should match(user.name)
