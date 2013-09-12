@@ -6,9 +6,6 @@ class StaticPagesController < ApplicationController
 			@fall_course_feed_items = current_user.fall_course_feed.paginate(page: params[:page])
 			@winter_course_feed_items = current_user.winter_course_feed.paginate(page: params[:page])
 			@summer_course_feed_items = current_user.summer_course_feed.paginate(page: params[:page])
-			@subject_codes = Course.uniq.order("subject_code").pluck(:subject_code)
-			@course_nums = Course.uniq.order("course_num").pluck(:course_num)
-			@sections = Course.uniq.order("section").pluck(:section)
 			@registered_courses = Course.all.where("id IN (?)", Registration.distinct.pluck(:course_id))
 		end
 	end

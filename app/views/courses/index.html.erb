@@ -10,22 +10,26 @@
       </div>
    </section>
 </aside>
-<div class="span10" id="courses">
-   <%= form_tag courses_path, method: 'get', html: { class: "form-inline" } do %>
+<div class="span10">
+   <%= form_tag courses_path, method: 'get', html: { class: "form-inline" }, id: "courses_search" do %>
+      <%= label_tag :search, nil, class: "cus-eye" %>
       <%= text_field_tag :search, params[:search], class: "input-large" %>
-      <%= button_tag(type: 'submit', class: "btn btn-medium btn-primary") do %>
-         <i class="cus-eye"></i> Search
-      <% end %>
    <% end %>
 
 
 
-   
-   <%= will_paginate @courses %>
+   <div id="courses_pagination_top">
+      <%= will_paginate @courses %>
+   </div>
 
-   <%= render @courses %> 
+   <div id="courses">
+      <%= render @courses %> 
+   </div>
 
-   <%= will_paginate @courses %>
+   <div id="courses_pagination_bottom">
+      <%= will_paginate @courses %>
+   </div>
+
 </div>
    
 </div>

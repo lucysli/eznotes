@@ -20,6 +20,8 @@ class Course < ActiveRecord::Base
    has_many :registered_users, through: :registrations, source: :user
    belongs_to  :note_taker, class_name: "User", foreign_key: "user_id"
 
+   default_scope -> { order('term ASC, subject_code ASC, course_num ASC, section ASC') }
+
    before_save do
       subject_code.upcase!
       course_num.downcase!
@@ -107,7 +109,7 @@ class Course < ActiveRecord::Base
                 "%#{search}%",
                 "%#{search}%",
                 "%#{query[0]}%",
-                "%#{query[1]}%")
+                "%#{query[1]}%").order('term ASC, subject_code ASC, course_num ASC, section ASC')
       else
          scoped
       end

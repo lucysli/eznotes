@@ -1,0 +1,3 @@
+$('#courses_pagination_top').html('<%= escape_javascript(will_paginate @courses) %>');
+$('#courses').html('<%= escape_javascript(render partial: 'course', collection: @courses) %>');
+$('#courses_pagination_bottom').html('<%= escape_javascript(will_paginate @courses) %>');
