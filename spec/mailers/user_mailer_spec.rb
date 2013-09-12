@@ -93,15 +93,5 @@ describe UserMailer do
         #{course.section}: #{course.course_title}")
     end
 
-    it "should send all note users registered with course message when a notetaker is unassigned" do
-
-      mail_users.subject.should eq("NoteTaker Has Been Unassigned[McGill OSD EZnotes]")
-      mail_users.to.should eq([user.email])
-      mail_users.from.should eq(["mcgill.osd.eznotes@gmail.com"])
-      mail_users.body.encoded.should match(user.name)
-      mail_users.body.encoded.should match("#{course.term.upcase} | 
-        #{course.subject_code} #{course.course_num} 
-        #{course.section}: #{course.course_title}")
-    end
   end
 end

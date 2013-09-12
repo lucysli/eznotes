@@ -40,9 +40,12 @@ describe User do
   it { should respond_to(:registered_courses) }
   it { should respond_to(:note_taker) }
 
+  it { should respond_to(:approved) }
+
 	it { should be_valid }
   it { should_not be_admin }
   it { should_not be_note_taker }
+  it { should_not be_approved }
 
   describe "with admin attribute set to 'true'" do
     before do
@@ -60,6 +63,15 @@ describe User do
     end  
 
     it { should be_note_taker }  
+  end
+
+  describe "with approved attribute set to 'true'" do
+    before do
+      @user.save!
+      @user.toggle!(:approved)
+    end
+
+    it { should be_approved }
   end
 
   describe "when password is not present" do
