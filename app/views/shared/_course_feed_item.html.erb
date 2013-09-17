@@ -1,5 +1,6 @@
-<div id="<%= course_feed_item.id %>" class="pull-right">
-   <dl>
+<li class="row-fluid courseFeedItem">
+  <section class="span5" id="<%= course_feed_item.id %>">
+    <dl>
       <dt>
          <%= course_feed_item.subject_code %> 
          <%= course_feed_item.course_num %>
@@ -11,32 +12,18 @@
             <strong class="text-success">You are currently the note taker for this course.</strong>
          <% end %>
       </dd>
-   </dl>
-   <div class="btn-group btn-group-vertical">
-      
-      <%= link_to "View Course", course_feed_item, class: "btn btn-small btn-primary cus-doc-text" %>
-
-      <% if @user.registered_with?(course_feed_item)%>
-         <%= link_to "Unregister", registration_path(@user.registrations.find_by(course_id: course_feed_item), user: @user),
-          data: { confirm: "Unregister from the course: #{course_feed_item.term.upcase} | #{course_feed_item.subject_code} #{course_feed_item.course_num} #{course_feed_item.section} #{course_feed_item.course_title}?" }, method: :delete, class: "btn btn-small btn-danger cus-unlink" %>
-      <% end %>
-      <% if current_user.admin? and @user.note_taker? %>
-         <% if course_feed_item.note_taker.nil? %> 
-               <%= link_to "Assign As Notetaker", 
-                   course_path(course_feed_item, 
-                   course: { user_id: @user }, user: @user ), method: :put, 
-                   class: "btn btn-small btn-success cus-check-empty" %>
-         <% else %>
-            <% if course_feed_item.note_taker?(@user) %>
-                  <%= link_to "UnAssign As Notetaker", 
-                      course_path(course_feed_item, 
-                      course: { user_id: nil }, user: @user ), method: :put, 
-                      class: "btn btn-small btn-success cus-check" %>
-            <% end %>
-         <% end %>
-      <% end %>
-   </div>
-   <div class="timestamp">
+    </dl>
+    <section class="timestamp">
       Registered <%= time_ago_in_words(@user.registrations.find_by(course_id: course_feed_item).created_at) %> ago.
-   </div>
-</div>
+    </section>
+  </section>
+  <section class="span6 courseFeedItemButtons">
+    <%= link_to "View Course", course_feed_item, class: "btn btn-medium btn-inverse cus-doc-text" %>
+
+    <% if @user.registered_with?(course_feed_item)%>
+       <%= link_to "Unregister", registration_path(@user.registrations.find_by(course_id: course_feed_item), user: @user),
+        data: { confirm: "Unregister from the course: #{course_feed_item.term.upcase} | #{course_feed_item.subject_code} #{course_feed_item.course_num} #{course_feed_item.section} #{course_feed_item.course_title}?" }, method: :delete, class: "btn btn-medium btn-danger cus-unlink " %>
+    <% end %>
+  </section>
+</li>
+

@@ -8,7 +8,9 @@ class CourseImportsController < ApplicationController
 
    def create
       @course_import = CourseImport.new(params[:course_import])
-      if @course_import.save
+      if not @course_import.valid?
+         render :new
+      elsif @course_import.save
          flash[:success] = "Successfully imported courses"
          redirect_to courses_path
       else

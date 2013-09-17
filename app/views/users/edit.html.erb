@@ -1,55 +1,54 @@
 <% provide(:title, "Edit user") %>
-<h1>Update your profile</h1>
-<div class="row">
-	<div class="span6 offset3" >
-		<%= form_for(@user, html: { class: "form-horizontal" } ) do |f| %>
+
+<section class="well span8 offset6">
+		<%= form_for(@user, html: { class: "form-inline" } ) do |f| %>
+			<legend>Update Your Profile</legend>
 			<%= render 'shared/error_messages', object: f.object %>
 
-			<div class="control-group">
+			<fieldset class="control-group">
 				<%= f.label :name, class: "cus-user control-label" %>
-				<div class="controls">
-					<%= f.text_field :name, required: true %>
-				</div>
-			</div>
+				<p class="controls">
+					<%= f.text_field :name, autofocus: true, maxlength: "50", required: true, class: "input-xlarge" %>
+				</p>
+			</fieldset>
 
-			<div class="control-group">
+			<fieldset class="control-group">
 				<%= f.label :student_id, "Student ID", class: "cus-credit-card McGill Student ID control-label" %>
-				<div class="controls">
+				<p class="controls">
 					<%= f.text_field :student_id, required: true,
 					:'data-validation-regex-regex' => "^[0-9]+$", 
 					:'data-validation-regex-message' => "Student ID is incorrect format; must be a 9 digit number", 
 					maxLength: "9",
-					minLength: "9" %>
-				</div>
-			</div>
+					minLength: "9", class: "input-xlarge" %>
+				</p>
+			</fieldset>
 
 			<% if current_user.admin? %>
-				<div class="control-group">
+				<fieldset class="control-group">
 					<%= f.label :email, "McGill Email", class: "cus-mail-alt control-label" %>
-					<div class="controls">
+					<p class="controls">
 						<%= f.text_field :email, required: true, 
 							:'data-validation-email-message' => "Please enter a valid email", 
 							:'data-validation-regex-regex' => "^[a-zA-Z0-9\-]+\\.([a-zA-Z0-9]+\\.)?[a-zA-Z0-9\-]+(@mail.mcgill.ca|@mcgill.ca)$", 
 							:'data-validation-regex-message' => "Must be of the form 
-							firstname.lastname@mail.mcgill.ca or firstname.middleinitial.lastname@mail.mcgill.ca" %>
-					</div>
-				</div>
+							firstname.lastname@mail.mcgill.ca or firstname.middleinitial.lastname@mail.mcgill.ca", class: "input-xlarge" %>
+					</p>
+				</fieldset>
 			<% end %>
 
 			<% if current_user.admin? and not current_user?(@user) %>
-				<div class="control-group">
-					<div class="controls">
+				<fieldset class="control-group">
+					<p class="controls">
 						<%= f.label :note_taker, "NoteTaker?", class: "cus-pencil checkbox inline" %>
 					
 						<%= f.check_box :note_taker %> 
-					</div>
-				</div>
+					</p>
+				</fieldset>
 			<% end %>
-			<br>
-			<br>
-			<%= button_tag(type: 'submit', class: "btn btn-large btn-primary") do %>
-				<i class="cus-floppy"></i> Save changes
-			<% end %>
+			<fieldset class="control-group">
+				<%= button_tag(type: 'submit', class: "btn btn-large btn-inverse cus-floppy") do %>
+					Save changes
+				<% end %>
+			</fieldset>
 		<% end %>
-	</div>
-</div>
+</section>

@@ -1,28 +1,32 @@
 <% provide(:title, 'Password Reset') %>
-<h1>Reset Password</h1>
 
-<%= form_for @user, url: password_reset_path(params[:id], html: { class: "form-horizontal" }) do |f| %>
+<section class="well span8 offset6">
+<%= form_for @user, url: password_reset_path(params[:id], html: {class: "form-inline"}) do |f| %>
+  <legend>Reset Password</legend>
   <%= render 'shared/error_messages', object: f.object %>
-  <div class="control-group">
-    <%= f.label :password, class: "cus-lock control-label" %>
-    <div class="controls">
-      <%= f.password_field :password, required: true, 
+
+  <fieldset class="control-group">
+    <%= f.label :password, class: "cus-lock" %>
+    <p class="controls">
+      <%= f.password_field :password, autofocus: true, required: true, 
           minLength: "8",
           :'data-validation-regex-regex' => "^[^\\s']+$", 
-          :'data-validation-regex-message' => "Password is incorrect format; cannot have any spaces or quotes(')"%>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :password_confirmation, class: "cus-lock control-label" %>
-    <div class="controls">
+          :'data-validation-regex-message' => "Password is incorrect format; cannot have any spaces or quotes(')", class: "input-xlarge" %>
+    </p>
+  </fieldset>
+  
+  <fieldset class="control-group">
+    <%= f.label :password_confirmation, class: "cus-lock" %>
+    <p class="controls">
       <%= f.password_field :password_confirmation,
           :'data-validation-match-match' => "user[password]", 
-          :'data-validation-match-message' => "Password confirmation must match password" %>
-    </div>
-  </div>
-  <div class="actions">
-    <%= button_tag type: 'submit', class: "btn btn-large btn-primary" do %>
-      <i class="cus-floppy"></i> Update Password
+          :'data-validation-match-message' => "Password confirmation must match password", class: "input-xlarge"%>
+    </p>
+  </fieldset>
+
+  <fieldset>
+    <%= button_tag type: 'submit', class: "cus-floppy btn btn-large btn-inverse" do %>
+      Update Password
     <% end %>
-  </div>
+  </fieldset>
 <% end %>

@@ -11,10 +11,9 @@ describe "Static pages" do
   shared_examples "course feed" do |term|
     it "should render the user's registered #{term} courses" do
       course_feed.each do |item|
-        expect(page).to have_selector("div##{item.id}", text: item.subject_code)
-        expect(page).to have_selector("div##{item.id}", text: item.course_num)
-        expect(page).to have_selector("div##{item.id}", text: item.section)
-        expect(page).to have_selector("div##{item.id}", text: item.course_title)
+        expect(page).to have_selector("section##{item.id}")
+        expect(page).to have_content("#{item.subject_code} #{item.course_num} #{item.section}")
+        expect(page).to have_content("#{item.course_title}")
       end
     end
   end
@@ -125,17 +124,10 @@ describe "Static pages" do
 
           describe "registering for a course" do
 
-            describe "with invalid information" do
-              before { click_button "Register" }
-
-              it { should have_error_message('Course does not exist') }
-
-            end
-
             describe "with valid information" do
               
               before do
-                select course.subject_code, from: "subject_code"
+                fill course.subject_code, with: "subject_code"
                 select course.course_num, from: "course_num"
                 select course.section, from: "section"
                 select course.term, from: "term"
@@ -207,16 +199,25 @@ describe "Static pages" do
 
   it "should have the right links on the layout" do
     visit root_path
+
     click_link "About"
     expect(page).to have_title(full_title('About Us'))
+
     click_link "Help"
     expect(page).to have_title(full_title('Help'))
+
     click_link "Contact"
     expect(page).to have_title(full_title('Contact'))
+
     click_link "Home"
     expect(page).to have_title(full_title(''))
-    click_link "Register as a Note Taker or a Note User"
-    expect(page).to have_title(full_title('Registration'))
+
+    click_link "Register as a NoteTaker"
+    expect(page).to have_title(full_title('NoteTaker Registration'))
+
+    click_link "Register as a NoteUser"
+    expect(page).to have_title(full_title('NoteUser Registration'))
+
     click_link "McGill EZ Notes"
     expect(page).to have_title(full_title(''))
   end

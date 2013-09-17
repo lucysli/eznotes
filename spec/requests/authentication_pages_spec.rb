@@ -19,8 +19,6 @@ describe "Authentication" do
 
    describe "signin page" do
     before { visit signin_path }
-
-      it { should have_content('Please log in with your McGill Email and password') }
       it { should have_title(full_title('Sign in')) }
    end
 
@@ -28,10 +26,11 @@ describe "Authentication" do
       before { visit signin_path }
 
       describe "with invalid information" do
-         before { click_button "Sign in" }
+         before do
+            click_button "Sign in" 
+         end
 
          it { should have_title('Sign in') }
-         it { should have_error_message('Invalid') }
 
          describe "after visiting another page" do
             before { click_link "Home" }
@@ -219,8 +218,13 @@ describe "Authentication" do
          let(:realcourse) { FactoryGirl.create(:realcourse) }
          before { sign_in user, no_capybara: true }
 
-         describe "submitting to the new action" do
-            before { get new_user_path }
+         describe "submitting to the new_noteuser action" do
+            before { get signup_noteuser_path }
+            specify { expect(response).to redirect_to(root_path) }
+         end
+
+         describe "submitting to the new_notetaker action" do
+            before { get signup_notetaker_path }
             specify { expect(response).to redirect_to(root_path) }
          end
 

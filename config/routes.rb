@@ -3,7 +3,7 @@ EZNotes::Application.routes.draw do
   resources :sessions,  only: [:new, :create, :destroy]
   resources :notes,     only: [:create, :destroy]
   resources :courses,   only: [:show, :index, :create, :destroy, :update] 
-  resources :course_imports
+  resources :course_imports, only: [:create, :new]
   resources :registrations, only: [:index, :create, :destroy]
   resources :password_resets, only: [:new, :create, :edit, :update ]
   

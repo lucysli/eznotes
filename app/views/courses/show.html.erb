@@ -1,8 +1,7 @@
 <% provide(:title, @course.course_title) %>
-<div class="row">
-   <aside class="span4">
+<div class="row-fluid">
+   <aside class="span2">
       <section>
-         <h1> <%= @course.term %> </h1>
          <%= render @course %>
       </section>
       <section>
@@ -13,12 +12,22 @@
          <% end %>
       </section>
    </aside>
-   <div class="span8">
-      <% if @course.notes.any? %>
-         <h3>
-           <%= pluralize(@course.notes.count, "note") %> uploaded.
-         </h3>
-         <%= render 'shared/feed' %>
-    <% end %>
+   <div class="span10">
+      <header class="center">
+         <% if @course.note_taker %>
+            <h3> 
+               Problems with Notes? Late Notes? Please <strong class="cus-mail-alt text-error"> contact </strong> the notetaker directly at 
+               <strong class="text-error"> <%= @course.note_taker.email %> </strong>
+            </h3>
+         <% end %>
+      </header>
+      <section>
+         <% if @course.notes.any? %>
+            <h3>
+              <%= pluralize(@course.notes.count, "note") %> uploaded.
+            </h3>
+            <%= render 'shared/feed' %>
+         <% end %>
+      </section>
    </div>
 </div>

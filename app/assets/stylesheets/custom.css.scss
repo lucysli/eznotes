@@ -1,10 +1,9 @@
 @import "bootstrap";
 
-
 /* mixins, variables, etc. */
 
 $grayMediumLight: #eaeaea;
-$redMediumLight: #CC0000;
+$redMediumLight: #ff0000;
 
 
 @mixin box_sizing {
@@ -82,23 +81,18 @@ p {
   line-height: 1.7em;
 }
 
-.register {
-  font-style: italic;
-  font-weight: 900;
-}
 
 /* header */
 
 /* change the background color of the header to red */
 .navbar {
 	.navbar-inner {
-		background-color: $redMediumLight;
+		background-color: $gray;
 		background-image: none;
 	}
 	.nav {
 		li {
 			a {
-  			color: $black;
   			&:hover { 
   				color: white;
   				text-decoration: none;
@@ -119,7 +113,7 @@ p {
   font-weight: bold;
   line-height: 1;
   &:hover {
-  	color: white;
+  	color: $redMediumLight;
   	text-decoration: none;
   }
 }
@@ -174,6 +168,36 @@ aside {
     }
   }
 }
+#registered_courses {
+  display: block;
+        margin-bottom: 0.3em;
+      line-height: 1;
+      font-size: 1em;
+      font-weight: bolder;
+            &:hover {
+        color: $redMediumLight;
+      }
+}
+#notetaking_courses {
+  display: block;
+        margin-bottom: 0.3em;
+      line-height: 1;
+      font-size: 1em;
+      font-weight: bolder;
+      &:hover {
+        color: $redMediumLight;
+      }
+}
+#notes_uploaded {
+  display: block;
+        margin-bottom: 0.3em;
+      line-height: 1;
+      font-size: 1em;
+      font-weight: bolder;
+            &:hover {
+        color: $redMediumLight;
+      }
+}
 
 .stats {
   overflow: auto;
@@ -184,7 +208,7 @@ aside {
     color: gray;
     &:hover {
       text-decoration: none;
-      color: $blue;
+      color: $redMediumLight;
     }
     display: block;
   }
@@ -234,6 +258,7 @@ input {
   &:hover {
     color: $redMediumLight;
     text-decoration: none;
+    cursor: help;
   }
 }
 
@@ -293,6 +318,19 @@ aside {
 }
 
 /* courses */
+#courses {
+  margin: 0;
+  dl {
+    padding: 10px 0;
+    border-top: 1px solid $grayLighter;
+    &:last-child {
+      border-bottom: 1px solid $grayLighter;
+    }
+    &:hover {
+      background-color: $grayLighter;
+    }
+  }
+}
 .courses {
   list-style: none;
   margin: 10px 0 0 0;
@@ -300,6 +338,14 @@ aside {
   li {
     padding: 10px 0;
     border-top: 1px solid #e8e8e8;
+  }
+}
+
+.course {
+  dt {
+    &:hover {
+      color: $redMediumLight;
+    }
   }
 }
 
@@ -339,3 +385,43 @@ aside {
     }
   }
 }
+
+/* course feed */
+
+
+
+
+.header h4 {
+  color: black;
+  &:hover{
+    color: $redMediumLight;
+  }
+}
+
+
+.body {
+  margin: 1em;
+}
+
+.courseFeedItem {
+  margin: 0.1em;
+  padding: 0.2em;
+  list-style: none;
+  border: 0.2em solid $grayDarker;
+  &:hover {
+    background-color: $grayLighter;
+  }
+}
+
+.courseFeedItemButtons {
+  padding-top: 2em;
+}
+
+
+em {
+  font-style: italic;
+  font-weight: 900;
+}
+
+
+

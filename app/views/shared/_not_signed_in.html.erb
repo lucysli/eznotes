@@ -1,19 +1,22 @@
-<div class="center hero-unit">
-   <h1>Welcome to McGill OSD</h1>   
-   <h1>EZ Notes</h1>
-   <div class="alert alert-danger"> 
-   Please register with the new <strong>2013</strong> system!
-   </div>
-   <div class="alert alert-info">This site works best in Chrome web browser </div>
-   <h2 class="text-info"> The online service for uploading and accessing your course notes. </h2>
+<article class="center hero-unit">
+   <section class="intro">
+      <h1>Welcome to McGill OSD EZNotes</h1>   
+      <h2 class="text-error"> The online service for uploading and accessing your course notes. </h2>
+   
+      <p class="alert span6 offset6 alert-danger"> 
+         Please register with the new <strong>2013</strong> system!
+      </p>  
+      <p class="alert span6 offset6 alert-info">This site works best in Chrome web browser </p>
+   </section>
+   
 
-   <div class="btn-group">
-   <%= link_to(signup_notetaker_path, class: "btn btn-large btn-danger cus-pencil") do %>
-            Register as a <span class="register"> NoteTaker </span>
-   <% end %>
-   <%= link_to(signup_noteuser_path, class: "btn btn-large btn-success cus-user") do %>
-            Register as a <span class="register"> NoteUser </span>
-   <% end %>
-   </div>
+   <section class="signupLinks">
+      <%= link_to signup_notetaker_path, class: "cus-pencil btn btn-large btn-danger" do %>
+         Register as a <em> NoteTaker </em>
+      <% end %>   
+      <%= link_to signup_noteuser_path, class: "cus-user btn btn-large btn-inverse" do %>
+         Register as a <em> NoteUser </em>
+      <% end %>
+   </section>
          
-</div>
+</article>

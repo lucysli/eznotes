@@ -1,5 +1,5 @@
 <% provide(:title, @user.name) %>
-<div class="row">
+<article class="row-fluid">
   <aside class="span4">
     <section>
       <h1>
@@ -20,75 +20,77 @@
       </h1>
     </section>
   </aside>
-  <% if current_user.admin? and not current_user?(@user) %>
-    <table cellpadding="1" cellspacing="1" id="matchingTable" class="table table-bordered table-hover">
-     <caption class="alert alert-info"> 
-        The course feed for the user
-     </caption>
-     <thead>
-        <tr>
-           <th class="sortable cus-sort-name-up sorted-asc">Term</th>
-           <th class="sortable cus-sort-name-up sorted-asc">Course</th>
-           <th>View Course</th>
-           <th>Unregister</th>
-           <% if @user.note_taker? %>
-            <th>
-              Assign/UnAssign
-            </th>
-          <% end %>
-        </tr>
-     </thead>
-     <tbody>
-        <% @user.registered_courses.each do |registered_course| %>
-        <tr id="<%= registered_course.id %>" class="<%= @class %>">
-          <td> <%= registered_course.term.upcase %> </td>
+  <article class="row-fluid">
+    <% if current_user.admin? and not current_user?(@user) %>
+      <table cellpadding="1" cellspacing="1" class="table table-bordered table-hover">
+       <caption class="alert alert-info"> 
+          The course feed for the user
+       </caption>
+       <thead>
+          <tr>
+             <th class="sortable cus-sort-name-up sorted-asc">Term</th>
+             <th class="sortable cus-sort-name-up sorted-asc">Course</th>
+             <th>View Course</th>
+             <th>Unregister</th>
+             <% if @user.note_taker? %>
+              <th>
+                Assign/Unassign
+              </th>
+            <% end %>
+          </tr>
+       </thead>
+       <tbody>
+          <% @user.registered_courses.each do |registered_course| %>
+          <tr id="<%= registered_course.id %>" class="<%= @class %>">
+            <td> <%= registered_course.term.upcase %> </td>
 
-          <td>
-            <%= "#{registered_course.subject_code} 
-                     #{registered_course.course_num} 
-                     #{registered_course.section}" %>
-          </td>
-
-          <td>
-            <%= link_to "View Course", registered_course, class: "btn btn-small btn-primary cus-doc-text" %>
-          </td>
-
-          <td>
-            <%= link_to "Unregister", registration_path(@user.registrations.find_by(course_id: registered_course), user: @user),
-              data: { confirm: "Unregister #{@user.name} from the course: #{registered_course.term.upcase} | #{registered_course.subject_code} #{registered_course.course_num} #{registered_course.section} #{registered_course.course_title}?" }, method: :delete, class: "btn btn-small btn-danger cus-unlink" %>
-          </td>
-          <% if @user.note_taker? %>
             <td>
-              <% if registered_course.note_taker.nil? %> 
-                 <%= link_to "Assign As Notetaker", 
-                     course_path(registered_course, 
-                     course: { user_id: @user }, user: @user ), method: :put, 
-                     class: "btn btn-small btn-success cus-check-empty" %>
-              <% else %>
-                <% if registered_course.note_taker?(@user) %>
-                    <%= link_to "UnAssign As Notetaker", 
-                        course_path(registered_course, 
-                        course: { user_id: nil }, user: @user ), method: :put, 
-                        class: "btn btn-small btn-success cus-check" %>
-                <% end %>
-              <% end %>
+              <%= "#{registered_course.subject_code} 
+                       #{registered_course.course_num} 
+                       #{registered_course.section}" %>
             </td>
+
+            <td>
+              <%= link_to "View Course", registered_course, class: "btn btn-small btn-inverse cus-doc-text" %>
+            </td>
+
+            <td>
+              <%= link_to "Unregister", registration_path(@user.registrations.find_by(course_id: registered_course), user: @user),
+                data: { confirm: "Unregister #{@user.name} from the course: #{registered_course.term.upcase} | #{registered_course.subject_code} #{registered_course.course_num} #{registered_course.section} #{registered_course.course_title}?" }, method: :delete, class: "btn btn-small btn-danger cus-unlink" %>
+            </td>
+            <% if @user.note_taker? %>
+              <td>
+                <% if registered_course.note_taker.nil? %> 
+                   <%= link_to "Assign As Notetaker", 
+                       course_path(registered_course, 
+                       course: { user_id: @user }, user: @user ), method: :put, 
+                       class: "btn btn-small btn-success cus-check-empty" %>
+                <% else %>
+                  <% if registered_course.note_taker?(@user) %>
+                      <%= link_to "UnAssign As Notetaker", 
+                          course_path(registered_course, 
+                          course: { user_id: nil }, user: @user ), method: :put, 
+                          class: "btn btn-small btn-success cus-check" %>
+                  <% end %>
+                <% end %>
+              </td>
+            <% end %>
+          </tr>
           <% end %>
-        </tr>
+       </tbody>
+    </table>
+    <% else %>
+      <div class="span8">
+        <% if @user.notes.any? %>
+          <h3>
+            <%= pluralize(@user.notes.count, "Note") %> uploaded.
+          </h3>
+          <ol class="notes">
+            <%= render @notes %>
+          </ol>
+          <%= will_paginate @notes %>
         <% end %>
-     </tbody>
-  </table>
-  <% else %>
-    <div class="span8">
-      <% if @user.notes.any? %>
-        <h3>
-          <%= pluralize(@user.notes.count, "Note") %> uploaded.
-        </h3>
-        <ol class="notes">
-          <%= render @notes %>
-        </ol>
-        <%= will_paginate @notes %>
-      <% end %>
-    </div>
-  <% end %>
-</div>
+      </div>
+    <% end %>
+  </article>
+</article>

@@ -5,40 +5,37 @@ describe "User pages" do
 	subject { page }
 
 	describe "index" do
-		let(:notetaker) { FactoryGirl.create(:notetaker) }
+		describe "as note user" do
+			let(:user) { FactoryGirl.create(:user) }
+			before do
+			  sign_in user
+			  visit users_path
+			end
+			after { User.delete_all }
 
-		describe "as non admin user" do
 			it { should_not have_link('delete') }
 
-			describe "as note user" do
-				let(:user) { FactoryGirl.create(:user) }
-				before do
-				  sign_in user
-				  visit users_path
-				end
-				after { User.delete_all }
+			it { should_not have_title(full_title('All users')) }
+			it { should_not have_content('All users') }
+			it { should have_notice_message('You are not authorized to access this page.') }
+		end
 
-				it { should_not have_title(full_title('All users')) }
-				it { should_not have_content('All users') }
-				it { should have_notice_message('You are not authorized to access this page.') }
+		describe "as note taker" do
+			let(:notetaker) { FactoryGirl.create(:notetaker) }
+			before do
+			  sign_in notetaker
+			  visit users_path
 			end
 
-			describe "as note taker" do
+			it { should_not have_link('delete') }
 
-				before do
-				  sign_in notetaker
-				  visit users_path
-				end
-
-				it { should_not have_title(full_title('All users')) }
-				it { should_not have_content('All users') }
-				it { should have_notice_message('You are not authorized to access this page.') }
-			end
+			it { should_not have_title(full_title('All users')) }
+			it { should_not have_content('All users') }
+			it { should have_notice_message('You are not authorized to access this page.') }
 		end
 		describe "as an admin user" do
 			let(:admin) { FactoryGirl.create(:admin) }
 			
-
 			before(:each) do
 				sign_in admin
 				visit users_path
@@ -56,7 +53,7 @@ describe "User pages" do
 
 				it "should list each user" do
 					User.all.each do |user|
-						expect(page).to have_selector('li', text: "(NoteUser)")
+						expect(page).to have_selector('li', text: "#{user.student_id}")
 					end
 				end
 
@@ -76,7 +73,7 @@ describe "User pages" do
 
 					describe "should be able to approve a notetaker" do
 						before do
-							click_link("approve", match: :first)
+							click_link("Approve", match: :first)
 						end
 
 						specify { expect(notetaker.reload).to be_approved }
@@ -96,14 +93,6 @@ describe "User pages" do
 					it "should not create an admin user" do
 						expect { click_button submit }.not_to change(User, :count)
 					end
-				end
-
-				describe "after submission" do
-					before { click_button submit }
-
-					it { should have_title('All users') }
-					it { should have_content('error') }
-					it { should have_error_message('Could not create') }
 				end
 
 				describe "with valid information" do
@@ -136,12 +125,27 @@ describe "User pages" do
 		end
 	end
 
-	describe "signup page" do
-		before { visit signup_path }
+	describe "signup noteuser page" do
+		before { visit signup_noteuser_path }
 		let(:cancel) { "Cancel" }
 
 
-		it { should have_title(full_title('Registration')) }
+		it { should have_title(full_title('NoteUser Registration')) }
+		it { should have_content('First') }
+
+		describe "cancelling" do
+			it "should not create a user" do
+				expect { click_link cancel }.not_to change(User, :count)
+			end
+		end
+	end
+
+	describe "signup notetaker page" do
+		before { visit signup_notetaker_path }
+		let(:cancel) { "Cancel" }
+
+
+		it { should have_title(full_title('NoteTaker Registration')) }
 		it { should have_content('First') }
 
 		describe "cancelling" do
@@ -180,11 +184,11 @@ describe "User pages" do
       end
 	end
 
-	describe "signup" do
+	describe "noteuser signup" do
 		
-		before { visit signup_path }
+		before { visit signup_noteuser_path }
 
-		let(:submit) { "Create my account" }
+		let(:submit) { "Register" }
 
 		describe "with invalid information" do
 			it "should not create a user" do
@@ -194,72 +198,71 @@ describe "User pages" do
 			describe "after submission" do
 				before { click_button submit }
 
-				it { should have_title('Registration') }
+				it { should have_title('NoteUser Registration') }
 				it { should have_content('error') }
 			end
 		end
-
-		describe "note users" do
 			
-			describe "with valid information" do
-				before do
-				  fill_in "Name",				with: "Example User"
-				  fill_in "Email",			with: "example.user@mail.mcgill.ca"
-				  fill_in "Student ID",		with: "111111111"
-				  fill_in "Password",		with: "foobar11"
-				  fill_in "Confirmation",	with: "foobar11"
+		describe "with valid information" do
+			before do
+			  fill_in "Name",				with: "Example User"
+			  fill_in "Email",			with: "example.user@mail.mcgill.ca"
+			  fill_in "Student ID",		with: "111111111"
+			  fill_in "Password",		with: "foobar11"
+			  fill_in "Confirmation",	with: "foobar11"
+			end
+
+			it "should create a note user" do
+				expect { click_button submit }.to change(User, :count).by(1)
+			end
+
+			describe "after saving the note user" do
+				before { click_button submit }
+				let(:user) { User.find_by(email: 'example.user@mail.mcgill.ca') }
+
+				it { should have_link('Sign out') }
+				it { should have_title(full_title('')) }
+				it { should have_success_message('Welcome') }
+
+				it "should be a note user" do
+					expect(user).not_to be_note_taker
 				end
+			end
 
-				it "should create a note user" do
-					expect { click_button submit }.to change(User, :count).by(1)
-				end
-
-				describe "after saving the note user" do
-					before { click_button submit }
-					let(:user) { User.find_by(email: 'example.user@mail.mcgill.ca') }
-
-					it { should have_link('Sign out') }
-					it { should have_title(full_title('')) }
-					it { should have_success_message('Welcome') }
-
-					it "should be a note user" do
-						expect(user).not_to be_note_taker
-					end
-				end
-
-				describe "#send new user registration email" do
-    				it "should deliver email to user" do
-      				last_email.to.should include (user.email)
-    				end
-  				end
+			describe "#send new user registration email" do
+ 				it "should deliver email to user" do
+   				last_email.to.should include (user.email)
+ 				end
 			end
 		end
-		describe "note takers" do
-			describe "with valid information" do
-				before do
-				  fill_in "Name",				with: "Example User"
-				  fill_in "Email",			with: "example.user@mail.mcgill.ca"
-				  fill_in "Student ID",		with: "111111111"
-				  fill_in "Password",		with: "foobar11"
-				  fill_in "Confirmation",	with: "foobar11"
-				  check 'NoteTaker?'
-				end
+	end
+	describe "notetaker signup" do
+		before { visit signup_notetaker_path }
 
-				it "should create a note taker" do
-					expect { click_button submit }.to change(User, :count).by(1)
-				end
+		let(:submit) { "Register" }
+		describe "with valid information" do
+			before do
+			  fill_in "Name",				with: "Example User"
+			  fill_in "McGill Email",			with: "example.user@mail.mcgill.ca"
+			  fill_in "Student ID",		with: "111111111"
+			  fill_in "Password",		with: "foobar11"
+			  fill_in "Confirmation",	with: "foobar11"
+			end
 
-				describe "after saving the user" do
-					before { click_button submit }
-					let(:user) { User.find_by(email: 'example.user@mail.mcgill.ca') }
+			it "should create a note taker" do
+				expect { click_button submit }.to change(User, :count).by(1)
+			end
 
-					it { should have_link('Sign out') }
-					it { should have_title(full_title('')) }
-					it { should have_success_message('Welcome') }
+			describe "after saving the user" do
+				before { click_button submit }
+				let(:user) { User.find_by(email: 'example.user@mail.mcgill.ca') }
 
-					it "should be a notetaker" do
-						expect(user).to be_note_taker
-					end
+				it { should have_link('Sign out') }
+				it { should have_title(full_title('')) }
+				it { should have_success_message('Welcome') }
+
+				it "should be a notetaker" do
+					expect(user).to be_note_taker
 				end
 			end
 		end
@@ -273,14 +276,8 @@ describe "User pages" do
 		end
 
 		describe "page" do
-			it { should have_content("Update your profile") }
+			it { should have_selector('legend', text: "Update your profile") }
 			it { should have_title(full_title("Edit user")) }
-		end
-
-		describe "with invalid information" do
-			before { click_button "Save changes" }
-
-			it { should have_content('error') }
 		end
 
 		describe "with valid information" do
@@ -289,8 +286,6 @@ describe "User pages" do
 			before do
 			  fill_in "Name",	with: new_name
 			  fill_in "Student ID",	with: new_id
-			  fill_in "McGill Password",	with: user.password
-			  fill_in "Confirm Password",	with: user.password
 			  click_button "Save changes"
 			end
 

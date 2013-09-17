@@ -1,35 +1,37 @@
 <% provide(:title, 'Courses') %>
-<h1 id="heading"> Courses (<%= @courses.count %>)</h1>
+<h1 id="courses_heading"> Courses <strong class="text-error">( <%= @courses.count %> )</strong></h1>
 
-<div class="row">
-<aside class="span2">
-   <section>
-      <div class="btn-group btn-group-vertical">
-         <%= link_to "Import Courses", new_course_import_path, class: "btn btn-small btn-primary cus-upload" %>
-         <%= link_to "Delete All Courses", 'delete_all', method: :delete, data: { confirm: "WARNING This will delete all courses hence will also delete all course registrations made by students and all notes associated with the course." },class: "btn btn-small btn-danger cus-trash" %>
-      </div>
-   </section>
-</aside>
-<div class="span10">
-   <%= form_tag courses_path, method: 'get', html: { class: "form-inline" }, id: "courses_search" do %>
-      <%= label_tag :search, nil, class: "cus-eye" %>
-      <%= text_field_tag :search, params[:search], class: "input-large" %>
-   <% end %>
+<article class="row-fluid">
+   <aside class="span2">
+      <section>
+         <div class="btn-group btn-group-vertical">
+            <%= link_to "Import Courses", new_course_import_path, class: "btn btn-small btn-inverse cus-upload" %>
+            <%= link_to "Delete All Courses", 'delete_all', method: :delete, data: { confirm: "WARNING This will delete all courses hence will also delete all course registrations made by students and all notes associated with the course." },class: "btn btn-small btn-danger cus-trash" %>
+         </div>
+      </section>
+   </aside>
+   <article class="span10">
+      <section>
+         <%= form_tag courses_path, method: 'get', html: { class: "form-inline" }, id: "courses_search" do %>
+            <%= label_tag :search, nil, class: "cus-eye" %>
+            <%= text_field_tag :search, params[:search], class: "input-large" %>
+         <% end %>
+      </section>
 
 
 
-   <div id="courses_pagination_top">
-      <%= will_paginate @courses %>
-   </div>
+      <section id="courses_pagination_top">
+         <%= will_paginate @courses %>
+      </section>
 
-   <div id="courses">
-      <%= render @courses %> 
-   </div>
+      <section id="courses">
+         <%= render @courses %> 
+      </section>
 
-   <div id="courses_pagination_bottom">
-      <%= will_paginate @courses %>
-   </div>
+      <section id="courses_pagination_bottom">
+         <%= will_paginate @courses %>
+      </section>
 
-</div>
+   </article>
    
-</div>
+</article>

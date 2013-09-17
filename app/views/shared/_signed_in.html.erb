@@ -1,46 +1,32 @@
 <% if current_user.admin? %>
-<div class="row">
-   <aside class="span3">
-      <section>
+   <aside class="row-fluid">
+      <section class="span4">
          <%= render 'shared/user_info' %>
       </section>
       <section>
-         <form class="form-search">
+         <form class="form-search pull-right">
+            <input type="text" name="filter" value="" id="filter" class="input-large search-query" />
             <label for="filter" class="cus-zoom-in">Filter</label>
-            <input type="text" name="filter" value="" id="filter" class="input-medium search-query" />
          </form>
       </section>
    </aside>
-   <%= render 'shared/admin_info' %>
-</div>
+   <article class="row-fluid">
+      <%= render 'shared/admin_info' %>
+   </article>
 <% else %> 
-<div class="pull-right">
-<%= render 'shared/add_course_form' %>
-</div>
-<div class="span4">
-<aside>
-   <section>
-      <%= render 'shared/user_info' %>
-   </section>
-</aside>
-</div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<div class="row">
-   <hr>
-   <div class="span12">
-      <%= render 'shared/course_feed' %>
-   </div>
-</div>
-            
+   <aside class="row-fluid">
+      <section class="span4">
+         <%= render 'shared/user_info' %>
+      </section>
+      <section class="span6 well offset2">
+         <%= render 'shared/add_course_form' %>
+      </section>
+   </aside>
+   <% if @fall_course_feed_items.empty? and @winter_course_feed_items.empty? and @summer_course_feed_items.empty? %>
+      <h1 class="alert alert-info"> No Classes Registered Yet </h1>
+   <% else %>
+      <article id="courseFeed" class="row-fluid">
+         <%= render 'shared/course_feed' %>
+      </article>   
+   <% end %>        
 <% end %>

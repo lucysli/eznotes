@@ -1,23 +1,28 @@
-
 appendEmailAddress = ->
    # get the value of the email field in the note taker signup form
    text = $('#signup_email').val()
    # defined the pattern we want to match against
-   # in this case we want to look for @mail.mcgill.ca
+   # in this case we want to look for the '@' symbol
    # in the inputed text field
    emailPattern = /// # beginining of line
       .*              # one or more of anything
-      @mail.mcgill.ca # followed by an @mail.mcgill.ca sign
+      @               # followed by an @
       ///i            # endo of line ignore case
    
-   # if the pattern is matched then simply do some clean up
-   # and make sure nothing comes after it
-   # otherwise append it to value of the field and update
+   # if the pattern is matched search for '@mail.mcgill.ca'
+   # if the @mail.mcgill.ca already exists then make sure you
+   # perform some cleanup so that that is the only thing appended
+   # to the user email
+   emailEnd = "@mail.mcgill.ca"
    if emailPattern.test(text)
-      index = text.indexOf "@mail.mcgill.ca"
-      $('#signup_email').val(text.substring(0,index+15))
+      index = text.indexOf emailEnd
+      if index != -1
+         $('#signup_email').val(text.substring(0,index+emailEnd.length))
+      else
+         $('#signup_email').val(text.substring(0,text.indexOf "@") + emailEnd)
    else
-      $('#signup_email').val(text + "@mail.mcgill.ca")
+      # if there is no @ symbol then append @mail.mcgill.ca
+      $('#signup_email').val(text + emailEnd)
 
 # Taken from rails cast episode 390 about turbolinks
 
@@ -32,8 +37,11 @@ appendEmailAddress = ->
 # This way the events for the email text field will be attached whether 
 # we’ve loaded the page via Turbolinks or not.
 ready = ->
+   # append @mail.mcgill.ca to end of email once user finishes typing
+   # in the email field of the sign up form
    $('#signup_email').focusout appendEmailAddress
-   $("input,select").jqBootstrapValidation()
+   # enable inline validation for the sign up form
+   $("input").not("[type=submit]").jqBootstrapValidation()
    
    
 $(document).ready(ready)

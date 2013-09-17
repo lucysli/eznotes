@@ -1,45 +1,81 @@
 <% provide(:title, 'All users') %>
 <h1>All users</h1>
-<form class="form-search">
+<form class="form-search offset5">
    <label for="filter" class="cus-users">Filter</label>
    <input type="text" name="filter" value="" id="user_filter" class="input-large search-query" />
 </form>
-<div class="row">
+<article class="row-fluid">
    <aside class="span3">
-      <section>
-         <h2> Add Admin User </h2>
+      <section class="well">
          <%= form_tag('/create_admin', method: :put ) do %>
-            <%= label_tag :name do %>
-               <i class="cus-user"></i> Name
-            <% end %>
-            <%= text_field_tag :name, nil, placeholder: "john doe", class: "newAdminName" %>
+            <legend>Add Admin User</legend>
 
-            <%= label_tag :email, "McGill Email", class: "cus-mail-alt" %>
-            <div class="input-append">
-               <%= text_field_tag :email, nil, placeholder: "john.doe@mcgill.ca", class: "admin_email newAdminEmail" %>
-               <span class="add-on">@mcgill.ca</span>
-            </div>
-            <%= label_tag :student_id, "McGill Student ID", class: "cus-credit-card" %>
-            <%= text_field_tag :student_id, nil, placeholder: "123456789", class: "newAdminID" %>
+            <fieldset name="addAdminName" class="control-group">
+               <%= label_tag :name, nil, class: "cus-user control-label" %>
+               <p class="controls">
+                  <%= text_field_tag :name, nil, maxlength: "50", placeholder: "john doe", required: true, class: "input-xlarge newAdminName" %>
+               </p>
+            </fieldset>
 
-            <%= label_tag :password, "McGill Password", class: "cus-lock" %>
-            <%= password_field_tag :password, nil, class: "newAdminPassword"%>
+            <fieldset name="addAdminEmail" class="control-group">
+               <%= label_tag :email, "McGill Email", class: "cus-mail-alt" %>
+               <p class="controls">
+                  <%= text_field_tag :email, nil, placeholder: "john.doe@mcgill.ca", required: true, 
+                     :'data-validation-email-message' => "Please enter a valid email", 
+                     :'data-validation-regex-regex' => "^[a-zA-Z0-9\-]+\\.([a-zA-Z0-9]+\\.)?[a-zA-Z0-9\-]+(@mail.mcgill.ca|@mcgill.ca)$", 
+                     :'data-validation-regex-message' => "Must be of the form firstname.lastname@mcgill.ca",
+                     class: "input-xlarge newAdminEmail" %>
+               </p>
+            </fieldset>
 
-            <%= label_tag :password_confirmation, "Confirmation", class: "cus-lock" %>
-            <%= password_field_tag :password_confirmation, nil, class: "newAdminConfirm" %>
+            <fieldset name="addAdminID" class="control-group">
+               <%= label_tag :student_id, "McGill Student ID", class: "cus-credit-card" %>
+               <p class="controls">
+                  <%= text_field_tag :student_id, nil, placeholder: "123456789", required: true, 
+                                    :'data-validation-regex-regex' => "^[0-9]+$", 
+                                    :'data-validation-regex-message' => "Student ID is incorrect format; must be a 9 digit number", 
+                                    maxLength: "9",
+                                    minLength: "9",
+                                    placeholder: "123456789",
+                                    class: "input-xlarge newAdminID" %>
+               </p>
+            </fieldset>
 
-            <%= button_tag(type: 'submit', class: "btn btn-large btn-primary") do %>
-               <i class="cus-ok"></i> Create Account
-            <% end %>
+            <fieldset name="addAdminPassword" class="control-group">
+               <%= label_tag :password, "McGill Password", class: "cus-lock" %>
+               <p class="controls">
+                  <%= password_field_tag :password, nil, required: true, 
+                  minLength: "8",
+                  :'data-validation-regex-regex' => "^[^\\s']+$", 
+                  :'data-validation-regex-message' => "Password is incorrect format; cannot have any spaces or quotes(')", 
+                  class: "input-xlarge newAdminPassword"%>
+               </p>
+            </fieldset>
+
+            <fieldset name="addAdminConfirm" class="control-group">
+               <%= label_tag :password_confirmation, "Confirmation", class: "cus-lock" %>
+               <p class="controls">
+                  <%= password_field_tag :password_confirmation, nil, 
+                  :'data-validation-match-match' => "password", 
+                  :'data-validation-match-message' => "Password confirmation must match password", 
+                  class: "input-xlarge newAdminConfirm" %>
+               </p>
+            </fieldset>
+
+            <fieldset name="submit">
+               <%= button_tag(type: 'submit', class: "btn btn-large btn-inverse cus-ok") do %>
+                  Create Account
+               <% end %>
+            </fieldset>
          <% end %>
       </section>
    </aside>
-   <div class="span9">
+   <article class="span9">
 
       <ul class="users">
          <%= render @users %>
       </ul>
 
-   </div>
-</div>
+   </article>
+</article>
 

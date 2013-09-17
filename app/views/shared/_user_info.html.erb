@@ -1,32 +1,27 @@
-<!--<a href="<%= user_path(current_user) %>"></a>-->
-<span>
-   <h1> 
-      <%= current_user.name.capitalize %> 
-   </h1>
-   <h4>
-      (
-      <% if current_user.note_taker? %>
-         <i class="cus-pencil"></i> NoteTaker
-      <% elsif current_user.admin?%>
-         <i class="cus-cog-alt"></i> Admin
-      <% else %>
-         <i class="cus-user"></i> NoteUser
-      <% end %>)
-   </h4>
-</span>
-<span>
+<h1> <%= current_user.name.capitalize %> </h1>
+<h4>
+   (
+   <% if current_user.note_taker? %>
+      <strong class="cus-pencil">NoteTaker</strong> 
+   <% elsif current_user.admin?%>
+      <strong class="cus-cog-alt">Admin</strong> 
+   <% else %>
+      <strong class="cus-user">NoteUser</strong> 
+   <% end %>)
+</h4>
+<p>
    <%= link_to "view my profile", current_user, class: "cus-eye" %>
-</span>
+</p>
 <% if not current_user.admin? %>
-   <span id="registered_courses" class="badge badge-info cus-doc-inv">
-      <%= "Registered for " + pluralize(current_user.registered_courses.count, "course") %>
-   </span> 
+   <p id="registered_courses" class="cus-doc-inv">
+      Registered for <%= pluralize(current_user.registered_courses.count, "course") %>
+   </p> 
 <% end %>
 <% if current_user.note_taker? %>
-   <span id="notetaking_courses" class="badge badge-info cus-doc-inv">
-      <%= "Notetaking for " + pluralize(current_user.notetaking_for.count, "course") %>
-   </span>
-   <span  class="badge badge-info cus-doc-text">
-      <%= pluralize(current_user.notes.count, "note") + " uploaded" %>
-   </span>
+   <p id="notetaking_courses" class="cus-pencil">
+       Notetaking for <%= pluralize(current_user.notetaking_for.count, "course") %>
+   </p>
+   <p id="notes_uploaded" class="cus-doc-text-inv">
+      <%= pluralize(current_user.notes.count, "note") %> uploaded
+   </p>
 <% end %>

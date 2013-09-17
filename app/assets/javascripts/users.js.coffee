@@ -53,22 +53,16 @@ ready = ->
    $('.editUserConfirm').tooltip(title: "Confirm your password", placement: "right")
 
    # Reset password from
-   $('.emailReset').tooltip(title: "Please input your McGill Email that you registered with", placement: "right")
+   $('.emailReset').tooltip(title: "Please input your full McGill Email that you registered with", placement: "right")
 
    # Register courses form
    $('.registerCourses').tooltip(title: "Add your courses. 
                   You can register for more than one course at the same time.
-                  Please take note of the semester and course section", placement: "left", trigger: "click")
+                  Please take note of the semester and course section", placement: "left")
 
-   # Add Admin form 
-   $('.newAdminName').tooltip(title: "Enter the full name of the new admin user", placement: "left")
-   $('.newAdminEmail').tooltip(title: "Enter the email of the new admin user", placement: "left")
-   $('.newAdminID').tooltip(title: "Enter the 9 digit McGill ID of the new admin user", placement: "left")
-   $('.newAdminPassword').tooltip(title: "Enter the password minimum 8 characters", placement: "left")
-   $('.newAdminConfirm').tooltip(title: "Confirm the new password", placement: "left")
 
    # Admin filter search field
-   $('#filter').tooltip(title: "input search text to filter data in table. Press esc key to reset", placement: "right")
+   $('#filter').tooltip(title: "input search text to filter data in table. Press esc key to reset.", placement: "left")
    $('#course_filter').tooltip(title: "input search text to filter course data. Press esc key to reset", placement: "right")
    $('#user_filter').tooltip(title: "input search text to filter user data. Press esc key to reset", placement: "right")
 

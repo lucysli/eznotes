@@ -24,8 +24,8 @@ describe "Course pages" do
             visit courses_path
          end
 
-         it { should have_title(full_title('All Courses')) }
-         it { should have_content('All Courses') }
+         it { should have_title(full_title('Courses')) }
+         it { should have_content('Courses') }
 
          describe "pagination" do
             before(:all) { 31.times { FactoryGirl.create(:course) } }
@@ -35,44 +35,19 @@ describe "Course pages" do
 
             it "should list each course" do
                Course.paginate(page: 1).each do |course|
-                  expect(page).to have_selector('a', text: "#{course.subject_code} #{course.course_num} #{course.section}")
+                  expect(page).to have_selector("dt##{course.id}", text: "#{course.subject_code} #{course.course_num} #{course.section} ( #{course.term.upcase} )")
                   expect(page).to have_selector('dd', text: course.course_title)
                end
             end
          end
 
          describe "delete links" do
-            before { FactoryGirl.create(:course) }
+            let(:course) { FactoryGirl.create(:course) }
 
-            it { should have_link('delete', href: course_path(Course.first)) }
+            it { should have_link('delete', href: course_path(course)) }
 
             it "should be able to delete a course" do
                expect { click_link('delete') }.to change(Course, :count).by(-1)
-            end
-         end
-
-         describe "course import" do
-
-            describe "with invalid information" do
-         
-               it "should not import courses" do
-                  expect { click_button "Import" }.not_to change(Course, :count)
-               end
-
-               describe "error messages" do
-                  before { click_button "Import" }
-                  it { should have_content('error') }
-               end
-            end
-
-            describe "with valid information" do
-               before do
-                  attach_file 'courses', Rails.root.join('app', 'assets', 'files', 'Fall', 'all.csv')
-               end
-
-               it "should import courses" do
-                  expect { click_button "Import" }.to change(Course, :count).by(1072)
-               end
             end
          end
       end
@@ -101,13 +76,13 @@ describe "Course pages" do
             it { should have_title(full_title(realcourse.course_title)) }
 
             describe "sidebar" do
-               it { should have_content(realcourse.term) }
-               it { should have_link("#{realcourse.subject_code} #{realcourse.course_num} #{realcourse.section}", href: course_path(realcourse)) }
+               it { should have_content("#{realcourse.subject_code} #{realcourse.course_num} #{realcourse.section} ( #{realcourse.term.upcase} )", href: course_path(realcourse)) }
                it { should have_content(realcourse.course_title) }
 
-               it { should have_content("1 student registered") }
-               it { should have_content("0 notes uploaded") }
+               it { should have_content("1 noteuser registered") }
+               it { should have_content("0 notetakers registered") }
                it { should have_content("0 notetakers assigned") }
+               it { should have_content("0 notes uploaded") }
             end
 
             it "should not have the note upload form" do
@@ -132,7 +107,6 @@ describe "Course pages" do
 
                describe "sidebar" do
                   it { should have_content "1 notetaker assigned" }
-                  it { should have_selector("strong#notetaker", text: "1 notetaker assigned") }
                   it { should have_content("31 notes uploaded") }
                end
             end

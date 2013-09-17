@@ -1,9 +1,10 @@
-<div class="row">
-   <h1>Course Import</h1>
-   <div class="alert alert-block alert-info span12">
-      <p>
-         A CSV can be used to import records. You can download the courses CSV files from Mcgill <a href="https://horizon.mcgill.ca/pban1/bwckschd.p_disp_dyn_sched" target="_blank"> Minvera schedule </a>. Just select the term you are interested and click submit. On the next page choose the faculty and click Get Course Sections. Or better yet select all the subjects using shift click and click get course sections that should give you all the course sections in one shot. Finally if there any results scroll to the bottom and click Download Results.
-      </p>
+<% provide(:title, 'Course Import') %>
+<article class="row-fluid">
+   <h1 class="center">Course Import</h1>
+   <section class="alert alert-block alert-info span8 offset2">
+      <header>
+         A CSV can be used to import records. You can download the courses CSV files from Mcgill <a href="https://horizon.mcgill.ca/pban1/bwckschd.p_disp_dyn_sched" target="_blank" class="text-error"> Minvera schedule</a>. Just select the term you are interested and click submit. On the next page choose the faculty and click Get Course Sections. Or better yet select all the subjects using shift click and click get course sections that should give you all the course sections in one shot. Finally if there any results scroll to the bottom and click Download Results.
+      </header>
 
       <p>
          The following columns are allowed.
@@ -20,20 +21,44 @@
       </p>
 
       <p>
-         If a <strong>CRN</strong> is supplied in the file(which if downloaded from mcgill that should be the case)it will update the matching record instead of creating a new one.
+         If a <strong>CRN</strong> is supplied in the file(which if downloaded from mcgill that should be the case) it will update the matching record instead of creating a new one.
       </p>
-   </div>
+   </section>
 
-   <div class="span12">
+   <section class="well span4 offset4">
       <%= form_for @course_import do |f| %>
          <%= render 'shared/error_messages', object: f.object %>
 
-         <%= f.file_field :file, accept: 'text/csv', multiple: true %>
-         <%= f.select :term, 
-            options_for_select([["fall"], ["winter"], ["summer"]])%>
-         <%= button_tag(type: 'submit', class: "btn btn-large btn-primary") do %>
-            <i class="cus-upload"></i> Import
-         <% end %> 
+         <fieldset>
+          <%= f.label :file, class: "cus-folder-open" %>
+          <p class="controls">
+            <%= f.file_field :file, accept: 'text/csv', multiple: true, class: "input-xlarge"%>
+          </p>
+         </fieldset>
+
+        <fieldset>
+          <p>        
+            <%= f.label :term_fall, 'Fall', class: "radio inline" do %>
+              <%= f.radio_button :term, 'fall', checked: true %> Fall
+            <% end %>
+
+            
+            <%= f.label :term_winter, 'Winter', class: "radio inline" do %>
+              <%= f.radio_button :term, 'winter' %> Winter
+            <% end %>
+
+            
+            <%= f.label :term_summer, 'Summer', class: "radio inline" do %>
+              <%= f.radio_button :term, 'summer' %> Summer
+            <% end %>
+          </p>
+        </fieldset>
+
+        <fieldset>
+          <%= button_tag(type: 'submit', class: "btn btn-large btn-inverse cus-upload") do %>
+            Import
+          <% end %>
+        </fieldset> 
       <% end %>
-   </div>
-</div>
+   </section>
+</article>

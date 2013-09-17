@@ -1,9 +1,10 @@
 class CourseImport
   include ActiveModel::Model
+
   attr_accessor :file, :term
 
   VALID_FILE_REGEX = /\A.+.csv\z/i
-  validates :file, presence: true, format: { with: VALID_FILE_REGEX }
+  validates :file, presence: true, format: { with: VALID_FILE_REGEX, message: " format must be .csv" }
   validates :term, presence: true
 
   def initialize(attributes = {})
@@ -33,8 +34,8 @@ class CourseImport
   end
 
   def load_imported_courses
-    if File.extname(file[0].original_filename) != ".csv"
-      raise "Unknown file type: #{file.original_filename}"
+    if file.nil? or File.extname(file[0].original_filename) != ".csv"
+      return []
     end
 
     spreadsheet = CSV.read(file[0].path, skip_blanks: true, encoding: "ISO-8859-1")

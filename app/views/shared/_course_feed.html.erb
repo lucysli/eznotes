@@ -1,15 +1,26 @@
 <% @user = current_user %>
 
-<div class="span3" id="Fall">
-   <h4>FALL</h4>
-   <%= render partial: 'shared/course_feed_item', collection: @fall_course_feed_items %>
-</div>
-<div class="span3 offset1" id="Winter">
-   <h4>WINTER</h4>
-   <%= render partial: 'shared/course_feed_item', collection: @winter_course_feed_items %>
-</div>
-<div class="span3 offset1" id="Summer">
-   <h4>SUMMER</h4>
-   <%= render partial: 'shared/course_feed_item', collection: @summer_course_feed_items %>
-</div>
+
+<header class="span12 header">
+   <h4 class="center span4">FALL</h4>
+   <h4 class="center span4">WINTER</h4>
+   <h4 class="center span4">SUMMER</h4>
+</header>
+<section class="row-fluid body">
+   <ul class="span4 fall">
+      <%= render partial: 'shared/course_feed_item', collection: @fall_course_feed_items %>
+   </ul>
+
+   <ul class="span4 winter">
+      <%= render partial: 'shared/course_feed_item', collection: @winter_course_feed_items %>
+   </ul>
+
+   <ul class="span4 summer">
+      <%= render partial: 'shared/course_feed_item', collection: @summer_course_feed_items %>
+   </ul>
+</section>
+
+
+
+
 

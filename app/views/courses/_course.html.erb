@@ -1,8 +1,6 @@
-<dl id="<%= course.id %>" class="course">
-   <dt>
-      <%= link_to course.subject_code + 
-          " #{course.course_num}" + 
-          " #{course.section}", course %> (<%= course.term.upcase %>)
+<dl class="course">
+   <dt id="<%= course.id %>">
+      <%= "#{course.subject_code} #{course.course_num} #{course.section} ( #{course.term.upcase} )" %> 
    </dt> 
    <dd>
       <%= course.course_title %>
