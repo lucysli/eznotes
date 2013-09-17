@@ -35,9 +35,3 @@ appendEmailAddress = ->
 # and pass it to both the document.ready and the page:load events. 
 # This way the events for the email text field will be attached whether 
 # we’ve loaded the page via Turbolinks or not.
-ready = ->
-   #$('#session_email').focusout appendEmailAddress
-   #$('.admin_email').focusout appendEmailAddress
-   
-$(document).ready(ready)
-$(document).on('page:load', ready)
