@@ -23,11 +23,11 @@ class UsersController < ApplicationController
 
   def create
 		@user = User.new(create_params)
-    accomodation = Accomodation.find_by(student_id: @user.student_id)
-    if not @user.note_taker and ( accomodation.nil? or not accomodation.note_taking)
-      flash.now[:error] = "You are not registered with the OSD to recieve note taking, hence you cannot register for this service."
-      render 'new_noteuser'
-    else
+    #accomodation = Accomodation.find_by(student_id: @user.student_id)
+    #if not @user.note_taker and ( accomodation.nil? or not accomodation.note_taking)
+      #flash.now[:error] = "You are not registered with the OSD to recieve note taking, hence you cannot register for this service."
+      #render 'new_noteuser'
+    #else
   		if @user.save
         @user.send_new_registration_message
         sign_in @user
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
           render 'new_noteuser'
   		  end
       end
-    end
+    #end
   end
 
   def create_admin
