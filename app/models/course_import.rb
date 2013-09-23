@@ -3,8 +3,7 @@ class CourseImport
 
   attr_accessor :file, :term
 
-  VALID_FILE_REGEX = /\A.+.csv\z/i
-  validates :file, presence: true, format: { with: VALID_FILE_REGEX, message: " format must be .csv" }
+  validates :file, presence: true
   validates :term, presence: true
 
   def initialize(attributes = {})

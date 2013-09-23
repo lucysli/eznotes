@@ -23,7 +23,12 @@
       <% else %> 
         <strong class="muted"> <%= @noteusers.count %> registered </strong>
         <% @noteusers.each do |noteuser| %>
-          <p> <%= link_to noteuser.name, noteuser %> </p>
+          <p> 
+            <%= link_to noteuser.name, noteuser %> 
+            <% if not Accomodation.exists?(student_id: noteuser.student_id) %>
+              <small class="cus-attention text-error">not registered with OSD</small>
+            <% end %>
+          </p>
         <% end %>
       <% end %>
    </td>

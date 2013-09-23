@@ -1,0 +1,33 @@
+<% provide(:title, 'Accommodations') %>
+<aside class="row-fluid">
+   <section>
+      <div class="btn-group btn-group-vertical">
+         <%= link_to "Import Accomodations", new_accomodation_path, class: "btn btn-small btn-inverse cus-upload" %>
+         <%= link_to "Delete All Accomodations", 'delete_accommodations', method: :delete, data: { confirm: "WARNING This will delete all accomodations!!!" },class: "btn btn-small btn-danger cus-trash" %>
+      </div>
+   </section>
+   <section>
+      <form class="form-search offset5">
+         <input type="text" name="filter" value="" id="filter" class="input-large search-query" />
+         <label for="filter" class="cus-zoom-in">Filter</label>
+      </form>
+   </section>
+</aside>
+<article class="span10 offset3">
+<table cellpadding="1" cellspacing="1" id="accomodationsTable" class="table table-bordered table-hover">
+   <caption class="alert alert-info"> 
+      <h2> For all students registered with the OSD display if they require note taking </h2>
+   </caption>
+   <thead>
+      <tr>
+         <th class="sortable cus-sort-name-up sorted-asc">Registered with OSD (<%= @accomodations.count %>)</th>
+         <th class="sortable cus-sort-name-up sorted-asc">Registered with website</th>
+         <th class="sortable cus-sort-name-up sorted-asc">Accomodations</th>
+         <th class="sortable cus-sort-name-up sorted-asc">Require Note Taking? (<strong class="text-success cus-check"><%= @accomodations.where("note_taking SIMILAR TO ?", "%(GC|GM)%").count %></strong> | <strong class="text-error cus-check-empty"><%= @accomodations.where("note_taking NOT SIMILAR TO ?", "%(GC|GM)%").count %></strong>)</th>
+      </tr>
+   </thead>
+   <tbody>
+      <%= render @accomodations %>
+   </tbody>
+</table>
+</article>

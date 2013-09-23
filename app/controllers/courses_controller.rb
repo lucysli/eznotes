@@ -64,7 +64,7 @@ class CoursesController < ApplicationController
       redirect_to courses_path
    end
 
-   def delete_all
+   def delete_all_courses
       if Course.delete_all
          flash[:success] = "Deleted all courses"
          redirect_to :back

@@ -3,6 +3,7 @@ require File.expand_path('../boot', __FILE__)
 require 'rails/all'
 
 require 'csv'
+require 'roo'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -29,7 +30,7 @@ module EZNotes
     config.active_support.escape_html_entities_in_json = true
 
     # This ensures bootstrap-sass is compatible with the asset pipeline in rails 4
-    config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif *.woff *.eot *.svg *.ttf)
+    config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif *.woff *.eot *.svg *.ttf *.otf)
 
     config.filter_parameters << :password
 

@@ -15,7 +15,7 @@
 			<% flash.each do |key, value| %>
 				<section class="alert alert-<%= key %>">
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<%= content_tag(:p, value) %>
+					<%= content_tag(:section, value) %>
 				</section>
 			<% end %>
 			<%= yield %>

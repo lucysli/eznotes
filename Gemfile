@@ -13,6 +13,8 @@ gem 'therubyracer'
 
 gem 'figaro'
 
+gem 'roo'
+
 gem 'rails_12factor', group: :production
 
 # gem for authentication to ldap server

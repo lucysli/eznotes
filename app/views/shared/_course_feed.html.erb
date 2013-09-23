@@ -1,10 +1,19 @@
 <% @user = current_user %>
 
+<% if Time.now.month >= 1 and  Time.now.month < 9 %>
+   <% fall_year = Time.now.strftime("%Y").previous %>
+   <% winter_year = Time.now.strftime("%Y") %>
+   <% summer_year = Time.now.strftime("%Y") %>
+<% elsif Time.now.month >= 9 and Time.now.month <= 12 %>
+   <% fall_year = Time.now.strftime("%Y") %>
+   <% winter_year = Time.now.strftime("%Y").next %>
+   <% summer_year = Time.now.strftime("%Y").next %>
+<% end %>
 
 <header class="span12 header">
-   <h4 class="center span4">FALL</h4>
-   <h4 class="center span4">WINTER</h4>
-   <h4 class="center span4">SUMMER</h4>
+   <h4 class="center span4">FALL (<%= fall_year %>)</h4>
+   <h4 class="center span4">WINTER (<%= winter_year %>)</h4>
+   <h4 class="center span4">SUMMER (<%= summer_year %>)</h4>
 </header>
 <section class="row-fluid body">
    <ul class="span4 fall">

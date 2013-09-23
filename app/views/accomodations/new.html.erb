@@ -1,0 +1,42 @@
+<% provide(:title, 'Accommodation Import') %>
+<article class="row-fluid">
+   <h1 class="center">Accommodation Import</h1>
+   <section class="alert alert-block alert-info span8 offset2">
+      <header>
+         An Excel spreadsheet or a CSV file can be used to import records.
+      </header>
+
+      <p>
+         The following columns are allowed. It is assumed that the student id is in a column called "ID" and the accommodation code is in a column called "GENERAL ACCOMODATION CODE"
+         <ul>
+            <li>
+              <strong>student_id</strong> -
+              String
+            </li>
+            <li>
+              <strong>accommodation code</strong> -
+              String
+            </li>
+         </ul>
+      </p>
+   </section>
+
+   <section class="well span4 offset4">
+      <%= form_tag import_accomodations_path, multipart: true do %>
+
+         <fieldset>
+          <%= label_tag :file, nil, class: "cus-folder-open" %>
+          <p class="controls">
+            <%= file_field_tag :file, accept: 'text/csv application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet application/vnd.openxmlformats-officedocument.spreadsheetml.template', multiple: true, class: "input-xlarge"%>
+          </p>
+         </fieldset>
+
+         <fieldset>
+            <%= button_tag(type: 'submit', class: "btn btn-large btn-inverse cus-upload") do %>
+               Import
+            <% end %>
+         </fieldset> 
+      <% end %>
+   </section>
+</article>
+

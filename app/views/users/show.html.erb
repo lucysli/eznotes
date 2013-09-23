@@ -3,7 +3,12 @@
   <aside class="span4">
     <section>
       <h1>
-        <%= @user.name %> 
+        <% if current_user.admin? %>
+          <%= link_to @user.name, edit_user_path(@user) %>
+        <% else %>
+          <%= @user.name %> 
+        <% end %>
+        |
         <strong class="text-success">
           <%= @user.student_id %>
         </strong>

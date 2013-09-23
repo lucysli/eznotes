@@ -1,3 +1,5 @@
+
+
 @import "bootstrap";
 @import "bootstrap-responsive";
 
@@ -5,6 +7,31 @@
 
 $grayMediumLight: #eaeaea;
 $redMediumLight: #ff0000;
+
+@font-face
+{
+  font-family: Raleway-Bold;
+  src: url('/vendor/assets/fonts/Raleway/Raleway-Bold.otf');
+  font-family: Raleway-ExtraBold;
+  src: url('/vendor/assets/fonts/Raleway/Raleway-ExtraBold.otf');
+  font-family: Raleway-ExtraLight;
+  src: url('/vendor/assets/fonts/Raleway/Raleway-ExtraLight.otf');
+  font-family: Raleway-Heavy;
+  src: url('/vendor/assets/fonts/Raleway/Raleway-Heavy.otf');
+  font-family: Raleway-Light;
+  src: url('/vendor/assets/fonts/Raleway/Raleway-Light.otf');
+  font-family: Raleway-Medium;
+  src: url('/vendor/assets/fonts/Raleway/Raleway-Medium.otf');
+  font-family: Raleway-Regular;
+  src: url('/vendor/assets/fonts/Raleway/Raleway-Regular.otf');
+  font-family: Raleway-SemiBold;
+  src: url('/vendor/assets/fonts/Raleway/Raleway-SemiBold.otf');
+  font-family: Raleway-Thin;
+  src: url('/vendor/assets/fonts/Raleway/Raleway-Thin.otf');
+}
+
+//$baseFontFamily: 'Permian', sans-serif !default;
+//$ralewayFontFamily: 'Raleway-Thin', sans-serif !default;
 
 
 @mixin box_sizing {
@@ -81,6 +108,7 @@ p {
   font-size: 1.1em;
   line-height: 1.7em;
 }
+
 
 
 /* header */

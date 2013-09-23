@@ -6,7 +6,7 @@
       <section>
          <div class="btn-group btn-group-vertical">
             <%= link_to "Import Courses", new_course_import_path, class: "btn btn-small btn-inverse cus-upload" %>
-            <%= link_to "Delete All Courses", 'delete_all', method: :delete, data: { confirm: "WARNING This will delete all courses hence will also delete all course registrations made by students and all notes associated with the course." },class: "btn btn-small btn-danger cus-trash" %>
+            <%= link_to "Delete All Courses", 'delete_all_courses', method: :delete, data: { confirm: "WARNING This will delete all courses hence will also delete all course registrations made by students and all notes associated with the course." },class: "btn btn-small btn-danger cus-trash" %>
          </div>
       </section>
    </aside>

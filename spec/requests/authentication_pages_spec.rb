@@ -18,7 +18,7 @@ describe "Authentication" do
    end
 
    describe "signin page" do
-    before { visit signin_path }
+      before { visit signin_path }
       it { should have_title(full_title('Sign in')) }
    end
 
@@ -146,7 +146,12 @@ describe "Authentication" do
             describe "submitting to the destroy action" do
                before { delete course_path(realcourse) }
                specify { expect(response).to redirect_to(signin_path) }
-            end     
+            end   
+
+            describe "submitting to the delete_all action" do
+               before { delete delete_all_courses_path }
+               specify { expect(response).to redirect_to(signin_path) }
+            end   
 
             describe "submitting to the update action" do
                before { patch course_path(realcourse) }
@@ -174,6 +179,32 @@ describe "Authentication" do
                before { delete registration_path(1) }
                specify { expect(response).to redirect_to(signin_path) }
             end            
+         end
+
+         describe "in the course imports controller" do
+            describe "submitting to the create action" do
+               before { post course_imports_path }
+               specify { expect(response).to redirect_to(signin_path) }
+            end
+            describe "visiting the course imports new" do
+               before { visit new_course_import_path }
+               it { should have_title(full_title('Sign in')) }
+            end
+         end
+
+         describe "in the accomodation imports controller" do
+            describe "submitting to the create action" do
+               before { post accomodations_path }
+               specify { expect(response).to redirect_to(signin_path) }
+            end
+            describe "submitting to the destroy action" do
+               before { delete delete_accomodations_path }
+               specify { expect(response).to redirect_to(signin_path) }
+            end
+            describe "visiting the Accomodations#new page" do
+               before { visit new_accomodation_path }
+               it { should have_title(full_title('Sign in')) }
+            end
          end
       end
 
@@ -211,6 +242,40 @@ describe "Authentication" do
             before { delete user_path(user) }
             specify { expect(response).to redirect_to(root_path) }
          end
+
+         describe "submitting a CREATE request to the Users#create_admin action" do
+            before { put create_admin_path }
+            specify { expect(response).to redirect_to(root_path) }
+         end
+
+         describe "in the course imports controller" do
+            describe "submitting to the create action" do
+               before { post course_imports_path }
+               specify { expect(response).to redirect_to(root_path) }
+            end
+         end
+
+         describe "in the accomodation imports controller" do
+            describe "submitting to the create action" do
+               before { post accomodations_path }
+               specify { expect(response).to redirect_to(root_path) }
+            end
+
+            describe "submitting to the destroy action" do
+               before { delete delete_accomodations_path }
+               specify { expect(response).to redirect_to(root_path) }
+            end
+
+            describe "visiting Accomodations#index page" do
+               before { visit accomodations_path }
+               it { should_not have_title(full_title('Accomodations')) }
+            end
+
+            describe "visiting the Accomodations#new page" do
+               before { visit new_accomodation_path }
+               it { should_not have_title(full_title('Accomodation Import')) }
+            end
+         end
       end
 
       describe "as signed in users" do
@@ -230,6 +295,11 @@ describe "Authentication" do
 
          describe "submitting to the create action" do
             before { post users_path  }
+            specify { expect(response).to redirect_to(root_path) }
+         end
+
+         describe "submitting a CREATE request to the Users#create_admin action" do
+            before { put create_admin_path }
             specify { expect(response).to redirect_to(root_path) }
          end
 
@@ -257,7 +327,7 @@ describe "Authentication" do
          end
       end
 
-      describe "as admin" do
+      describe "as signed in admin" do
 
          let(:admin) { FactoryGirl.create(:admin) }
 
@@ -269,7 +339,7 @@ describe "Authentication" do
          end
       end
 
-      describe "as notetaker" do
+      describe "as signed in notetaker" do
          let(:notetaker) { FactoryGirl.create(:notetaker) }
          let(:realcourse) { FactoryGirl.create(:realcourse) }
 

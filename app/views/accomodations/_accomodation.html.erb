@@ -1,0 +1,21 @@
+<tr id="<%= accomodation.id %>">
+   <td>
+      <%= "#{accomodation.student_id}" %>
+   </td>
+   <td>
+      <% user =  User.find_by(student_id: accomodation.student_id, note_taker: false) %>
+      <% if user %>
+         <%= link_to "#{user.name}", edit_user_path(user) %>
+      <% else %>
+         Not Registered
+      <% end %>
+   </td>
+   <td><%= "#{accomodation.note_taking}" %></td>
+   <td>
+      <% if accomodation.note_taking.split(',').include?('GC') or accomodation.note_taking.split(',').include?('GM')%>
+         <i class="cus-check text-success">YES</i>
+      <% else %>
+         <i class="cus-check-empty text-error">NO</i>
+      <% end %>
+   </td>
+</tr>
