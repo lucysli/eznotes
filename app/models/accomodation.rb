@@ -23,6 +23,9 @@ class Accomodation < ActiveRecord::Base
   def self.import(file)
     spreadsheet = open_spreadsheet(file)
     #spreadsheet = CSV.new(file.path, skip_blanks: true, encoding: "ISO-8859-1")
+
+    # Find the header in the spreadsheet. WE cannot assume the header is in a particular
+    # row in the spreadsheet
     header = []
     (2..spreadsheet.last_row).each do |i|
       if spreadsheet.row(i)[0] == "ID"
@@ -30,26 +33,42 @@ class Accomodation < ActiveRecord::Base
         break
       end
     end
-    
+
+    # for each student in the spreadsheet store the accomodations
+    accomodations = Hash.new   
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
       if row.values != header and not row["ID"].nil? and not row["GENERAL ACCOMODATION CODE"].nil?
         
         student_id = row["ID"]
-        note_taking = row["GENERAL ACCOMODATION CODE"].upcase
+        accomodation_code = row["GENERAL ACCOMODATION CODE"].upcase
 
-        accomodation = find_by(student_id: student_id) || new
-
-        accomodation.student_id = student_id
-        if accomodation.note_taking.nil?
-          accomodation.note_taking = note_taking
+        if accomodations[student_id].nil?
+          accomodations[student_id] = accomodation_code
         else
-          if not accomodation.note_taking.split(',').include?(note_taking)
-            accomodation.note_taking = accomodation.note_taking + "," + note_taking
+          accomodations[student_id] = accomodations[student_id] + "," + accomodation_code
+        end
+      end
+    end
+
+    # for each student find out if that student is already in our accomodations
+    # database and compare their current accomodations with the new ones from the
+    # spreadsheet
+    accomodations.keys.each do |key|
+      accomodation = find_by(student_id: key) || new
+      accomodation.student_id = key
+      if accomodation.note_taking.nil?
+        accomodation.note_taking = accomodations[key]
+      else
+        accomodations[key].split(',').each do |code|
+          if accomodation.note_taking.split(',').include?(code)
+            accomodation.note_taking = accomodation.note_taking.split(',').delete(code)
+          else
+            accomodation.note_taking = accomodation.note_taking + "," + code
           end
         end
-        accomodation.save!
       end
+      accomodation.save!
     end
   end
 
