@@ -30,3 +30,6 @@ assets/*
 
 # Ignore application configuration
 /config/application.yml
+
+# Ignore files directory
+app/assets/files/*
