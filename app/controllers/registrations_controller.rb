@@ -43,6 +43,11 @@ class RegistrationsController < ApplicationController
             current_user.registrations.build(course_id: @course.id)
             if current_user.register!(@course)
               flash[:success] = "Registered for course: #{course_string}!"
+              # send email message you have been matched if course already has an assigned note taker
+              if @course.note_taker and not current_user.note_taker? and not current_user.admin?
+                current_user.send_notetaker_assigned(@course)
+              end
+
             else
               flash[:error] = "Could not register for course: #{course_string}!"
               #current_user.errors.add :base, "Could not register for course: #{course_string}!"

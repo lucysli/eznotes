@@ -51,16 +51,18 @@ class Course < ActiveRecord::Base
   validates :section, presence: true
   validates :crn, presence: true, uniqueness: { scope: :term, case_sensitive: false }, numericality: { only_integer: true }
 
+
   def self.to_csv
     CSV.generate do |csv|
-      csv << ["NOTE_TAKER_ID","NAME","COURSE","EMAIL","NOTE_USER"]
+      csv << ["NOTE_TAKER_ID","NAME","COURSE","EMAIL","NOTE_USER","NOTE_USER_ID","DATE_REGISTERED"]
       Course.all.where("id IN (?)", Registration.distinct.pluck(:course_id)).each do |course|
         if not course.note_taker.nil?
           noteusers = course.registered_users.where("note_taker = ?", false)
           noteusers.each do |noteuser|
+            date = noteuser.registrations.find_by(course_id: course).created_at.in_time_zone
             csv << ["#{course.note_taker.student_id}","#{course.note_taker.name}",
               "#{course.subject_code} #{course.course_num} #{course.section}",
-              "#{course.note_taker.email}","#{noteuser.name}"]
+              "#{course.note_taker.email}","#{noteuser.name}","#{noteuser.student_id}", date]
           end
         end
       end
