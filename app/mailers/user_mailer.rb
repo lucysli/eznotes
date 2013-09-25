@@ -9,20 +9,20 @@ class UserMailer < ActionMailer::Base
   def password_reset(user)
     @user = user
 
-    mail to: user.email, subject: "Password Reset"
+    mail to: user.email, subject: "[DO NO REPLY]Password Reset"
   end
 
   def new_registration(user)
     @user = user
 
-    mail to: user.email, subject: "New Registration[McGill OSD EZnotes]"
+    mail to: user.email, subject: "[DO NO REPLY]New Registration[McGill OSD EZnotes]"
   end
 
   def assign_notetaker(notetaker, course)
     @notetaker = notetaker
     @course = course
 
-    mail to: notetaker.email, subject: "You Have Been Matched[McGill OSD EZnotes]"
+    mail to: notetaker.email, subject: "[DO NO REPLY]You Have Been Matched[McGill OSD EZnotes]"
 
   end
 
@@ -30,14 +30,14 @@ class UserMailer < ActionMailer::Base
     @user = user
     @course = course
 
-    mail to: user.email, subject: "You Have Been Matched[McGill OSD EZnotes]"
+    mail to: user.email, subject: "[DO NO REPLY]You Have Been Matched[McGill OSD EZnotes]"
   end
 
   def unassign_notetaker(notetaker, course)
     @notetaker = notetaker
     @course = course
 
-    mail to: notetaker.email, subject: "You Have Been Unassigned[McGill OSD EZnotes]"
+    mail to: notetaker.email, subject: "[DO NO REPLY]You Have Been Unassigned[McGill OSD EZnotes]"
   end
 
 end
