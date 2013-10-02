@@ -2,9 +2,9 @@
 
 # Table Of Contents #
 1. [General Information](#general-information)
-	1. [Project](#project)
-	2. [contact Info](#contact-info)
-2. [General Started](#general-started)
+	- [Project](#project)
+	- [contact Info](#contact-info)
+2. [Getting Started](#getting-started)
 
 # General Information #
 
