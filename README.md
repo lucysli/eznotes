@@ -1,9 +1,9 @@
 # IMPORTANT NOTE THIS README IS NOT FULLY UPDATED THERE IS SOME OUTDATED INFORMATION AND/OR MISSING INFORMATION READ AT YOUR OWN RISK DO NOT RELY ON THIS YET. CURRENTLY IT IS UNDER REPAIR AND THE FULL UPDATED VERSION WITH THE CORRECT INFO WILL BE OUT SOON. #
 
 # Table Of Contents #
-1. [General Information][id]
+1. [General Information](/General Information/)
 
-# [id]: General Information #
+# General Information #
 
 ## Project ##
 
