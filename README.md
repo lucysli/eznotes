@@ -1,10 +1,10 @@
 # IMPORTANT NOTE THIS README IS NOT FULLY UPDATED THERE IS SOME OUTDATED INFORMATION AND/OR MISSING INFORMATION READ AT YOUR OWN RISK DO NOT RELY ON THIS YET. CURRENTLY IT IS UNDER REPAIR AND THE FULL UPDATED VERSION WITH THE CORRECT INFO WILL BE OUT SOON. #
 
 # Table Of Contents #
-1. [General Information](#General Information)
-	1. [Project](#Project)
-	2. [contact Info](#Contact Info)
-2. [General Started](#General Started)
+1. [General Information](#general-information)
+	1. [Project](#project)
+	2. [contact Info](#contact-info)
+2. [General Started](#general-started)
 
 # General Information #
 
