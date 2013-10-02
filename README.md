@@ -1,3 +1,5 @@
+# IMPORTANT NOTE THIS README IS NOT FULLY UPDATED THERE IS SOME OUTDATED INFORMATION AND/OR MISSING INFORMATION READ AT YOUR OWN RISK DO NOT RELY ON THIS YET. CURRENTLY IT IS UNDER REPAIR AND THE FULL UPDATED VERSION WITH THE CORRECT INFO WILL BE OUT SOON. #
+
 # General Information #
 
 ## Project ##
@@ -448,11 +450,8 @@ Please note that with software that constantly updates and new versions getting 
 
 ## Server ##
 
-### Installation and setup ###
-Our Server is a Dell machine 64 Bit
-Server machine has a static ip address
-
-Running Ubuntu server 12.04.3 LTS AMD 64
+### Physical Machine ###
+Dell Machine 64 Bit
 
 Server has a partition(split in half) has both windows 7 and linux installed. Linux parition is 103GB
 The parititioning schemse is as follows
@@ -464,6 +463,12 @@ the other is the windows installation at 139GB
 
 there is a physical boot partition of 250MB
 then the there is a logical volume group with 3 logical volumes installed. one is root with size 30GB the other is swap at 8GB and the remaining diskspace is var which will contain the data for website i.e web site files databases and log files
+
+has a static ip address
+
+### Installation and setup ###
+
+Running Ubuntu server 12.04.3 LTS AMD 64
 
 Now update by running
 
@@ -605,7 +610,7 @@ To create databases:
 `sudo -u postgres createdb {your-db-test-name}`
 `sudo -u postgres createdb {your-db-production-name}`
 
-### Install Ruby + RVM + Rails ###
+### Install RVM ###
 
 `curl -L https://get.rvm.io | sudo bash -s stable`
 
@@ -618,6 +623,7 @@ sudo adduser <yourusername> rvm
 sudo chown -R deploy:deploy /var/www
 sudo chmod g+w /var/www
 ```
+### Install Ruby ###
 
 `rvm list known`
 `rvm install 2.0.0`
@@ -625,28 +631,303 @@ sudo chmod g+w /var/www
 `gem update --system`
 `gem update`
 
+### Install RAILS ###
+
 `gem install rails`
 `rails -v`
 
 ### Install Phusion Passenger ###
 
+`sudo gem install passenger --pre`
+
+`sudo passenger-install-apache2-module`
+
+```
+sudo a2enmod passenger
+sudo service apache2 restart
+```
+
+### Configure Virtual Host to Point to App ###
+
+The final step is to setup a custom virtual host to point Apache to the new app directly. In this way we wont need to specify the port number everytime.
+
+To do that, I edited the file:
+`sudo vim /etc/apache2/sites-available/eznotes`
+
+```
+<VirtualHost _default_:8443>
+   # ServerName www.yourhost.com # Commented out for default
+   DocumentRoot /var/www/eznotes/public # be sure to point to public
+   <Directory /var/www/eznotes/public>
+      AllowOverride all
+      Options -MultiViews
+   </Directory>
+</VirtualHost>
+```
+
+I activated the new site.
+
+`sudo a2ensite testapp`
+
+I deactivated the default site.
+
+`sudo a2dissite default`
+
+And reloaded apache to enabled the new configurations.
+
+`sudo service apache2 reload`
 
 
+## Deployment Using Git and Capistrano ##
+
+This is a critical step that facilitates the deployment process so its automated fast and efficient.
+
+Capistrano in essence allows us to deploy our local Rails app that we are developing on our local development machine to the production server in one or two lines.
+
+### Set up Deployment User ###
+
+Add a group to your remote server called "deployers" that will have permissions to deploy to the server and run stuff without requiring full root/sudo access.
+
+`sudo groupadd deployers`
+
+Create a user (if you haven't already) that will be added to the "deployers" group for making all your deployments. This user should have super-user privileges. Then add the user you want to use for deployments to that group (the last argument is the username you want to add).
+
+`sudo usermod -a -G deployers deploy`
+
+Then, update permissions on your deployment path where you want your app's code to go (here, I'm assuming the user "deploy" owns that path). This will give the "deployers" group read and write access to all files and directories beneath /deploy/to/path.
+
+```
+sudo chown -R deploy:deployers /deploy/to/path
+sudo chmod -R g+w /deploy/to/path
+```
+
+### Set up Capistrano ###
+
+Capistrano is a Ruby gem that makes your deployment life a lot easier. It avoids the nightmare of having to manually copy files, logon to the server, run deployment tasks off the CLI. 
+
+Installing Capistrano is as easy as adding it to your app's Gemfile and running bundle install. You don't need it on the production server, so you can just add it under the "development" group in your Gemfile.
+
+```
+group :development do
+    gem 'capistrano'
+end
+```
+
+And install with bundler (from your app's root).
+`bundle install`
+
+Once installed, you'll need to "capify" your project. This will generate a few files (namely /config/deploy.rb and /Capfile). The deploy.rb is where you can add or write custom scripts to help automate your deployment tasks and save your carpal tunnel for more important application programming.
+
+```
+cd /path/to/your/project
+capify .
+```
+
+#### Capistrano settings ####
 
 
+Once your project is capified, open up your editor of choice and modify /config/deploy.rb 
+
+First, you need to tell Capistrano your app's name and the clone path to your app's remote repository.
+
+```
+set :application, "Your application's name"
+set :repository, "git@github.com:your-username/your-repository-name.git"
+```
+
+Next, tell it where your app needs to be installed on your production server (this is the path to where you want your app to live, starting from your server's root). The path will be the location you pointed your server to.
+
+```
+set :deploy_to, "/path/to/your/app"
+Set the type of repository you're using (e.g., GIT, SVN, etc.) and which branch you want to deploy from (usually "master").
+
+set :scm, :git
+set :branch, "master"
+```
+
+Set the user you want to use for your server's deploys.
+
+`set :user, "deploy"`
+
+Now, you could use the scm_passphrase setting to tell Capistrano the password to use for your deployment user, but I don't like the idea of storing my server password in a file I want to keep in my repository. This is why I setup my server with RSA keys that allow my dev machine access without the need for entering a password every time. But if you want to put it in your deployment script without using keys, you'd do it like this (although not recommended):
+
+`set :scm_passphrase, "password"`
+
+I change another setting called use_sudo to false so commands are executed with the user's permissions unless I specify otherwise. If you added your user to the "deployers" group (which has write-access to your app's directory tree) you probably won't need to use sudo much, if at all.
+
+`set :use_sudo, false`
+
+Set your rails environment (this is deploying to the production server, so I'm setting it to "production", but you might want to deploy to a staging server with a custom environment). You can re-use this variable in your scripts whenever you need to specify the environment so you only need to change it in one place to keep things DRY.
+
+`set :rails_env, "production"`
+
+Tell Capistrano how you'd like to make updates. There are many different ways of doing it, but for simplicity's sake, I'm going to stick with the most straight-forward method, namely copy. This will clone your entire repository (download it from the remote to your local machine) and then upload the entire app to your server.
+
+`set :deploy_via, :copy`
+
+You could alternatively use a faster method like remote_cache which will run a fetch from your server to your remote repository and only update what's changed, but that requires some additional authentication between your server and the remote repository. I just want to get you up and running first. Worry about optimizing the process later.
+
+Next, you need to tell Capistrano about any special SSH options it should be aware of. For instance, my server is setup to use a custom port number and uses RSA keys for authentication to my Github account. So, I need to specify the port, and use what's called "agent forwarding" to connect to my remote repository (it sounds weird, but agent forwarding will make your life easier by using your local keys rather than those installed on your server). Read more about agent forwarding with this great article from Github.
+
+`set :ssh_options, { :forward_agent => true, :port => 4321 }`
+
+You can also specify how many releases Capistrano should store on your server's harddrive. This is handy in case you ever want to rollback to a previous version quickly in case your newly deployed code blew something up and you need to put out the fires. But you probably want this to be a finite number so you don't fill up your disk with inactive versions of your app. I keep five releases.
+
+`set :keep_releases, 5`
+
+Next, you should use the following setting to ensure any needed password prompts from SSH show up in your terminal so you can handle them.
+
+`default_run_options[:pty] = true`
+
+The last setting you need to handle is where on the internet Capistrano can find your server. This could be your domain name or the IP address. For our case this deployment is for a smallish MVP-type app where everything is on the same machine (database, app, server, etc.). In this case you can use Capistrano's server setting.
+
+`server "server.eznotes.ca", :app, :web, :db, :primary => true`
+
+If you want to do fancier deployments by splitting things up for scaling (like separating your database from your application server), you'll want to use Capistrano's "roles" to point it to the different places where things are installed. Use multiple roles instead of the server command (it accomplishes the same thing with greater granularity).
+
+```
+role :web, "web.example.com"
+role :app, "app.example.com"
+role :db, "db.somethingelse.com", :primary => true
+```
+That :primary => true part of the database role tells Capistrano that this is the location of your primary database. Read more about this in greater detail.
+
+#### Connect ####
 
 
+Before we get into the individual deployment tasks, check that all the settings you've just saved in deploy.rb are working properly. Run this command in a terminal from your app's root.
 
+`cap deploy:setup`
 
+This will SSH to your server and create some directories in the folder you specified with deploy_to where Capistrano will store your releases, and your shared files (e.g., logs, configs, static assets like uploads, etc.). If something goes wrong with permissions or SSH access, you'll see some error messages. Fix these before proceeding so you know you can actually make a connection to your server.
 
+This should setup the following directories (if you've specified to install your app in /var/www/eznotes/):
 
-## Deployment ##
+```
+/var/www/eeznotes/current
+/var/www/eznotes/shared
+/var/www/eznotes/releases
+```
 
-### Capistrano ###
-Running Ubuntu server 12.04.3 LTS AMD 64Apache 2
-PostGRES
-Passenger
-RVM
+The releases directory is where copies of all your actual code are stored. shared is a place where you can put common, shared files like logs, static assets, and in our case, config files like database.yml. current is simply a symbolic link that points to the current release inside the releases directory (Capistrano updates this for you on each deploy, so don't worry about it).
+
+If `deploy:setup` works, the next thing you can do is run the `deploy:check` command. This will check your local environment and your server and try to locate any possible issues. If you see any errors, fix them first, and then run the command again until you don't have any more errors.
+
+`cap deploy:check`
+
+Any number of things could go wrong here, but the most likely issues will be some sort of authentication or file permission issues with your server and the user you're logging in with SSH.
+
+#### Setting up Database.yml ####
+
+In order not to store our database password in plain text in github we have excluded the file database.yml from our repository by adding it to .gitignore file. This is critical as we do not want to store sensitive data like passwords in the repository. However, when you run Capistrano to update your server, it only copies the files that are in your repository (and Rails actually needs to use that database.yml file to hook up to your server's database, unless you don't plan on storing any data whatsoever). So, the problem is: we need to get that config file onto the server somehow, securely, and make sure Rails knows where to find it.
+
+There are many different solutions out there for handling this issue, but the simplist solution and easiest solution I found was to  manually put the file on the server in a shared location that only I (and the app) have read-access to.
+
+First, make a new config directory in the shared directory that Capistrano created.
+
+```
+ssh deploy@xxx.xxxx.xxxx
+mkdir /var/www/eznotes/shared/config
+```
+
+Leave the server and back on your local machine, in your app's root directory, copy the database.yml file to the server
+
+`scp ./config/database.yml  deploy@xxx.xxx.xxx.xxx:/var/www/eznotes/shared/config/database.yml`
+
+I then hook it up to the app with a simple symbolic link that I create in my deployment script inside deploy.rb (see below).
+
+Tasks
+Now for the fun stuff. You can make all kinds of cool programming logic for different needs that you can run each time you deploy your app so it's all nicely automated (I like not thinking too hard :).
+
+enter image description here
+
+I put all my deployment tasks under the "deploy" namespace inside my deploy.rb file. You could make up your own namespaces if you want, to help you organize things. But I'm just going to go over some basic stuff, so I'll group all these tasks under "deploy". The format of the tasks looks like this:
+
+namespace :deploy do
+    desc "Human readable description of task"
+    task :name_of_task_command do
+        # do stuff
+    end
+end
+The string defined by the desc command is what will show up when you run cap -T from the CLI on your application (this lists all the deployment tasks available in your app).
+
+The basic deployment tasks you need to accomplish are as follows:
+
+Update application code
+Precompile assets
+Update custom symlinks
+Restart the server
+Cleanup unneeded files
+I used to need to make custom tasks for a lot of this stuff, but lucky for you, these days most of this is baked into Capistrano to make your life that much easier! I'll go over each task one by one. You can also tack on other things you need to do on deploy (like refresh your sitemap, restart/reindex your search engine, etc.) but I'm just going to stick with the basics for now (this article is already crazy long!)
+
+1. Update Application Code
+You don't need a special task for this. This is Capistrano's primary function. When you run cap deploy it will first update your code. However, if you want to only update your code and not do anything else, you can use the
+cap deploy:update_code command to do it.
+
+2. Precompile assets
+Here's another freebie. I was handling asset compilation on my own until I started writing this article and discovered that this, too, is now baked into Capistrano (win). So instead of dealing with file-permission issues for generating asset files, all you have to do is uncomment this one line (that should already exist from when you capified your project) in the /Capfile file.
+
+load 'deploy/assets'
+This tells Capistrano to precompile assets on each deploy (it's commented out because for some reason there are other people out there using Capistrano for projects built with different frameworks than Ruby on Rails and don't need to run this task; go figure).
+
+However, I ran into a Rails 4 gotcha in that Capistrano barfs while looking for a file called /path-to-app/shared/assets/manifest.yml on your server (at least as of version 2.14.2 which I'm using). Rails has changed the format of the manifest file to use JSON now in the format of
+manifest-a5247d24f7c66d27d9b50f5c7e640bca.json. To get around this error, I simply created an empty version of the file Capistrano wants to see in the place it's looking for it. Read more about this issue.
+
+On your remote server:
+
+touch /path-to-your-app/shared/assets/manifest.yml
+3. Update custom symlinks
+This could be a link to some static assets you want to store outside your repository or something, but the main thing you need to do here is hook up your database.yml file so Rails can find it!
+
+Rails expects to see /path/to/your/app/config/database.yml. But the file is now stored in /deploy_to/shared/config/database.yml. What to do? Here comes the magic of symbolic links. Add this task to your deploy.rb file.
+
+desc "Symlink shared config files"
+task :symlink_config_files do
+    run "#{ try_sudo } ln -s #{ deploy_to }/shared/config/database.yml #{ current_path }/config/database.yml"
+end
+4. Restart the server
+Since the server is setup to run with Passenger, you'll need to override Capistrano's default restart task with one specific to Passenger (i.e., you want to touch /tmp/restart.txt from inside your app's root. This is pretty simple by adding this task to the "deploy" namespace in deploy.rb.
+
+desc "Restart Passenger app"
+task :restart do
+    run "#{ try_sudo } touch #{ File.join(current_path, 'tmp', 'restart.txt') }"
+end
+5. Cleanup unneeded files
+This one comes baked in too, but I just wanted to highlight it because I sometimes forget :P If you don't run cleanup, the worst thing that will happen is that all your old releases stay stored on your server. But you might not want this as it's taking up disk space. This task is run from deploy:cleanup.
+
+After Deploy
+The final step in setting up your deployment script is to add your custom tasks to run after deployment (i.e., after all the files are copied to the server and the current_path has been updated to the latest release). All you need to do is tell Capistrano what tasks you want to run in the order you want to run them outside the deploy namespace block.
+
+after "deploy", "deploy:symlink_config_files"
+after "deploy", "deploy:restart"
+after "deploy", "deploy:cleanup"
+Since precompiling assets and updating the code are baked in, you don't need to specify those tasks. If you add any other tasks to your deployment process, you can just add them here to get executed.
+
+Deploy!
+Phew! Ok, now to actually do stuff. You should have a remote Git repository with the latest version of your code in it, Capistrano setup and checked, and your deployment tasks written and ready to run. So let's run it:
+
+cap deploy
+Sit back and watch all those characters flow over your terminal and feel good inside knowing the computer is saving you hours of frustration (if you aren't frustrated already, haha).
+
+Oh, and if you need to simply migrate your database, Capistrano has a task for that too.
+
+cap deploy:migrate
+And if something goes horribly wrong (which will happen), you can quickly and easily rollback to the previous release (which is hopefully a working version).
+
+cap deploy:rollback
+Run this multiple times to go back through additional past releases.
+
+Computer screens
+
+Your regular routine can now be something like this:
+
+change some stuff in your code
+git add . it to your local repo queue
+git commit -m 'my new commit' it to your local repo
+git push origin master to sync it to your remote
+cap deploy to update your production server with your changes
+I wanted to go over installing ImageMagick with Paperclip for all your uploading needs, but I think I'll save that for a future post (I've already written too much). Thanks for reading, and like always, if you notice anything that could be improved, please let me know!
+
 
 
 ## Resources/References ##
