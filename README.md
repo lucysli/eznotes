@@ -56,14 +56,14 @@ PostgreSQL
 ### Testing/Development Deployment ###
 Heroku <https://www.heroku.com/>
 
-## Online tools ##
+### Online tools ###
 Wireframes <http://pencil.evolus.vn/>  
 GitHub <https://github.com/mcgillosd/eznotes>
 
 -------------------------------------------
 # Getting Started #
 
-Almost everything was based on the rails guide by Michael Hartl <http://ruby.railstutorial.org/>. If you
+The EZNotes web application was developed using the guide by Michael Hartl <http://ruby.railstutorial.org/> as spring board. If you
 are a first time rubist and this is your first rails app I recommend to read and follow the tutorial
 thoroughly.
 
@@ -102,8 +102,7 @@ Finally we can install rails simply by running
 
 Type `rails v` to verify the version of rails is 4.0.0
 
-
-
+-------------------------------------------
 
 -	Step 1: Install Git
 -	Step 2: Verify that GCC was installed
@@ -173,6 +172,7 @@ alias pg-status='pg_ctl status -D /usr/local/var/postgres'
 
 update the gem file of your app to eliminate the sqlite3 gem and add the pg gem.
 open config/database.yml file. I set it up as follows  
+
 ```
 # postgresql version 9.2.2.x'
 #   gem install pg
@@ -204,7 +204,8 @@ production:
   database: EZNotes_production
   pool: 5
   timeout: 5000
-  ```
+```
+
 # Setting up CSS #
 We make use of Bootstrap, an open-source web design framework from twitter. Bootstrap uses LESS CSS. To use Bootstrap we include the bootstrap-sass gem.
 Rails 3 uses HTML5 by default as indicated by <code> <!DOCTYPE html> </code>
@@ -442,11 +443,16 @@ Now if you run guard it will automatically start a Spork server which will reduc
 
 -------------------------------------------
 # Staging and Production Environments #
+
+Please note that with software that constantly updates and new versions getting released Google is your best friend A lot of the set up was done looking through different resources and references all of them can be found at the end of this section. 
+
+## Server ##
+
+### Installation and setup ###
+Our Server is a Dell machine 64 Bit
+Server machine has a static ip address
+
 Running Ubuntu server 12.04.3 LTS AMD 64
-Apache 2
-PostGRES
-Passenger
-RVM
 
 Server has a partition(split in half) has both windows 7 and linux installed. Linux parition is 103GB
 The parititioning schemse is as follows
@@ -459,11 +465,193 @@ the other is the windows installation at 139GB
 there is a physical boot partition of 250MB
 then the there is a logical volume group with 3 logical volumes installed. one is root with size 30GB the other is swap at 8GB and the remaining diskspace is var which will contain the data for website i.e web site files databases and log files
 
+Now update by running
 
-Server machine has a static ip address
-Server is a dell machine
-64-bit
-Installing Ubuntu server 12.04.3 LTS AMD 64 was done following the following tutorials below:
+```
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
+sudo reboot
+```
+
+It would be a good idea to set up automatic updates I did this as follows:
+
+`sudo apt-get install unattended-upgrades`
+
+`sudo vim /etc/apt/apt.conf.d/50unattended-upgrades`
+
+uncomment security updates
+
+```
+Unattended-Upgrade::Allowed-Origins {
+        "Ubuntu precise-security";
+//      "Ubuntu precise-updates";
+};
+```
+to enable automatic updates edit the following
+`sudo vim /etc/apt/apt.conf.d/10periodic`
+
+```
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Download-Upgradeable-Packages "1";
+APT::Periodic::AutocleanInterval "7";
+APT::Periodic::Unattended-Upgrade "1";
+```
+
+1 says that it will update every day and 7 is weekly.
+
+#### Setting up the hosts file ####
+
+You can call your server anything you want
+xxxx.xxxx.xxxx is replaced with the static ip that is set up
+for the server machine in the OSD office
+
+```
+# /etc/hosts
+127.0.0.1   localhost
+xxx.xxx.xxx.xxx server.eznotes.ca
+
+# /etc/hostname
+server.eznotes.ca
+```
+
+#### Install curl and git ####
+`sudo apt-get install curl`
+`sudo apt-get install git-core`
+
+### Permissions and Security ###
+Create a deploy user in order to avoid doing anything through root. The deployment user had the password generated using LastPass.
+
+#### Setup SSH ####
+Log in as root and modify /etc/ssh/sshd_config file
+`sudo vim /etc/ssh/sshd_config`
+
+change PermitRootLogin to now
+add AllowUsers deploy
+
+in this case our deployment non root user is called deploy
+
+save and reload the SSH daemon
+`sudo service ssh restart` or `sudo /etc/init.d/ssh restart`
+
+If you want to check all current SSH connections to the server you can use the netstat command.
+`netstat -algrep ssh`
+
+#### Add RSA Key to Server ####
+
+By adding an RSA key to the server the deploy user can access the server without needing to input the password everytime. Since I used a very strong password for the deploy user using the password generator from last pass it saves us some hassle and its fairly secure. This also becomes necessary to run remote commands from the deployment scripts without being interrupted by password prompts in particular for using Capistrano
+
+On the remote server run the following
+`sudo mkdir ~/.ssh`
+
+On the local machine use OpenSSH to create an RSA key in ~/.ssh and copy it to the remote server authorized_keys file
+
+`ssh-keygen -t rsa -b 2048 -C "You comment for the public key"`
+`cat ~/.ssh/id_rsa.pub | ssh deploy@xxx.xxx.xxx.xxx 'cat - >> ~/.ssh/authorized_keys'`
+
+log into the remove server
+`ssh deploy@xxx.xxx.xxx.xxx`
+
+run: `sudo chmod 600 ~/.ssh/authorized_keys && chmod 700 ~/.ssh/`
+
+As a sanity check check the permission of authorized_keys
+`ls -la ~/.ssh | grep "authorized_keys"`
+
+You should get something like the following output:
+`-rw------- 1 deploy deploy 403 2013-04-5 11:55 authorized_keys`
+
+On ssh directory
+`ls -la ~ | grep ".ssh"`
+
+you should get something like this:
+`drwx----- 2 deploy deploy 4096 2103-04-05 11:55 .ssh`
+
+## Installing Apache ##
+
+`sudo apt-get update`
+
+fix Locales
+`sudo locale-gen en_US en_US.UTF-8 en_CA.UTF-8`
+`sudo dpkg-reconfigure locales`
+
+Install basic packages
+`sudo apt-get install apache2 curl git build-essential zlibc zlib1g-dev zlib1g libcurl4-openssl-dev libssl-dev libopenssl-ruby apache2-prefork-dev libapr1-dev libaprutil1-dev libreadline6 libreadline6-dev`
+
+### Installing and Setting up Postgresql ###
+
+`sudo apt-get install postgresql postgresql-contrib`
+
+First we need to change the PostgreSQL postgres user password
+
+`sudo -u postgres psql postgres`
+
+Set the password using the following command
+
+`\password postgres`
+
+Input password when prompted. Again in our case I used LastPass password generator to generate the password
+
+`\q` to quit
+
+change authentication configuration by changing ident to md5
+`sudo vim /etc/postgresql/9.2/main/pg_hba/conf`
+By doing this change you ensure that a password is needed to log into psql and that the password is encrypted.
+
+`sudo /etc/init.d/postgresql reload`
+
+To create databases:
+
+`sudo -u postgres createdb {your-db-dev-name}`
+`sudo -u postgres createdb {your-db-test-name}`
+`sudo -u postgres createdb {your-db-production-name}`
+
+### Install Ruby + RVM + Rails ###
+
+`curl -L https://get.rvm.io | sudo bash -s stable`
+
+This will install RVM in a multi-user install. Next step is add the deploy user to the RVM user group.
+```
+sudo adduser deploy
+sudo adduser deploy rvm
+sudo adduser <yourusername> deploy
+sudo adduser <yourusername> rvm
+sudo chown -R deploy:deploy /var/www
+sudo chmod g+w /var/www
+```
+
+`rvm list known`
+`rvm install 2.0.0`
+`rvm --default use 2.0.0`
+`gem update --system`
+`gem update`
+
+`gem install rails`
+`rails -v`
+
+### Install Phusion Passenger ###
+
+
+
+
+
+
+
+
+
+
+
+## Deployment ##
+
+### Capistrano ###
+Running Ubuntu server 12.04.3 LTS AMD 64Apache 2
+PostGRES
+Passenger
+RVM
+
+
+## Resources/References ##
+
+### Installing Ubuntu server 12.04.3 LTS AMD 64 ###
 
 <http://www.designervisuals.com/Manual_Partitioning_of_Ubuntu_Web_Server_using_LVM.html>
 
@@ -471,5 +659,21 @@ Installing Ubuntu server 12.04.3 LTS AMD 64 was done following the following tut
 
 <http://net.tutsplus.com/tutorials/php/how-to-setup-a-dedicated-web-server-for-free/>
 
-Set up of server is done following the tutorial below:
+<https://help.ubuntu.com/10.04/serverguide/automatic-updates.html>
+
 <http://www.web-l.nl/posts/21-production-rails-on-ubuntu-12-04-lts>
+
+### Postgres ###
+<https://www.digitalocean.com/community/articles/how-to-install-and-use-postgresql-on-ubuntu-12-04>
+
+### Security ###
+<http://www.debian-administration.org/articles/349>
+<http://httpd.apache.org/docs/2.2/ssl/ssl_faq.html>
+<http://blog.ericlamb.net/2009/05/setting-up-a-linux-web-server/>
+<http://www.jonathanmoeller.com/screed/?p=2097>
+
+### Set up Rails on server ###
+<http://robmclarty.com/blog/how-to-setup-a-production-server-for-rails-4>
+<http://robmclarty.com/blog/how-to-deploy-a-rails-4-app-with-git-and-capistrano>
+<http://www.web-l.nl/posts/21-production-rails-on-ubuntu-12-04-lts>
+<http://coding.smashingmagazine.com/2011/06/28/setup-a-ubuntu-vps-for-hosting-ruby-on-rails-applications-2/>
