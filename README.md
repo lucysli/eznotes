@@ -1060,16 +1060,19 @@ cap deploy to update your production server with your changes
 5. <http://www.web-l.nl/posts/21-production-rails-on-ubuntu-12-04-lts>
 
 ## Postgres ##
-<https://www.digitalocean.com/community/articles/how-to-install-and-use-postgresql-on-ubuntu-12-04>
+1. <https://www.digitalocean.com/community/articles/how-to-install-and-use-postgresql-on-ubuntu-12-04>
 
 ## Security ##
-<http://www.debian-administration.org/articles/349>
-<http://httpd.apache.org/docs/2.2/ssl/ssl_faq.html>
-<http://blog.ericlamb.net/2009/05/setting-up-a-linux-web-server/>
-<http://www.jonathanmoeller.com/screed/?p=2097>
+1. <http://www.debian-administration.org/articles/349>
+2. <http://httpd.apache.org/docs/2.2/ssl/ssl_faq.html>
+3. <http://blog.ericlamb.net/2009/05/setting-up-a-linux-web-server/>
+4. <http://www.jonathanmoeller.com/screed/?p=2097>
 
 ## Set up Rails on server ##
-<http://robmclarty.com/blog/how-to-setup-a-production-server-for-rails-4>
-<http://robmclarty.com/blog/how-to-deploy-a-rails-4-app-with-git-and-capistrano>
-<http://www.web-l.nl/posts/21-production-rails-on-ubuntu-12-04-lts>
-<http://coding.smashingmagazine.com/2011/06/28/setup-a-ubuntu-vps-for-hosting-ruby-on-rails-applications-2/>
+1. <http://robmclarty.com/blog/how-to-setup-a-production-server-for-rails-4>
+2. <http://robmclarty.com/blog/how-to-deploy-a-rails-4-app-with-git-and-capistrano>
+3. <http://www.web-l.nl/posts/21-production-rails-on-ubuntu-12-04-lts>
+4. <http://coding.smashingmagazine.com/2011/06/28/setup-a-ubuntu-vps-for-hosting-ruby-on-rails-applications-2/>
+
+## Git and GitHub ##
+1. <https://help.github.com/articles/using-ssh-agent-forwarding>
