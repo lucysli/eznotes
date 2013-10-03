@@ -533,6 +533,41 @@ server.eznotes.ca
 ### Permissions and Security ###
 Create a deploy user in order to avoid doing anything through root. The deployment user had the password generated using LastPass.
 
+#### Set up Firewall ####
+
+We now are going to lock down our server a bit more by installing Shorewall, a command-line firewall. 
+To install it:
+`sudo aptitude install shorewall`
+
+By default, Shorewall is installed with no rules, allowing complete access. However, this is not the behavior we want.
+Instead, we’re going to block all connections to anything other than port 80 (HTTP) port, port 22 (SSH) and the port our server is running from. 
+
+First, copy the configuration files to the Shorewall directory:
+`sudo cp /usr/share/doc/shorewall-common/examples/one-interface/* /etc/shorewall/`
+
+Now, open the “rules” file:
+`sudo vim /etc/shorewall/rules`
+
+Add these lines below where it says #Permit all ICMP Traffic...
+```
+ACCEPT	net	$FW	tcp 80
+ACCEPT	net	$FW	tcp 22
+ACCEPT	net	$FW	tcp OURPORTNUMBER
+```
+
+The firewall is now configured to only accept HTTP, HTTPS, SSH, and our port traffic. The last thing we need to do is tell Shorewall to start on boot. So, open up the main Shorewall configuration file:
+`sudo vim /etc/shorewall/shorewall.conf`
+Scroll down to `“STARTUP_ENABLED=No”` and set it to `“STARTUP_ENABLED=Yes”`
+
+Now open the Shorewall default configuration file:
+`sudo vim /etc/default/shorewall`
+
+change 
+`“startup=0″ to “startup=1″`
+
+Finally, start your firewall:
+`sudo /etc/init.d/shorewall start`
+
 #### Setup SSH ####
 Log in as root and modify /etc/ssh/sshd_config file
 `sudo vim /etc/ssh/sshd_config`
