@@ -17,8 +17,9 @@
 2. [Getting Started](#getting-started)
 	- [Installing Ruby and Rails](#installing-ruby-and-rails) 
 	- [Creating a Rails Application](#creating-a-rails-application)
-	- [Installing Ruby and Rails](#installing-ruby-and-rails) 
-	- [Installing Ruby and Rails](#installing-ruby-and-rails) 
+		1. [Summary of Rails Application Directory Structure](#Summary-of-Rails-Application-Directory-Structure) 	
+	- [Using *Bundler* to install the included gems needed by the app](#using-bundler-to-install-the-included-gems-needed-by-the-app) 
+	- [Running a local web server](#running-a-local-web-server) 
 	- [Installing Ruby and Rails](#installing-ruby-and-rails) 
 3. [Installing PostgreSQL](#installing-postgresql)
 4. [Setting up CSS](#setting-up-css)
@@ -177,7 +178,7 @@ $ `bundle install`
 ## Running a local web server ##
 use `rails server`. To see the result visit <http://localhost:3000/>  
 
-# Installing PostgreSQL #
+## Installing PostgreSQL ##
 
 The easiest way is to follow the tutorial at <http://robdodson.me/blog/2012/04/27/how-to-setup-postgresql-for-rails-and-heroku/> and/or <http://railscasts.com/episodes/342-migrating-to-postgresql>
 
@@ -232,12 +233,14 @@ production:
   timeout: 5000
 ```
 
-# Setting up CSS #
+## Setting up CSS ##
 We make use of Bootstrap, an open-source web design framework from twitter. Bootstrap uses LESS CSS. To use Bootstrap we include the bootstrap-sass gem.
 Rails 3 uses HTML5 by default as indicated by <code> <!DOCTYPE html> </code>
-# Setting up Git #
 
-## First-time system setup ##
+## Setting up Git ##
+
+### First-time system setup ###
+
 perform one time system setups.  
 `$ git config --global user.name "Your Name"`  
 `$ git config --global user.email your.email@example.com`  
@@ -245,14 +248,14 @@ perform one time system setups.
 if you like using `co` in place of the more verbose `checkout` command then run
 `$ git config --global alias.co checkout`
 
-## First-time repository setup ##
+### First-time repository setup ###
 navigate to the root directory of your app and run  
 `$ git init`
 
 The next step is to add the project files to the repository. Git tracks all changes so if you want to ignore 
 certain files then you need to edit .gitignore
 
-## Adding and committing ##
+### Adding and committing ###
 `$ git add . `  
 
 the . will add files recursively so it automatically includes subdirectories
@@ -268,7 +271,8 @@ This will perform a local commit on your machine. in order to commit to the remo
 `$ git log`  
 will display the list of your commit messages
 
-## GitHub ##
+### GitHub ###
+
 to push your application to GitHub type  
 `$ git remote add origin https://github.com/<username>/first_app.git`  
 `$ git push -u origin master`  
@@ -286,6 +290,8 @@ catching any deployment problems early as opposed to deploying only at the end a
 developing the app.
 
 We are using Heroku to deploy our application which makes things easy as long as the source code is under version control with Git.
+
+Furthermore since deployment to heroku is only being used to test our application or test new features we do not deploy any real data but only fake data
 
 ## Heroku Setup ##
 
@@ -322,12 +328,14 @@ For development we generated a reasonably secure random/obscure subdomain such a
 # Testing #
 
 ## Test suites ##
+
 -	RSpec: used for test driven development
 -	Capayara: A gem that allowed us to simulate user's interaction with the app using a natural english-like syntax
 -	Guard: Automated running of tests.
 -	Spork: Test server that speeds up the running of future tests.
 
 ## Configure Rails to use RSpec ##
+
 Run the command `rails generate rspec:install`
 Note you need the postgres server running locally for this to work.
 
@@ -340,6 +348,7 @@ $ rvm get head && rvm reload
 $ rvm -v
 ```
 ## Automated test with Guard ##
+
 We use Guard to automate the running of the tests. Guard monitors changes in the filesystem so that when a change occurs it runs the tests that are relevant to that change.
 
 First add guard-rspec to the Gemfile.
