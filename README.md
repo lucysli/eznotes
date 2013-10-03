@@ -98,7 +98,7 @@ GitHub <https://github.com/mcgillosd/eznotes>
 -------------------------------------------
 # Getting Started #
 
-The EZNotes web application was developed using the guide by Michael Hartl <http://ruby.railstutorial.org/> as a spring board. If you
+The EZNotes web application was developed using the guide by Michael Hartl <http://ruby.railstutorial.org/ruby-on-rails-tutorial-book> as a spring board. If you
 are a first time rubist and this is your first rails app I recommend that you read and follow the tutorial
 thoroughly. I have outlined below the basic steps for setting up the development machine to run Ruby extracted from the tutorial by Michael Hartl.
 
