@@ -106,7 +106,7 @@ thoroughly. I have outlined below the basic steps for setting up the development
 
 For Our purposes we are using Ruby version 2.0.0-p and Rails 4.0.0.  
 To check the version of ruby installed on your system type `ruby -v` on the command line.  
-I strongly recommend using [Ruby Version Manager(RVM)]<http://rvm.io/> to install ruby.  
+I strongly recommend using [Ruby Version Manager(RVM)](<http://rvm.io/>) to install ruby.  
 OS X Users must install Command line tools for Xcode.
 
 To get started with Ruby Installation, first install RVM:  
