@@ -6,7 +6,7 @@
 	- [Project Summary](#project-summary)
 	- [Licensing](#licensing)
 	- [Technologies](#technologies)
-		1. [Framework](#framework)
+		- [Framework](#framework)
 		2. [Programming Languages](#programming-languages)
 		3. [Version Control](#version-control)
 		4. [Database](#database)
