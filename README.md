@@ -17,7 +17,7 @@
 2. [Getting Started](#getting-started)
 	- [Installing Ruby and Rails](#installing-ruby-and-rails) 
 	- [Creating a Rails Application](#creating-a-rails-application)
-		1. [Summary of Rails Application Directory Structure](#Summary-of-Rails-Application-Directory-Structure) 	
+		1. [Summary of Rails Application Directory Structure](#summary-of-rails-application-directory-structure) 	
 	- [Using *Bundler* to install the included gems needed by the app](#using-bundler-to-install-the-included-gems-needed-by-the-app) 
 	- [Running a local web server](#running-a-local-web-server) 
 	- [Installing PostgreSQL](#installing-postgresql)
@@ -29,7 +29,7 @@
 		4. [GitHub](#GitHub)
 3. [Deploying](#deploying)
 	- [Heroku Setup](#heroku-setup)
-	- [Heroku Deployment, in one step](#Heroku-Deployment-in-one-step)
+	- [Heroku Deployment, in one step](#heroku-deployment-,-in-one-step)
 4. [Setting up CSS](#setting-up-css)
 5. [Setting up Git](#setting-up-git)
 
