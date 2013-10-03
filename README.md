@@ -12,7 +12,7 @@
 		2. [Programming Languages](#programming-languages)
 		3. [Version Control](#version-control)
 		4. [Database](#database)
-		5. [Testing/Development Deployment](#testing/development-deployment)
+		5. [Testing And Development Deployment](#testing-and-development-deployment)
 		6. [Online Tools](#online-tools)
 2. [Getting Started](#getting-started)
 3. [Installing PostgreSQL](#installing-postgresql)
@@ -74,7 +74,7 @@ Git
 ### Database ###
 PostgreSQL
 
-### Testing/Development Deployment ###
+### Testing And Development Deployment ###
 Heroku <https://www.heroku.com/>
 
 ### Online Tools ###
