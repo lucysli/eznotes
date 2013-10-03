@@ -1050,13 +1050,9 @@ cap deploy to update your production server with your changes
 ## Installing Ubuntu server 12.04.3 LTS AMD 64 ##
 
 1. <http://www.designervisuals.com/Manual_Partitioning_of_Ubuntu_Web_Server_using_LVM.html>
-
 2. <http://www.designervisuals.com/Manual_Partitioning_Ubuntu_Web_Server.html>
-
 3. <http://net.tutsplus.com/tutorials/php/how-to-setup-a-dedicated-web-server-for-free/>
-
 4. <https://help.ubuntu.com/10.04/serverguide/automatic-updates.html>
-
 5. <http://www.web-l.nl/posts/21-production-rails-on-ubuntu-12-04-lts>
 
 ## Postgres ##
