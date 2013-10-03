@@ -750,7 +750,7 @@ To do that, I edited the file:
 `sudo vim /etc/apache2/sites-available/eznotes`
 
 ```
-<VirtualHost _default_:8443>
+<VirtualHost _default_:OURPORTNUMBER>
    # ServerName www.yourhost.com # Commented out for default
    DocumentRoot /var/www/eznotes/public # be sure to point to public
    <Directory /var/www/eznotes/public>
@@ -1053,15 +1053,15 @@ cap deploy to update your production server with your changes
 
 ## Installing Ubuntu server 12.04.3 LTS AMD 64 ##
 
-<http://www.designervisuals.com/Manual_Partitioning_of_Ubuntu_Web_Server_using_LVM.html>
+1. <http://www.designervisuals.com/Manual_Partitioning_of_Ubuntu_Web_Server_using_LVM.html>
 
-<http://www.designervisuals.com/Manual_Partitioning_Ubuntu_Web_Server.html>
+2. <http://www.designervisuals.com/Manual_Partitioning_Ubuntu_Web_Server.html>
 
-<http://net.tutsplus.com/tutorials/php/how-to-setup-a-dedicated-web-server-for-free/>
+3. <http://net.tutsplus.com/tutorials/php/how-to-setup-a-dedicated-web-server-for-free/>
 
-<https://help.ubuntu.com/10.04/serverguide/automatic-updates.html>
+4. <https://help.ubuntu.com/10.04/serverguide/automatic-updates.html>
 
-<http://www.web-l.nl/posts/21-production-rails-on-ubuntu-12-04-lts>
+5. <http://www.web-l.nl/posts/21-production-rails-on-ubuntu-12-04-lts>
 
 ## Postgres ##
 <https://www.digitalocean.com/community/articles/how-to-install-and-use-postgresql-on-ubuntu-12-04>
