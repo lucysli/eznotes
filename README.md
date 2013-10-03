@@ -775,7 +775,7 @@ And reloaded apache to enabled the new configurations.
 
 ## Deployment Using Git and Capistrano ##
 
-This is a critical step that facilitates the deployment process so its automated fast and efficient.
+This is a critical step that facilitates the deployment process so its automated, fast and efficient.
 
 Capistrano in essence allows us to deploy our local Rails app that we are developing on our local development machine to the production server in one or two lines.
 
@@ -860,9 +860,6 @@ Set the user you want to use for your server's deploys.
 
 `set :user, "deploy"`
 
-Now, you could use the scm_passphrase setting to tell Capistrano the password to use for your deployment user, but I don't like the idea of storing my server password in a file I want to keep in my repository. This is why I setup my server with RSA keys that allow my dev machine access without the need for entering a password every time. But if you want to put it in your deployment script without using keys, you'd do it like this (although not recommended):
-
-`set :scm_passphrase, "password"`
 
 I change another setting called use_sudo to false so commands are executed with the user's permissions unless I specify otherwise. If you added your user to the "deployers" group (which has write-access to your app's directory tree) you probably won't need to use sudo much, if at all.
 
@@ -872,13 +869,13 @@ Set your rails environment (this is deploying to the production server, so I'm s
 
 `set :rails_env, "production"`
 
-Tell Capistrano how you'd like to make updates. There are many different ways of doing it, but for simplicity's sake, I'm going to stick with the most straight-forward method, namely copy. This will clone your entire repository (download it from the remote to your local machine) and then upload the entire app to your server.
+Tell Capistrano how you'd like to make updates. There are many different ways of doing it, the simple way is to use copy. This will clone your entire repository (download it from the remote to your local machine) and then upload the entire app to your server. 
 
-`set :deploy_via, :copy` I use remote_cache
+`set :deploy_via, :remote_cache`
 
-You could alternatively use a faster method like remote_cache which will run a fetch from your server to your remote repository and only update what's changed, but that requires some additional authentication between your server and the remote repository. I just want to get you up and running first. Worry about optimizing the process later.
+Alternatively we can use a faster method like remote_cache which will run a fetch from your server to your remote repository and only update what's changed.
 
-Next, you need to tell Capistrano about any special SSH options it should be aware of. For instance, my server is setup to use a custom port number and uses RSA keys for authentication to my Github account. So, I need to specify the port, and use what's called "agent forwarding" to connect to my remote repository (it sounds weird, but agent forwarding will make your life easier by using your local keys rather than those installed on your server). Read more about agent forwarding with this great article from Github.
+Next, you need to tell Capistrano about any special SSH options it should be aware of. For instance, our server uses RSA keys for authentication to the eznotes Github account. We need to specify "agent forwarding" to connect to the remote repository. Follow this link for more details on agent forwarding <https://help.github.com/articles/using-ssh-agent-forwarding>
 
 `set :ssh_options, { :forward_agent => true }`
 
@@ -892,7 +889,7 @@ Next, you should use the following setting to ensure any needed password prompts
 
 The last setting you need to handle is where on the internet Capistrano can find your server. This could be your domain name or the IP address. For our case this deployment is for a smallish MVP-type app where everything is on the same machine (database, app, server, etc.). In this case you can use Capistrano's server setting.
 
-`server "server.eznotes.ca", :app, :web, :db, :primary => true`
+`server "xxx.xxx.xxx", :app, :web, :db, :primary => true`
 
 If you want to do fancier deployments by splitting things up for scaling (like separating your database from your application server), you'll want to use Capistrano's "roles" to point it to the different places where things are installed. Use multiple roles instead of the server command (it accomplishes the same thing with greater granularity).
 
@@ -1007,7 +1004,7 @@ end
 5. Cleanup unneeded files
 If you don't run cleanup, the worst thing that will happen is that all your old releases stay stored on your server. But you might not want this as it's taking up disk space. This task is run from `deploy:cleanup`.
 
-After Deploy
+6. After Deploy
 The final step in setting up your deployment script is to add your custom tasks to run after deployment (i.e., after all the files are copied to the server and the current_path has been updated to the latest release). All you need to do is tell Capistrano what tasks you want to run in the order you want to run them outside the deploy namespace block.
 
 ```
@@ -1046,8 +1043,7 @@ git commit -m 'my new commit' it to your local repo
 git push origin master to sync it to your remote
 cap deploy to update your production server with your changes
 ```
-
-
+-----------------------------------
 
 # Resources and References #
 
