@@ -508,8 +508,8 @@ Server has a partition(split in half) has both windows 7 and linux installed.
 The partitioning scheme is as follows: 
 3 physical volumes and one logical volume.
 
-Linux partition is 103GB
-2 partitions(1PV and 1LV) for Ubuntu server
+Total Linux partition size is 103GB.
+two partitions(1PV and 1LV) for Ubuntu server
 1. There is a physical boot partition of 250MB
 2. The logical volume group has 3 logical volumes installed.
 	- One is root with size 30GB
@@ -517,9 +517,9 @@ Linux partition is 103GB
 	- The remaining disk-space is var which will contain the data for website i.e web site files databases and log files.
 	 
 Windows partition is 139GB
-2 physical partitions 
-1. one is fat32 for swap
-2. the other is the windows installation NTFS
+Two physical partitions for windows installation
+1. fat32 for swap
+2. NTFS remaining space
 
 #### Network Configuration ####
 
