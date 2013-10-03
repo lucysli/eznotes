@@ -25,13 +25,14 @@
 	- [Setting up Git](#setting-up-git)
 		1. [First-time system setup](#first-time-system-setup)
 		2. [First-time repository setup](#first-time-repository-setup)
-		3. [Adding and committing](#Adding-and-committing)
-		4. [GitHub](#GitHub)
+		3. [Adding and committing](#adding-and-committing)
+		4. [GitHub](#gitHub)
 3. [Deploying](#deploying)
 	- [Heroku Setup](#heroku-setup)
-	- [Heroku Deployment, in one step](#heroku-deployment-,-in-one-step)
-4. [Setting up CSS](#setting-up-css)
-5. [Setting up Git](#setting-up-git)
+	- [Heroku Deployment, in one step](#heroku-deployment-in-one-step)
+	- [Heroku commands](#heroku-commands)
+4. [Testing](#testing)
+5. [Staging and Production Environments](#staging-and-production-environments)
 
 # General Information #
 
