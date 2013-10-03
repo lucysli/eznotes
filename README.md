@@ -31,7 +31,7 @@
 	- [Heroku commands](#heroku-commands)
 4. [Testing](#testing)
 5. [Staging and Production Environments](#staging-and-production-environments)
-6. [Resources/References](#resources-references)
+6. [Resources/References](#resources/references)
 
 # General Information #
 
