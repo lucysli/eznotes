@@ -1,5 +1,3 @@
-# IMPORTANT NOTE THIS README IS NOT FULLY UPDATED THERE IS SOME OUTDATED INFORMATION AND/OR MISSING INFORMATION READ AT YOUR OWN RISK DO NOT RELY ON THIS YET. CURRENTLY IT IS UNDER REPAIR AND THE FULL UPDATED VERSION WITH THE CORRECT INFO WILL BE OUT SOON. #
-
 # Table Of Contents #
 1. [General Information](#general-information)
 	- [Project](#project)
@@ -99,15 +97,15 @@ GitHub <https://github.com/mcgillosd/eznotes>
 -------------------------------------------
 # Getting Started #
 
-The EZNotes web application was developed using the guide by Michael Hartl <http://ruby.railstutorial.org/> as spring board. If you
-are a first time rubist and this is your first rails app I recommend to read and follow the tutorial
-thoroughly.
+The EZNotes web application was developed using the guide by Michael Hartl <http://ruby.railstutorial.org/> as a spring board. If you
+are a first time rubist and this is your first rails app I recommend that you read and follow the tutorial
+thoroughly. I have outlined below the basic steps for setting up the development machine to run Ruby extracted from the tutorial by Michael Hartl.
 
 ## Installing Ruby and Rails ##
 
 For Our purposes we are using Ruby version 2.0.0-p and Rails 4.0.0.  
-To check the version of ruby installed on your system type `ruby -v` in command line.  
-I strongly reccomend to use [Ruby Version Manager(RVM)]<http://rvm.io/> to install ruby.  
+To check the version of ruby installed on your system type `ruby -v` on the command line.  
+I strongly recommend using [Ruby Version Manager(RVM)]<http://rvm.io/> to install ruby.  
 OS X Users must install Command line tools for Xcode.
 
 To get started with Ruby Installation, first install RVM:  
@@ -336,6 +334,14 @@ For development we generated a reasonably secure random/obscure subdomain such a
 -------------------------------------------
 # Testing #
 
+Development of this web application was done using test driven development and for the most part followed a strategy along the following lines:
+- Design feature
+- Write failing tests for feature
+- Implement feature such that it passes tests
+- Refactor and write more tests
+- Ensure all tests pass
+- Commit
+
 ## Test suites ##
 
 -	RSpec: used for test driven development
@@ -493,24 +499,35 @@ Please note that with software that constantly updates and new versions getting 
 ## Server ##
 
 ### Physical Machine ###
-Dell Machine 64 Bit
+Dell Machine 64 bit
 
-Server has a partition(split in half) has both windows 7 and linux installed. Linux parition is 103GB
-The parititioning schemse is as follows
-3 physical volumes and one logical volume
-2 partitions(PV) for windows one is fat32 
-the other is the windows installation at 139GB
+#### Partitioning Scheme ####
 
-2 partitions(1PV and 1LV) for ubuntu server
+Server has a partition(split in half) has both windows 7 and linux installed. 
 
-there is a physical boot partition of 250MB
-then the there is a logical volume group with 3 logical volumes installed. one is root with size 30GB the other is swap at 8GB and the remaining diskspace is var which will contain the data for website i.e web site files databases and log files
+The partitioning scheme is as follows: 
+3 physical volumes and one logical volume.
+
+Linux partition is 103GB
+2 partitions(1PV and 1LV) for Ubuntu server
+1. There is a physical boot partition of 250MB
+2. The logical volume group has 3 logical volumes installed.
+	- One is root with size 30GB
+	- The other is swap at 8GB
+	- The remaining disk-space is var which will contain the data for website i.e web site files databases and log files.
+	 
+Windows partition is 139GB
+2 physical partitions 
+1. one is fat32 for swap
+2. the other is the windows installation NTFS
+
+#### Network Configuration ####
 
 has a static ip address
 
 ### Installation and setup ###
 
-Running Ubuntu server 12.04.3 LTS AMD 64
+Install Ubuntu server 12.04.3 LTS AMD 64
 
 Now update by running
 
