@@ -31,7 +31,7 @@
 	- [Heroku commands](#heroku-commands)
 4. [Testing](#testing)
 5. [Staging and Production Environments](#staging-and-production-environments)
-6. [Resources/References](#resources/references)
+6. [Resources and References](#resources-and-references)
 
 # General Information #
 
@@ -1049,7 +1049,7 @@ cap deploy to update your production server with your changes
 
 
 
-# Resources/References #
+# Resources and References #
 
 ## Installing Ubuntu server 12.04.3 LTS AMD 64 ##
 
