@@ -26,7 +26,7 @@
 		1. [First-time system setup](#first-time-system-setup)
 		2. [First-time repository setup](#first-time-repository-setup)
 		3. [Adding and committing](#adding-and-committing)
-		4. [GitHub](#gitHub)
+		4. [GitHub](#github)
 3. [Deploying](#deploying)
 	- [Heroku Setup](#heroku-setup)
 	- [Heroku Deployment, in one step](#heroku-deployment-in-one-step)
