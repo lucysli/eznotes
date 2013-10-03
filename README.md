@@ -201,9 +201,11 @@ rake db:create:all
 ```
 
 Note following the advice from the tutorial i created aliases in my .bash_profile to start stop and check the status of the server. I found this very useful.  
+```
 alias pg-start='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'  
 alias pg-stop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'  
-alias pg-status='pg_ctl status -D /usr/local/var/postgres'  
+alias pg-status='pg_ctl status -D /usr/local/var/postgres'
+```
 
 update the gem file of your app to eliminate the sqlite3 gem and add the pg gem.
 open config/database.yml file. I set it up as follows  
