@@ -31,6 +31,7 @@
 	- [Heroku commands](#heroku-commands)
 4. [Testing](#testing)
 5. [Staging and Production Environments](#staging-and-production-environments)
+6. [Resources/References](#resources-references)
 
 # General Information #
 
@@ -1048,9 +1049,9 @@ cap deploy to update your production server with your changes
 
 
 
-## Resources/References ##
+# Resources/References #
 
-### Installing Ubuntu server 12.04.3 LTS AMD 64 ###
+## Installing Ubuntu server 12.04.3 LTS AMD 64 ##
 
 <http://www.designervisuals.com/Manual_Partitioning_of_Ubuntu_Web_Server_using_LVM.html>
 
@@ -1062,16 +1063,16 @@ cap deploy to update your production server with your changes
 
 <http://www.web-l.nl/posts/21-production-rails-on-ubuntu-12-04-lts>
 
-### Postgres ###
+## Postgres ##
 <https://www.digitalocean.com/community/articles/how-to-install-and-use-postgresql-on-ubuntu-12-04>
 
-### Security ###
+## Security ##
 <http://www.debian-administration.org/articles/349>
 <http://httpd.apache.org/docs/2.2/ssl/ssl_faq.html>
 <http://blog.ericlamb.net/2009/05/setting-up-a-linux-web-server/>
 <http://www.jonathanmoeller.com/screed/?p=2097>
 
-### Set up Rails on server ###
+## Set up Rails on server ##
 <http://robmclarty.com/blog/how-to-setup-a-production-server-for-rails-4>
 <http://robmclarty.com/blog/how-to-deploy-a-rails-4-app-with-git-and-capistrano>
 <http://www.web-l.nl/posts/21-production-rails-on-ubuntu-12-04-lts>
