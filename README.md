@@ -3,11 +3,21 @@
 # Table Of Contents #
 1. [General Information](#general-information)
 	- [Project](#project)
-	- [contact Info](#contact-info)
+	- [Contact Info](#contact-info)
+	- [Developers](#developers)
+	- [Project Summary](#project-summary)
+	- [Licensing](#licensing)
+	- [Technologies](#technologies)
+		1. [Framework](#framework)
+		2. [Programming Languages](#programming-languages)
+		3. [Version Control](#version-control)
+		4. [Database](#database)
+		5. [Testing/Development Deployment](#testing/development-deployment)
+		6. [Online Tools](#online-tools)
 2. [Getting Started](#getting-started)
-3. [Installing PostgreSQL](#installing_postgresql)
-4. [Setting up CSS](#setting_up_css)
-5. [Setting up Git](#setting_up_git)
+3. [Installing PostgreSQL](#installing-postgresql)
+4. [Setting up CSS](#setting-up-css)
+5. [Setting up Git](#setting-up-git)
 
 # General Information #
 
@@ -51,7 +61,7 @@ All icons are from Font-Awesome <http://fortawesome.github.io/Font-Awesome/licen
 ### Framework ###
 Rails
 
-### Programming Language(s) ###
+### Programming Languages ###
 -	Ruby
 -	JQuery
 -	Javascript
@@ -67,7 +77,7 @@ PostgreSQL
 ### Testing/Development Deployment ###
 Heroku <https://www.heroku.com/>
 
-### Online tools ###
+### Online Tools ###
 Wireframes <http://pencil.evolus.vn/>  
 GitHub <https://github.com/mcgillosd/eznotes>
 
