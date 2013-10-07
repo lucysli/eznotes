@@ -1,18 +1,17 @@
 <%= form_for current_user, url: registrations_path, method: :post, html: { class: "form-inline" } do |f| %>
    <legend>
       Register Courses You Are Enrolled In 
-      <strong class="cus-help-circled registerCourses pull-right">Help</strong>
+      <strong class="icon-question-sign icon-2x registerCourses pull-right"> Help</strong>
    </legend>
 
    <fieldset name="search" class="control-group"> 
-      <%= f.label :course_tokens, "Search", class: "cus-eye" %>
+      <%= f.label :course_tokens, " Search", class: "icon-search" %>
       <%= f.text_field :course_tokens %> 
    </fieldset>
 
    <fieldset name="submit">     
-      <%= button_tag type: 'submit', class: "btn btn-large btn-inverse cus-link" do %>
+      <%= button_tag type: 'submit', class: "btn btn-large btn-inverse icon-plus icon-large" do %>
          Register
       <% end %>
    </fieldset>
 <% end %>
-

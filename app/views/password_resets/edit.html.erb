@@ -6,7 +6,7 @@
   <%= render 'shared/error_messages', object: f.object %>
 
   <fieldset class="control-group">
-    <%= f.label :password, class: "cus-lock" %>
+    <%= f.label :password, " New Password", class: "icon-lock icon-large" %>
     <p class="controls">
       <%= f.password_field :password, autofocus: true, required: true, 
           minLength: "8",
@@ -16,7 +16,7 @@
   </fieldset>
   
   <fieldset class="control-group">
-    <%= f.label :password_confirmation, class: "cus-lock" %>
+    <%= f.label :password_confirmation, " Password Confirmation", class: "icon-lock icon-large" %>
     <p class="controls">
       <%= f.password_field :password_confirmation,
           :'data-validation-match-match' => "user[password]", 
@@ -25,7 +25,7 @@
   </fieldset>
 
   <fieldset>
-    <%= button_tag type: 'submit', class: "cus-floppy btn btn-large btn-inverse" do %>
+    <%= button_tag type: 'submit', class: "icon-save icon-large btn btn-large btn-inverse" do %>
       Update Password
     <% end %>
   </fieldset>

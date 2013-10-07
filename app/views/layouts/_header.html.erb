@@ -21,75 +21,88 @@
 											:'data-validation-regex-regex' => "^[^\\s']+$", 
 											:'data-validation-regex-message' => "Password is incorrect format; cannot have any spaces or quotes(')", placeholder: 'McGill password', class: "input-medium" %>
 
-								<%= button_tag(type: 'submit', class: "cus-login btn btn-danger") do %>
-										Sign in
+								<%= button_tag(type: 'submit', class: "btn btn-danger") do %>
+										<i class="icon-signin icon-large"></i> Sign in
 								<% end %>
 							<% end %>
 						</li>
-						<li><%= link_to "Forgotten password? Click to reset", new_password_reset_path, class: "cus-lock-open" %> </li>
+						<li>
+							<%= link_to new_password_reset_path do %>
+							<i class="icon-unlock-alt icon-large"></i> Forgotten password? Click to reset
+							<% end %>
+						</li>
 					<% end %>
 				</ul>
 				<ul class="nav pull-right">
-					<li><%= link_to "Home", root_path, class: "cus-home" %></li>
-					<li><%= link_to "Contact Us", contact_path, class: "cus-mail-alt" %></li>
-					<li><%= link_to "Help", help_path, class: "cus-help-circled" %></li>
+					<li>
+						<%= link_to root_path do %>
+							<i class="icon-home icon-large"></i> Home
+						<% end %>
+					</li>
+					<li>
+						<%= link_to contact_path do %>
+							<i class="icon-envelope icon-large"></i> Contact Us
+						<% end %>
+					</li>
+					<li>
+						<%= link_to help_path do %>
+							<i class="icon-question-sign icon-large"></i> Help
+						<% end %>
+					</li>
 					<% if signed_in? %>
 						<% if  current_user.admin? %>
 							<li id="fat-menu" class="dropdown">
-								<a href="#" class="dropdown-toggle cus-users" data-toggle="dropdown">
-								Users <b class="caret"></b>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<i class="icon-group icon-large"></i> Users <b class="caret"></b>
 								</a>
 								<ul class="dropdown-menu">
-									<li><%= link_to "Show Users", users_path, class: "cus-eye" %></li>
-									<li><%= link_to "Download Matchings as CSV", courses_path(format: "csv"), class: "cus-download" %></li>
+									<li><%= link_to " Show Users", users_path, class: "icon-eye-open" %></li>
+									<li><%= link_to " Download Matchings as CSV", courses_path(format: "csv"), class: "icon-download-alt" %></li>
 								</ul>
 							</li>
 							
 							<li id="fat-menu" class="dropdown">
-								<a href="#" class="dropdown-toggle cus-docs" data-toggle="dropdown">
-								Courses <b class="caret"></b>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<i class="icon-book icon-large"></i> Courses <b class="caret"></b>
 								</a>
 								<ul class="dropdown-menu">
-									<li><%= link_to "Show Courses", courses_path, class: "cus-eye" %></li>
-									<li><%= link_to "Import Courses", new_course_import_path, class: "cus-upload" %></li>
+									<li><%= link_to " Show Courses", courses_path, class: "icon-eye-open" %></li>
+									<li><%= link_to " Import Courses", new_course_import_path, class: "icon-upload-alt" %></li>
 									<li class="divider"></li>
-									<li><%= link_to "Delete All Courses", 'delete_all_courses', method: :delete, data: { confirm: "WARNING This will delete all courses hence will also delete all course registrations made by students and all notes associated with the course." },class: "cus-trash" %></li>
+									<li><%= link_to " Delete All Courses", 'delete_all_courses', method: :delete, data: { confirm: "WARNING This will delete all courses hence will also delete all course registrations made by students and all notes associated with the course." },class: "icon-trash" %></li>
 								</ul>
 							</li>
 							<li id="fat-menu" class="dropdown">
-								<a href="#" class="dropdown-toggle cus-tags" data-toggle="dropdown">
-								Accommodations <b class="caret"></b>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<i class="icon-bar-chart icon-large"></i> Accommodations <b class="caret"></b>
 								</a>
 								<ul class="dropdown-menu">
-									<li><%= link_to "Show Accommodations", accomodations_path, class: "cus-eye" %></li>
-									<li><%= link_to "Import Accommodations", new_accomodation_path, class: "cus-upload" %></li>
+									<li><%= link_to " Show Accommodations", accomodations_path, class: "icon-eye-open" %></li>
+									<li><%= link_to " Import Accommodations", new_accomodation_path, class: "icon-upload-alt" %></li>
 									<li class="divider"></li>
-									<li><%= link_to "Delete All Accommodations", 'delete_accommodations', method: :delete, data: { confirm: "WARNING This will delete all accommodations!!!" },class: "cus-trash" %></li>
+									<li><%= link_to " Delete All Accommodations", 'delete_accommodations', method: :delete, data: { confirm: "WARNING This will delete all accommodations!!!" },class: "icon-trash" %></li>
 								</ul>
-							</li>
-								
-
+							</li>					
 						<% end %>
 						<li id="fat-menu" class="dropdown">
-							<a href="#" class="dropdown-toggle cus-cog" data-toggle="dropdown">
-								Account <b class="caret"></b>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<i class="icon-cog icon-large"></i> Account <b class="caret"></b>
 							</a>
 							<ul class="dropdown-menu">
-								<li><%= link_to "Profile", current_user, class: "cus-user" %></li>
-								<li><%= link_to "Settings", edit_user_path(current_user), class: "cus-edit" %></li>
-								<% if current_user.note_taker? %>
-									<li><%= link_to "Payroll information", '#', class: "cus-credit-card" %></li>
-								<% end %>
-
-								<li><%= link_to "Inbox", '#', class: "cus-mail" %></li>
+								<li><%= link_to " Profile", current_user, class: "icon-user" %></li>
+								<li><%= link_to " Settings", edit_user_path(current_user), class: "icon-edit" %></li>
 								<li class="divider"></li>
 								<li>
-									<%= link_to "Sign out", signout_path, method: "delete", class: "cus-logout" %>
+									<%= link_to " Sign out", signout_path, method: "delete", class: "icon-signout" %>
 								</li>
 							</ul>
 						</li>
 					<% else %>
-						<li><%= link_to "Sign in", signin_path, class: "cus-login" %></li>
+						<li>
+							<%= link_to signin_path do %>
+								<i class="icon-signin icon-large"></i> Sign in 
+							<% end %>
+						</li>
 					<% end %>
 				</ul>
 			</nav>

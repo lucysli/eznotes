@@ -1,7 +1,10 @@
 <% provide(:title, 'Contact') %>
 
 <section>
-	<h1> <%= link_to "Contact McGill OSD", "http://www.mcgill.ca/osd/contact", class: "cus-mail-alt text-error" %> 
+	<h1> 
+      <%= link_to "http://www.mcgill.ca/osd/contact", class: "text-error" do %> 
+         <i class="icon-envelope"></i> Contact McGill OSD
+      <% end %>
       about EZ Notes! 
    </h1>
 </section>

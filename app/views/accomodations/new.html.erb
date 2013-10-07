@@ -25,14 +25,14 @@
       <%= form_tag import_accomodations_path, multipart: true do %>
 
          <fieldset>
-          <%= label_tag :file, nil, class: "cus-folder-open" %>
+          <%= label_tag :file, " File", class: "icon-folder-open" %>
           <p class="controls">
             <%= file_field_tag :file, accept: 'text/csv application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet application/vnd.openxmlformats-officedocument.spreadsheetml.template', multiple: true, class: "input-xlarge"%>
           </p>
          </fieldset>
 
          <fieldset>
-            <%= button_tag(type: 'submit', class: "btn btn-large btn-inverse cus-upload") do %>
+            <%= button_tag(type: 'submit', class: "btn btn-large btn-inverse icon-upload-alt icon-large") do %>
                Import
             <% end %>
          </fieldset> 

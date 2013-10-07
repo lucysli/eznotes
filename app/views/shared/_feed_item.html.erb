@@ -13,7 +13,7 @@
    </span>
    <div class="center">
       <span class="download">
-         <%= link_to('download file', feed_item.file.url, class: "cus-download download", alt: 'download', target: "_blank") %>
+         <%= link_to('download file', feed_item.file.url, class: "icon-download download", alt: 'download', target: "_blank") %>
       </span> 
       <% if current_user?(feed_item.user) %>
          <%= render partial: 'shared/delete_note_link', locals: { object: feed_item } %>

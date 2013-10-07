@@ -1,13 +1,13 @@
-
-
 @import "bootstrap";
 @import "bootstrap-responsive";
+@import "font-awesome";
 
 /* mixins, variables, etc. */
 
 $grayMediumLight: #eaeaea;
 $redMediumLight: #ff0000;
 
+/*
 @font-face
 {
   font-family: Raleway-Bold;
@@ -32,7 +32,7 @@ $redMediumLight: #ff0000;
 
 //$baseFontFamily: 'Permian', sans-serif !default;
 //$ralewayFontFamily: 'Raleway-Thin', sans-serif !default;
-
+*/
 
 @mixin box_sizing {
   -moz-box-sizing: border-box; // firefox
@@ -348,30 +348,24 @@ aside {
 
 /* courses */
 #courses {
-  margin: 0;
-  dl {
-    padding: 10px 0;
-    border-top: 1px solid $grayLighter;
-    &:last-child {
-      border-bottom: 1px solid $grayLighter;
-    }
+  ul {
+    list-style: none;
     &:hover {
       background-color: $grayLighter;
     }
   }
-}
-.courses {
-  list-style: none;
-  margin: 10px 0 0 0;
-
   li {
-    padding: 10px 0;
-    border-top: 1px solid #e8e8e8;
+    padding: 30px 0;
+    border-top: 1px solid $grayLighter;
+    &:last-child {
+      border-bottom: 1px solid $grayLighter;
+    }
+
   }
 }
 
 .course {
-  dt {
+  li {
     &:hover {
       color: $redMediumLight;
     }
@@ -452,5 +446,18 @@ em {
   font-weight: 900;
 }
 
+.approve {
+  color: $redMediumLight;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.unapprove {
+  &:hover {
+    text-decoration: none;
+    color: $redMediumLight;
+  }
+}
 
 

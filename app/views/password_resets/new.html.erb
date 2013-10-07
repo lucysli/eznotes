@@ -4,7 +4,7 @@
    <%= form_tag password_resets_path, method: :post do %>
       <legend>Reset Password</legend>
       <fieldset class="control-group">
-         <%= label_tag :email, nil, class: "cus-mail-alt" %>
+         <%= label_tag :email, " Email", class: "icon-envelope" %>
          <p class="controls">
             <%= email_field_tag :email, params[:email], autofocus: true, required: true, 
                   :'data-validation-email-message' => "Please enter a valid email", 
@@ -14,7 +14,7 @@
          </p>
       </fieldset>
       <fieldset>
-         <%= button_tag type: 'submit', class: "cus-lock-open-alt btn btn-large btn-inverse" do %>
+         <%= button_tag type: 'submit', class: "icon-unlock icon-large btn btn-large btn-inverse" do %>
             Reset Password
          <% end %>
       </fieldset>

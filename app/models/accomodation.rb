@@ -22,7 +22,6 @@ class Accomodation < ActiveRecord::Base
 
   def self.import(file)
     spreadsheet = open_spreadsheet(file)
-    #spreadsheet = CSV.new(file.path, skip_blanks: true, encoding: "ISO-8859-1")
 
     # Find the header in the spreadsheet. WE cannot assume the header is in a particular
     # row in the spreadsheet

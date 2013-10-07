@@ -1,0 +1,36 @@
+<%= form_for @course_import do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <fieldset>
+    <%= f.label :file do %>
+      <i class="icon-file"></i> File
+    <% end %>
+    <p class="controls">
+      <%= f.file_field :file, accept: 'text/csv', multiple: true, class: "input-xlarge"%>
+    </p>
+  </fieldset>
+
+  <fieldset>
+    <p>        
+      <%= f.label :term_fall, 'Fall', class: "radio inline" do %>
+        <%= f.radio_button :term, 'fall', checked: true %> Fall
+      <% end %>
+
+      
+      <%= f.label :term_winter, 'Winter', class: "radio inline" do %>
+        <%= f.radio_button :term, 'winter' %> Winter
+      <% end %>
+
+      
+      <%= f.label :term_summer, 'Summer', class: "radio inline" do %>
+        <%= f.radio_button :term, 'summer' %> Summer
+      <% end %>
+    </p>
+  </fieldset>
+
+  <fieldset>
+    <%= button_tag(type: 'submit', class: "btn btn-large btn-inverse") do %>
+      <i class="icon-upload-alt icon-large"></i> Import
+    <% end %>
+  </fieldset> 
+<% end %>

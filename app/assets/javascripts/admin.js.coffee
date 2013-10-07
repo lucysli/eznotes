@@ -52,6 +52,22 @@ search = ->
 # This way the events for the comment field text area will be attached whether 
 # we’ve loaded the page via Turbolinks or not.
 ready = ->
+   $('.approve').mouseenter ->
+      $(this).find('i').removeClass('icon-star')
+      $(this).find('i').addClass('icon-star-empty')
+
+   $('.approve').mouseleave ->
+      $(this).find('i').removeClass('icon-star-empty')
+      $(this).find('i').addClass('icon-star')
+
+   $('.unapprove').mouseenter ->
+      $(this).find('i').removeClass('icon-star-empty')
+      $(this).find('i').addClass('icon-star')
+
+   $('.unapprove').mouseleave ->
+      $(this).find('i').removeClass('icon-star')
+      $(this).find('i').addClass('icon-star-empty')
+
    $('#courses_search input').keyup search
    # default each row to visible
    $('tbody tr').addClass('visible')
@@ -91,12 +107,12 @@ ready = ->
             row.sortkey = null
 
          # identify the column sort order
-         $("th").removeClass "sorted-asc sorted-desc cus-sort-name-down cus-sort-name-up"
+         $("th").removeClass "sorted-asc sorted-desc icon-sort-by-alphabet icon-sort-by-alphabet-alt"
          $sortHead = $("th").filter(":nth-child(" + (column + 1) + ")")
          if sortDirection == 1     
-            $sortHead.addClass("sorted-asc cus-sort-name-up")
+            $sortHead.addClass("sorted-asc icon-sort-by-alphabet")
          else
-            $sortHead.addClass("sorted-desc cus-sort-name-down")
+            $sortHead.addClass("sorted-desc icon-sort-by-alphabet-alt")
 
          # identify the column to be sorted by
          $("td").removeClass("sorted").filter(":nth-child(" + (column + 1) + ")").addClass("sorted")

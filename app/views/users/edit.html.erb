@@ -6,14 +6,18 @@
 			<%= render 'shared/error_messages', object: f.object %>
 
 			<fieldset class="control-group">
-				<%= f.label :name, class: "cus-user control-label" %>
+				<%= f.label :name, class: "control-label" do %>
+					<i class="icon-user icon-large"></i> Name
+				<% end %>
 				<p class="controls">
 					<%= f.text_field :name, autofocus: true, maxlength: "50", required: true, class: "input-xlarge" %>
 				</p>
 			</fieldset>
 
 			<fieldset class="control-group">
-				<%= f.label :student_id, "Student ID", class: "cus-credit-card McGill Student ID control-label" %>
+				<%= f.label :student_id, class: "control-label" do %>
+					<i class="icon-credit-card icon-large"></i> Student ID
+				<% end %>
 				<p class="controls">
 					<%= f.text_field :student_id, required: true,
 					:'data-validation-regex-regex' => "^[0-9]+$", 
@@ -25,7 +29,9 @@
 
 			<% if current_user.admin? %>
 				<fieldset class="control-group">
-					<%= f.label :email, "McGill Email", class: "cus-mail-alt control-label" %>
+					<%= f.label :email, class: "control-label" do %>
+						<i class="icon-envelope icon-large"></i> McGill Email
+					<% end %>
 					<p class="controls">
 						<%= f.text_field :email, required: true, 
 							:'data-validation-email-message' => "Please enter a valid email", 
@@ -39,15 +45,17 @@
 			<% if current_user.admin? and not current_user?(@user) %>
 				<fieldset class="control-group">
 					<p class="controls">
-						<%= f.label :note_taker, "NoteTaker?", class: "cus-pencil checkbox inline" %>
+						<%= f.label :note_taker, class: "checkbox inline" do %>
+							<i class="icon-pencil icon-large"></i> NoteTaker?
+						<% end %>
 					
 						<%= f.check_box :note_taker %> 
 					</p>
 				</fieldset>
 			<% end %>
 			<fieldset class="control-group">
-				<%= button_tag(type: 'submit', class: "btn btn-large btn-inverse cus-floppy") do %>
-					Save changes
+				<%= button_tag(type: 'submit', class: "btn btn-large btn-inverse") do %>
+					<i class="icon-save icon-large"></i> Save changes
 				<% end %>
 			</fieldset>
 		<% end %>

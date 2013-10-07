@@ -2,7 +2,17 @@
 <div class="row-fluid">
    <aside class="span2">
       <section>
-         <%= render @course %>
+            <% if @course.term.upcase == "FALL" %>
+               <%= fa_stacked_icon "leaf", text: "(FALL)", base: "check-empty", class: "icon-2x pull-left text-error"%>
+            <% elsif @course.term.upcase == "WINTER" %>
+               <%= fa_stacked_icon "asterisk", text: "(WINTER)",  base: "check-empty", class: "icon-2x pull-left text-info" %>
+            <% elsif @course.term.upcase == "SUMMER" %>
+               <%= fa_stacked_icon "sun", text: "(SUMMER)",  class: "icon-2x pull-left text-warning" %>
+            <% end %>
+            <br>
+            <strong> 
+               <%= "#{@course.subject_code}-#{@course.course_num}-#{@course.section}" %>
+            </strong>
       </section>
       <section>
          <%= render 'shared/stats' %>

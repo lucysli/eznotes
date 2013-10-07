@@ -1,14 +1,14 @@
 <% provide(:title, 'All users') %>
 <h1>All users</h1>
 <form class="form-search offset7">
-   <label for="filter" class="cus-users">Filter</label>
+   <label for="filter"> <i class="icon-filter icon-large"></i>Filter</label>
    <input type="text" name="filter" value="" id="user_filter" class="input-large search-query" />
 </form>
 <article class="row-fluid">
    <aside class="span3">
       <section class="well">
          <%= form_tag('/create_admin', method: :put ) do %>
-            <legend>Add Admin User</legend>
+            <legend><i class="icon-plus icon-large"></i> Add Admin User</legend>
 
             <fieldset name="addAdminName" class="control-group">
                <%= label_tag :name, nil, class: "cus-user control-label" %>

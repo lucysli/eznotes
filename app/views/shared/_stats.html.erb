@@ -2,9 +2,9 @@
    <strong id="noteusers" class="stat">
       <% @registered_note_users =  @course.registered_users.where("note_taker = ?", false) %>
       <% if @registered_note_users.count <= 1 %>
-         <i class="cus-user"></i>
+         <i class="icon-user"></i>
       <% elsif @registered_note_users.count > 1 %>
-         <i class="cus-users"></i>
+         <i class="icon-group"></i>
       <% end %>
       <%= pluralize(@registered_note_users.count, "noteuser") %>
       registered
@@ -14,16 +14,16 @@
       <% @registered_note_takers =  
       @course.registered_users.count - @registered_note_users.count %>
       <% if @registered_note_takers <= 1 %>
-         <i class="cus-user"></i>
+         <i class="icon-user"></i>
       <% elsif @registered_note_takers > 1 %>
-         <i class="cus-users"></i>
+         <i class="icon-group"></i>
       <% end %>
       <%= pluralize(@registered_note_takers, "notetaker") %>
       registered
    </strong>
 
    <strong id="notetaker" class="stat">
-      <i class="cus-pencil"></i>
+      <i class="icon-pencil"></i>
       <% if @course.note_taker %>
          <%= pluralize(1, "notetaker") %>
       <% else %>
@@ -34,11 +34,9 @@
    
    <strong id="notes" class="stat">
       <% if @course.notes.count == 0 %>
-         <i class="cus-doc"></i>
-      <% elsif  @course.notes.count == 1 %>
-         <i class="cus-doc-text"></i>
+         <i class="icon-file"></i>
       <% else %>
-         <i class="cus-docs"></i>
+         <i class="icon-file-text"></i>
       <% end %>
       
       <%= pluralize(@course.notes.count, "note") %>

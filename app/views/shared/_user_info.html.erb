@@ -2,26 +2,28 @@
 <h4>
    (
    <% if current_user.note_taker? %>
-      <strong class="cus-pencil">NoteTaker</strong> 
+      <strong><i class="icon-pencil icon-large"></i> NoteTaker</strong> 
    <% elsif current_user.admin?%>
-      <strong class="cus-cog-alt">Admin</strong> 
+      <strong><i class="icon-gears icon-large"></i> Admin</strong> 
    <% else %>
-      <strong class="cus-user">NoteUser</strong> 
+      <strong><i class="icon-user icon-large"></i> NoteUser</strong> 
    <% end %>)
 </h4>
 <p>
-   <%= link_to "view my profile", current_user, class: "cus-eye" %>
+   <%= link_to current_user do %>
+      <i class="icon-eye-open icon-large"></i> view my profile
+   <% end %>
 </p>
 <% if not current_user.admin? %>
-   <p id="registered_courses" class="cus-doc-inv">
-      Registered for <%= pluralize(current_user.registered_courses.count, "course") %>
+   <p id="registered_courses">
+      <i class="icon-book icon-large"></i> Registered for <%= pluralize(current_user.registered_courses.count, "course") %>
    </p> 
 <% end %>
 <% if current_user.note_taker? %>
-   <p id="notetaking_courses" class="cus-pencil">
-       Notetaking for <%= pluralize(current_user.notetaking_for.count, "course") %>
+   <p id="notetaking_courses">
+       <i class="icon-pencil icon-large"></i> Notetaking for <%= pluralize(current_user.notetaking_for.count, "course") %>
    </p>
-   <p id="notes_uploaded" class="cus-doc-text-inv">
-      <%= pluralize(current_user.notes.count, "note") %> uploaded
+   <p id="notes_uploaded">
+      <i class="icon-file-text icon-large"></i> <%= pluralize(current_user.notes.count, "note") %> uploaded
    </p>
 <% end %>

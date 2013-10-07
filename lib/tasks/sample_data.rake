@@ -3,8 +3,8 @@ namespace :db do
 	desc "Fill database with sample data"
 	task populate: :environment do
 		make_users
-		make_courses
-		make_registrations
+		#make_courses
+		#make_registrations
 		#make_notes			
 	end
 end

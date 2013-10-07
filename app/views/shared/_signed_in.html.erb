@@ -3,22 +3,22 @@
       <section class="span4">
          <%= render 'shared/user_info' %>
       </section>
-      <section>
-         <form class="form-search pull-right">
-            <input type="text" name="filter" value="" id="filter" class="input-large search-query" />
-            <label for="filter" class="cus-zoom-in">Filter</label>
-         </form>
-      </section>
    </aside>
    <article class="row-fluid">
+      <section>
+         <form class="form-search center">
+            <input type="text" name="filter" value="" id="filter" class="input-xlarge search-query" />
+            <label for="filter" class="icon-filter icon-large"> Filter</label>
+         </form>
+      </section>
       <%= render 'shared/admin_info' %>
    </article>
 <% else %>
       
    <h2 class="alert alert-danger"> 
-      <i class="cus-attention"></i> 
+      <i class="icon-warning-sign"></i> 
       Once you have been matched for the courses you have registered for you will be notified by email with further instructions. 
-      <i class="cus-attention"></i>
+      <i class="icon-warning-sign"></i>
    </h2>
       
    <aside class="row-fluid">

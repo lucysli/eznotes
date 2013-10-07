@@ -30,6 +30,9 @@ gem 'paperclip', '~> 3.0'
 # annotate database models
 gem 'annotate', ">=2.5.0"
 
+# font awesome icons
+gem "font-awesome-rails"
+
 # gems used only in development and testing
 group :development, :test do
 	gem 'rspec-rails', '2.13.2'

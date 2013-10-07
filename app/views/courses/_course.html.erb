@@ -1,15 +1,23 @@
-<dl class="course">
-   <dt id="<%= course.id %>">
-      <%= "#{course.subject_code} #{course.course_num} #{course.section} ( #{course.term.upcase} )" %> 
-   </dt> 
-   <dd>
-      <%= course.course_title %>
-      <% if current_user.admin? %>
-         <%= link_to "delete", course, method: :delete,
-             data: { confirm: "Delete Course: 
-              #{course.subject_code} #{course.course_num} #{course.section} #{course.course_title}" }, class: "cus-trash delete" %>
+<ul id="<%= course.id %>", class="course">
+  <% if course.term.upcase == "FALL" %>
+    <%= fa_stacked_icon "leaf", base: "check-empty", class: "icon-3x pull-left text-error"%>
+  <% elsif course.term.upcase == "WINTER" %>
+    <%= fa_stacked_icon "asterisk", base: "check-empty", class: "icon-3x pull-left text-info" %>
+  <% elsif course.term.upcase == "SUMMER" %>
+    <%= fa_stacked_icon "sun", class: "icon-3x pull-left text-warning" %>
+  <% end %>
+  <li>
+    <i class="icon-li icon-book"></i>
+    <%= "#{course.subject_code}-#{course.course_num} #{course.section} #{course.course_title}" %>
+    <% if current_user.admin? %>
+      <%= link_to course, class: "btn btn-small btn-inverse" do %>
+          <i class="icon-eye-open icon-large"></i> Show
       <% end %>
-
-   </dd>
-</dl>
+      <%= link_to course, method: :delete, data: { confirm: "Delete Course: #{course.subject_code} #{course.course_num} #{course.section} #{course.course_title}" },
+      class: "btn btn-small btn-danger" do %>
+          <i class="icon-trash icon-large"></i> Delete
+      <% end %>
+    <% end %>
+  </li>
+</ul>
 

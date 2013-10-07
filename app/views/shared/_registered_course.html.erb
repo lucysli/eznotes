@@ -26,7 +26,7 @@
           <p> 
             <%= link_to noteuser.name, noteuser %> 
             <% if not Accomodation.exists?(student_id: noteuser.student_id) %>
-              <small class="cus-attention text-error">not registered with OSD</small>
+              <small class="icon-warning-sign icon-large text-error"> not registered with OSD</small>
             <% end %>
           </p>
         <% end %>
@@ -41,7 +41,13 @@
             <p> 
               <%= link_to notetaker.name, notetaker %> 
               <% if notetaker.approved? %>
-                <i class="cus-thumbs-up"></i>
+                <%= link_to user_path(notetaker, user: { :approved => false }), method: :put, class: "approve" do %> 
+                  <i class="icon-star icon-large"></i>
+                <% end %>
+              <% else %>
+                <%= link_to user_path(notetaker, user: { :approved => true }), method: :put, class: "unapprove" do %> 
+                  <i class="icon-star-empty icon-large"></i>
+                <% end %>
               <% end %>
             </p>
          <% end %>
@@ -49,10 +55,10 @@
    </td>
    <td>
       <% if registered_course.note_taker %>
-         <%= link_to registered_course.note_taker.name, registered_course.note_taker %>
-          <% if registered_course.note_taker.approved? %>
-            <i class="cus-thumbs-up"></i>
-          <% end %>
+        <strong class="muted"> 1 assigned </strong>
+        <p>
+          <%= link_to registered_course.note_taker.name, registered_course.note_taker %>
+        </p>
       <% else %>
         None Assigned
       <% end %>

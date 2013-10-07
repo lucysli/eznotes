@@ -1,32 +1,38 @@
 <li>
    (
    <% if user.note_taker? %>
-      <strong class="text-success"><i class="cus-pencil"></i> NoteTaker</strong>
+      <strong class="text-success"><i class="icon-pencil icon-large"></i> NoteTaker</strong>
    <% elsif user.admin? %>
-      <strong class="text-error"><i class="cus-cog-alt"></i> Admin</strong>
+      <strong class="text-error"><i class="icon-gears icon-large"></i> Admin</strong>
    <% else %>
-      <strong class="text-warning"><i class="cus-user"></i> NoteUser</strong>
+      <strong class="text-warning"><i class="icon-user icon-large"></i> NoteUser</strong>
    <% end %>)
 	<%= user.student_id %>
 	<strong><%= link_to user.name, edit_user_path(user) %></strong>
   <% if user.note_taker?  %>
     <% if user.approved?  %>
-      <i class="cus-check"> </i>
+      <i class="icon-star icon-large approve"></i>
     <% else %>
-      <i class="cus-check-empty"> </i>
+      <i class="icon-star-empty icon-large"></i>
     <% end %>
   <% end %>
 	<%= user.email %>
    
 	<% if current_user.admin? && !current_user?(user) %>
-		<%= link_to "delete", user, method: :delete,
-									  data: { confirm: "delete user #{user.student_id} #{user.name}" }, 
-                             class: "cus-trash delete" %>
+		<%= link_to user, method: :delete,
+									  data: { confirm: "Delete user #{user.student_id} #{user.name}" }, 
+                             class: "delete" do %>
+        <i class="icon-trash icon-large"></i> Delete
+    <% end %>
     <% if user.note_taker? %>
       <% if user.approved? %>
-        <%= link_to "Unapprove", user_path(user, user: { :approved => false }), method: :put, class: "cus-thumbs-down approve" %>
+        <%= link_to user_path(user, user: { :approved => false }), method: :put do %>
+            <i class="icon-thumbs-down icon-large"></i> Unapprove
+        <% end %>
       <% else %>
-        <%= link_to "Approve", user_path(user, user: { :approved => true }), method: :put, class: "cus-thumbs-up approve" %>
+        <%= link_to user_path(user, user: { :approved => true }), method: :put do %>
+          <i class="icon-thumbs-up icon-large"></i> Approve
+        <% end %>
       <% end %>
     <% end %>
 	<% end %>

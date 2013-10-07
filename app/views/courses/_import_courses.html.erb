@@ -1,9 +1,0 @@
-<h5 class="center"> Import Courses </h5>
-<%= form_tag import_courses_path, multipart: true do %>
-   <%= file_field_tag :file, accept: 'text/csv', multiple: true, class: "span3" %>
-   <%= select_tag :term, 
-      options_for_select([["fall"], ["winter"], ["summer"]]), class: "span2" %>
-   <%= button_tag(type: 'submit', class: "btn btn-large btn-primary") do %>
-      <i class="cus-upload"></i> Import
-   <% end %> 
-<% end %>

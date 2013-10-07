@@ -6,14 +6,18 @@
 		<%= f.hidden_field :note_taker, value: locals[:note_taker] %>
 
 		<fieldset name="userName" class="control-group">
-			<%= f.label :name, class: "cus-user"%>
+			<%= f.label :name do %>
+				<i class="icon-user icon-large"></i> Name
+			<% end %>
 			<p class="controls">
 				<%= f.text_field :name, required: true, maxlength: "50", placeholder: "John Doe", autofocus: true, class: "input-xlarge" %>
 			</p>
 		</fieldset>
 
 		<fieldset name="userEmail" class="control-group">
-			<%= f.label :email, "McGill Email", class: "cus-mail-alt" %>
+			<%= f.label :email do %>
+				<i class="icon-envelope icon-large"></i> McGill Email 
+			<% end %>
 			<p class="controls">
 				<%= f.email_field :email, required: true, 
 						:'data-validation-email-message' => "Please enter a valid email", 
@@ -24,7 +28,9 @@
 		</fieldset>
 
 		<fieldset name="userID" class="control-group">
-			<%= f.label :student_id, "McGill Student ID", class: "cus-credit-card" %>
+			<%= f.label :student_id do %>
+				<i class="icon-credit-card icon-large"></i> McGill Student ID
+			<% end %>
 			<p class="controls">
 				<%= f.text_field :student_id, required: true, 
 				:'data-validation-regex-regex' => "^[0-9]+$", 
@@ -36,7 +42,9 @@
 		</fieldset>
 
 		<fieldset name="userPassword" class="control-group">
-			<%= f.label :password, "McGill Password", class: "cus-lock" %>
+			<%= f.label :password do %>
+				<i class="icon-lock icon-large"></i> McGill Password
+			<% end %>
 			<p class="controls">
 				<%= f.password_field :password, required: true, minLength: "8",
 				:'data-validation-regex-regex' => "^[^\\s']+$", 
@@ -45,7 +53,9 @@
 		</fieldset>
 
 		<fieldset name="userPasswordConfirm" class="control-group">
-			<%= f.label :password_confirmation, "Confirmation", class: "cus-lock" %>
+			<%= f.label :password_confirmation do %>
+				<i class="icon-lock icon-large"></i> Confirmation
+			<% end %>
 			<p class="controls">
 				<%= f.password_field :password_confirmation, 
 				:'data-validation-match-match' => "user[password]", 
@@ -55,11 +65,13 @@
 
 		<fieldset name="userButtons" class="btn-toolbar">
 			<section class="btn-group">
-		      <%= link_to 'Cancel', root_path, class: "cus-cancel btn btn-large btn-inverse" %>
+		      <%= link_to root_path, class: "btn btn-large btn-inverse" do %>
+		      	<i class="icon-remove icon-large"></i> Cancel
+		      <% end %>
 		   </section>
 		   <section class="btn-group">
-		      <%= button_tag(type: 'submit', class: "cus-ok btn btn-large btn-danger") do %>
-		      	Register
+		      <%= button_tag(type: 'submit', class: "btn btn-large btn-danger") do %>
+		      <i class="icon-ok icon-large"></i> Register
 				<% end %>
 			</section>
 		</fieldset>
