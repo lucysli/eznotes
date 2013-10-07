@@ -1,3 +1,38 @@
+# Table Of Contents #
+1. [General Information](#general-information)
+	- [Project](#project)
+	- [Contact Info](#contact-info)
+	- [Developers](#developers)
+	- [Project Summary](#project-summary)
+	- [Licensing](#licensing)
+	- [Technologies](#technologies)
+		- [Framework](#framework)
+		- [Programming Languages](#programming-languages)
+		- [Version Control](#version-control)
+		- [Database](#database)
+		- [Testing And Development Deployment](#testing-and-development-deployment)
+		- [Online Tools](#online-tools)
+2. [Getting Started](#getting-started)
+	- [Installing Ruby and Rails](#installing-ruby-and-rails) 
+	- [Creating a Rails Application](#creating-a-rails-application)
+		- [Summary of Rails Application Directory Structure](#summary-of-rails-application-directory-structure) 	
+	- [Using *Bundler* to install the included gems needed by the app](#using-bundler-to-install-the-included-gems-needed-by-the-app) 
+	- [Running a local web server](#running-a-local-web-server) 
+	- [Installing PostgreSQL](#installing-postgresql)
+	- [Setting up CSS](#setting-up-css)
+	- [Setting up Git](#setting-up-git)
+		- [First-time system setup](#first-time-system-setup)
+		- [First-time repository setup](#first-time-repository-setup)
+		- [Adding and committing](#adding-and-committing)
+		- [GitHub](#github)
+3. [Deploying](#deploying)
+	- [Heroku Setup](#heroku-setup)
+	- [Heroku Deployment, in one step](#heroku-deployment-in-one-step)
+	- [Heroku commands](#heroku-commands)
+4. [Testing](#testing)
+5. [Staging and Production Environments](#staging-and-production-environments)
+6. [Resources and References](#resources-and-references)
+
 # General Information #
 
 ## Project ##
@@ -28,41 +63,23 @@ wisam.alabed@mail.mcgill.ca
 
 ## Project Summary ##
 
-What problem is this project solving?  
-
-We are developing a web application that will match  
-students with disabilities with prospective students  
-taking the same course so that they can share their notes  
-. TODO
+We are developing a web application that will allow the staff at the OSD to match students experiencing disabilities with
+prospective note takers taking the same course so that they can share their notes. 
 
 ## Licensing ##
 This project is licenced under the MIT open source initiative <http://opensource.org/licenses/MIT>  
-Currently the icons come from <fontello.com>. The following is the Licence file:
-
-
-Font license info
-
-
-## Font Awesome
-
-   Copyright (C) 2012 by Dave Gandy
-
-   Author:    Dave Gandy
-   License:   SIL ()
-   Homepage:  http://fortawesome.github.com/Font-Awesome/
-
-
-Since our project is open source then we will make the licence and readme file available publically in the repository in a folder called fontello-icons
+All icons are from Font-Awesome <http://fortawesome.github.io/Font-Awesome/license/>
 
 ## Technologies ##
 
 ### Framework ###
 Rails
 
-### Programming Language(s) ###
+### Programming Languages ###
 -	Ruby
 -	JQuery
 -	Javascript
+-	CoffeeScript
 -	HTML
 
 ### Version Control ###
@@ -71,25 +88,25 @@ Git
 ### Database ###
 PostgreSQL
 
-### Testing/Development Deployment ###
+### Testing And Development Deployment ###
 Heroku <https://www.heroku.com/>
 
-## Online tools ##
+### Online Tools ###
 Wireframes <http://pencil.evolus.vn/>  
 GitHub <https://github.com/mcgillosd/eznotes>
 
 -------------------------------------------
 # Getting Started #
 
-Almost everything was based on the rails guide by Michael Hartl <http://ruby.railstutorial.org/>. If you
-are a first time rubist and this is your first rails app I recommend to read and follow the tutorial
-thoroughly.
+The EZNotes web application was developed using the guide by [Michael Hartl](<http://ruby.railstutorial.org/ruby-on-rails-tutorial-book>) as a spring board. If you
+are a first time rubist and this is your first rails app I recommend that you read and follow the tutorial
+thoroughly. I have outlined below the basic steps for setting up the development machine to run Ruby extracted from the tutorial by Michael Hartl.
 
 ## Installing Ruby and Rails ##
 
 For Our purposes we are using Ruby version 2.0.0-p and Rails 4.0.0.  
-To check the version of ruby installed on your system type `ruby -v` in command line.  
-I strongly reccomend to use [Ruby Version Manager(RVM)]<http://rvm.io/> to install ruby.  
+To check the version of ruby installed on your system type `ruby -v` on the command line.  
+I strongly recommend using [Ruby Version Manager(RVM)](<http://rvm.io/>) to install ruby.  
 OS X Users must install Command line tools for Xcode.
 
 To get started with Ruby Installation, first install RVM:  
@@ -120,8 +137,7 @@ Finally we can install rails simply by running
 
 Type `rails v` to verify the version of rails is 4.0.0
 
-
-
+-------------------------------------------
 
 -	Step 1: Install Git
 -	Step 2: Verify that GCC was installed
@@ -170,7 +186,7 @@ $ `bundle install`
 ## Running a local web server ##
 use `rails server`. To see the result visit <http://localhost:3000/>  
 
-# Installing PostgreSQL #
+## Installing PostgreSQL ##
 
 The easiest way is to follow the tutorial at <http://robdodson.me/blog/2012/04/27/how-to-setup-postgresql-for-rails-and-heroku/> and/or <http://railscasts.com/episodes/342-migrating-to-postgresql>
 
@@ -185,12 +201,15 @@ rake db:create:all
 ```
 
 Note following the advice from the tutorial i created aliases in my .bash_profile to start stop and check the status of the server. I found this very useful.  
+```
 alias pg-start='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'  
 alias pg-stop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'  
-alias pg-status='pg_ctl status -D /usr/local/var/postgres'  
+alias pg-status='pg_ctl status -D /usr/local/var/postgres'
+```
 
 update the gem file of your app to eliminate the sqlite3 gem and add the pg gem.
 open config/database.yml file. I set it up as follows  
+
 ```
 # postgresql version 9.2.2.x'
 #   gem install pg
@@ -222,13 +241,16 @@ production:
   database: EZNotes_production
   pool: 5
   timeout: 5000
-  ```
-# Setting up CSS #
+```
+
+## Setting up CSS ##
 We make use of Bootstrap, an open-source web design framework from twitter. Bootstrap uses LESS CSS. To use Bootstrap we include the bootstrap-sass gem.
 Rails 3 uses HTML5 by default as indicated by <code> <!DOCTYPE html> </code>
-# Setting up Git #
 
-## First-time system setup ##
+## Setting up Git ##
+
+### First-time system setup ###
+
 perform one time system setups.  
 `$ git config --global user.name "Your Name"`  
 `$ git config --global user.email your.email@example.com`  
@@ -236,14 +258,14 @@ perform one time system setups.
 if you like using `co` in place of the more verbose `checkout` command then run
 `$ git config --global alias.co checkout`
 
-## First-time repository setup ##
+### First-time repository setup ###
 navigate to the root directory of your app and run  
 `$ git init`
 
 The next step is to add the project files to the repository. Git tracks all changes so if you want to ignore 
 certain files then you need to edit .gitignore
 
-## Adding and committing ##
+### Adding and committing ###
 `$ git add . `  
 
 the . will add files recursively so it automatically includes subdirectories
@@ -259,7 +281,8 @@ This will perform a local commit on your machine. in order to commit to the remo
 `$ git log`  
 will display the list of your commit messages
 
-## GitHub ##
+### GitHub ###
+
 to push your application to GitHub type  
 `$ git remote add origin https://github.com/<username>/first_app.git`  
 `$ git push -u origin master`  
@@ -277,6 +300,8 @@ catching any deployment problems early as opposed to deploying only at the end a
 developing the app.
 
 We are using Heroku to deploy our application which makes things easy as long as the source code is under version control with Git.
+
+Furthermore since deployment to heroku is only being used to test our application or test new features we do not deploy any real data but only fake data
 
 ## Heroku Setup ##
 
@@ -312,13 +337,23 @@ For development we generated a reasonably secure random/obscure subdomain such a
 -------------------------------------------
 # Testing #
 
+Development of this web application was done using test driven development and for the most part followed a strategy along the following lines:
+- Design feature
+- Write failing tests for feature
+- Implement feature such that it passes tests
+- Refactor and write more tests
+- Ensure all tests pass
+- Commit
+
 ## Test suites ##
+
 -	RSpec: used for test driven development
 -	Capayara: A gem that allowed us to simulate user's interaction with the app using a natural english-like syntax
 -	Guard: Automated running of tests.
 -	Spork: Test server that speeds up the running of future tests.
 
 ## Configure Rails to use RSpec ##
+
 Run the command `rails generate rspec:install`
 Note you need the postgres server running locally for this to work.
 
@@ -331,6 +366,7 @@ $ rvm get head && rvm reload
 $ rvm -v
 ```
 ## Automated test with Guard ##
+
 We use Guard to automate the running of the tests. Guard monitors changes in the filesystem so that when a change occurs it runs the tests that are relevant to that change.
 
 First add guard-rspec to the Gemfile.
@@ -460,34 +496,581 @@ Now if you run guard it will automatically start a Spork server which will reduc
 
 -------------------------------------------
 # Staging and Production Environments #
-Running Ubuntu server 12.04.3 LTS AMD 64
-Apache 2
-PostGRES
-Passenger
-RVM
 
-Server has a partition(split in half) has both windows 7 and linux installed. Linux parition is 103GB
-The parititioning schemse is as follows
-3 physical volumes and one logical volume
-2 partitions(PV) for windows one is fat32 
-the other is the windows installation at 139GB
+Please note that with software that constantly updates and new versions getting released Google is your best friend A lot of the set up was done looking through different resources and references all of them can be found at the end of this section. 
 
-2 partitions(1PV and 1LV) for ubuntu server
+## Server ##
 
-there is a physical boot partition of 250MB
-then the there is a logical volume group with 3 logical volumes installed. one is root with size 30GB the other is swap at 8GB and the remaining diskspace is var which will contain the data for website i.e web site files databases and log files
+### Physical Machine ###
+Dell Machine 64 bit
+
+#### Partitioning Scheme ####
+
+Server has a partition(split in half) has both windows 7 and linux installed. 
+
+The partitioning scheme is as follows: 
+3 physical volumes and one logical volume.
+
+Total Linux partition size is 103GB.
+two partitions(1PV and 1LV) for Ubuntu server
+1. There is a physical boot partition of 250MB
+2. The logical volume group has 3 logical volumes installed.
+	- One is root with size 30GB
+	- The other is swap at 8GB
+	- The remaining disk-space is var which will contain the data for website i.e web site files databases and log files.
+	 
+Windows partition is 139GB
+Two physical partitions for windows installation
+1. fat32 for swap
+2. NTFS remaining space
+
+#### Network Configuration ####
+
+has a static ip address
+
+### Installation and setup ###
+
+Install Ubuntu server 12.04.3 LTS AMD 64
+
+Now update by running
+
+```
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
+sudo reboot
+```
+
+It would be a good idea to set up automatic updates I did this as follows:
+
+`sudo apt-get install unattended-upgrades`
+
+`sudo vim /etc/apt/apt.conf.d/50unattended-upgrades`
+
+uncomment security updates
+
+```
+Unattended-Upgrade::Allowed-Origins {
+        "Ubuntu precise-security";
+//      "Ubuntu precise-updates";
+};
+```
+to enable automatic updates edit the following
+`sudo vim /etc/apt/apt.conf.d/10periodic`
+
+```
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Download-Upgradeable-Packages "1";
+APT::Periodic::AutocleanInterval "7";
+APT::Periodic::Unattended-Upgrade "1";
+```
+
+1 says that it will update every day and 7 is weekly.
+
+#### Setting up the hosts file ####
+
+You can call your server anything you want
+xxxx.xxxx.xxxx is replaced with the static ip that is set up
+for the server machine in the OSD office
+
+```
+# /etc/hosts
+127.0.0.1   localhost
+xxx.xxx.xxx.xxx server.eznotes.ca
+
+# /etc/hostname
+server.eznotes.ca
+```
+
+#### Install curl and git ####
+`sudo apt-get install curl`
+`sudo apt-get install git-core`
+
+### Permissions and Security ###
+Create a deploy user in order to avoid doing anything through root. The deployment user had the password generated using LastPass.
+
+#### Set up Firewall ####
+
+We now are going to lock down our server a bit more by installing Shorewall, a command-line firewall. 
+To install it:
+`sudo aptitude install shorewall`
+
+By default, Shorewall is installed with no rules, allowing complete access. However, this is not the behavior we want.
+Instead, we’re going to block all connections to anything other than port 80 (HTTP) port, port 22 (SSH) and the port our server is running from. 
+
+First, copy the configuration files to the Shorewall directory:
+`sudo cp /usr/share/doc/shorewall-common/examples/one-interface/* /etc/shorewall/`
+
+Now, open the “rules” file:
+`sudo vim /etc/shorewall/rules`
+
+Add these lines below where it says #Permit all ICMP Traffic...
+```
+ACCEPT	net	$FW	tcp 80
+ACCEPT	net	$FW	tcp 22
+ACCEPT	net	$FW	tcp OURPORTNUMBER
+```
+
+The firewall is now configured to only accept HTTP, HTTPS, SSH, and our port traffic. The last thing we need to do is tell Shorewall to start on boot. So, open up the main Shorewall configuration file:
+`sudo vim /etc/shorewall/shorewall.conf`
+Scroll down to `“STARTUP_ENABLED=No”` and set it to `“STARTUP_ENABLED=Yes”`
+
+Now open the Shorewall default configuration file:
+`sudo vim /etc/default/shorewall`
+
+change 
+`“startup=0″ to “startup=1″`
+
+Finally, start your firewall:
+`sudo /etc/init.d/shorewall start`
+
+#### Setup SSH ####
+Log in as root and modify /etc/ssh/sshd_config file
+`sudo vim /etc/ssh/sshd_config`
+
+change PermitRootLogin to now
+add AllowUsers deploy
+
+in this case our deployment non root user is called deploy
+
+save and reload the SSH daemon
+`sudo service ssh restart` or `sudo /etc/init.d/ssh restart`
+
+If you want to check all current SSH connections to the server you can use the netstat command.
+`netstat -algrep ssh`
+
+#### Add RSA Key to Server ####
+
+By adding an RSA key to the server the deploy user can access the server without needing to input the password everytime. Since I used a very strong password for the deploy user using the password generator from last pass it saves us some hassle and its fairly secure. This also becomes necessary to run remote commands from the deployment scripts without being interrupted by password prompts in particular for using Capistrano
+
+On the remote server run the following
+`sudo mkdir ~/.ssh`
+
+On the local machine use OpenSSH to create an RSA key in ~/.ssh and copy it to the remote server authorized_keys file
+
+`ssh-keygen -t rsa -b 2048 -C "You comment for the public key"`
+`cat ~/.ssh/id_rsa.pub | ssh deploy@xxx.xxx.xxx.xxx 'cat - >> ~/.ssh/authorized_keys'`
+
+log into the remove server
+`ssh deploy@xxx.xxx.xxx.xxx`
+
+run: `sudo chmod 600 ~/.ssh/authorized_keys && chmod 700 ~/.ssh/`
+
+As a sanity check check the permission of authorized_keys
+`ls -la ~/.ssh | grep "authorized_keys"`
+
+You should get something like the following output:
+`-rw------- 1 deploy deploy 403 2013-04-5 11:55 authorized_keys`
+
+On ssh directory
+`ls -la ~ | grep ".ssh"`
+
+you should get something like this:
+`drwx----- 2 deploy deploy 4096 2103-04-05 11:55 .ssh`
+
+## Installing Apache ##
+
+`sudo apt-get update`
+
+fix Locales
+`sudo locale-gen en_US en_US.UTF-8 en_CA.UTF-8`
+`sudo dpkg-reconfigure locales`
+
+Install basic packages
+`sudo apt-get install apache2 curl git build-essential zlibc zlib1g-dev zlib1g libcurl4-openssl-dev libssl-dev libopenssl-ruby apache2-prefork-dev libapr1-dev libaprutil1-dev libreadline6 libreadline6-dev`
+
+### Installing and Setting up Postgresql ###
+
+`sudo apt-get install postgresql postgresql-contrib`
+
+First we need to change the PostgreSQL postgres user password
+
+`sudo -u postgres psql postgres`
+
+Set the password using the following command
+
+`\password postgres`
+
+Input password when prompted. Again in our case I used LastPass password generator to generate the password
+
+`\q` to quit
+
+change authentication configuration by changing ident to md5
+`sudo vim /etc/postgresql/9.2/main/pg_hba/conf`
+By doing this change you ensure that a password is needed to log into psql and that the password is encrypted.
+
+`sudo /etc/init.d/postgresql reload`
+
+To create databases:
+
+`sudo -u postgres createdb {your-db-dev-name}`
+`sudo -u postgres createdb {your-db-test-name}`
+`sudo -u postgres createdb {your-db-production-name}`
+
+### Install RVM ###
+
+`curl -L https://get.rvm.io | sudo bash -s stable`
+
+This will install RVM in a multi-user install. Next step is add the deploy user to the RVM user group.
+```
+sudo adduser deploy
+sudo adduser deploy rvm
+sudo adduser <yourusername> deploy
+sudo adduser <yourusername> rvm
+sudo chown -R deploy:deploy /var/www
+sudo chmod g+w /var/www
+```
+### Install Ruby ###
+
+`rvm list known`
+`rvm install 2.0.0`
+`rvm --default use 2.0.0`
+`gem update --system`
+`gem update`
+
+### Install RAILS ###
+
+`gem install rails`
+`rails -v`
+
+### Install Phusion Passenger ###
+
+`sudo gem install passenger --pre`
+
+`sudo passenger-install-apache2-module`
+
+```
+sudo a2enmod passenger
+sudo service apache2 restart
+```
+
+### Configure Virtual Host to Point to App ###
+
+The final step is to setup a custom virtual host to point Apache to the new app directly. In this way we wont need to specify the port number everytime.
+
+To do that, I edited the file:
+`sudo vim /etc/apache2/sites-available/eznotes`
+
+```
+<VirtualHost _default_:OURPORTNUMBER>
+   # ServerName www.yourhost.com # Commented out for default
+   DocumentRoot /var/www/eznotes/public # be sure to point to public
+   <Directory /var/www/eznotes/public>
+      AllowOverride all
+      Options -MultiViews
+   </Directory>
+</VirtualHost>
+```
+
+I activated the new site.
+
+`sudo a2ensite testapp`
+
+I deactivated the default site.
+
+`sudo a2dissite default`
+
+And reloaded apache to enabled the new configurations.
+
+`sudo service apache2 reload`
 
 
-Server machine has a static ip address
-Server is a dell machine
-64-bit
-Installing Ubuntu server 12.04.3 LTS AMD 64 was done following the following tutorials below:
+## Deployment Using Git and Capistrano ##
 
-<http://www.designervisuals.com/Manual_Partitioning_of_Ubuntu_Web_Server_using_LVM.html>
+This is a critical step that facilitates the deployment process so its automated, fast and efficient.
 
-<http://www.designervisuals.com/Manual_Partitioning_Ubuntu_Web_Server.html>
+Capistrano in essence allows us to deploy our local Rails app that we are developing on our local development machine to the production server in one or two lines.
 
-<http://net.tutsplus.com/tutorials/php/how-to-setup-a-dedicated-web-server-for-free/>
+### Set up Deployment User ###
 
-Set up of server is done following the tutorial below:
-<http://www.web-l.nl/posts/21-production-rails-on-ubuntu-12-04-lts>
+Add a group to your remote server called "deployers" that will have permissions to deploy to the server and run stuff without requiring full root/sudo access.
+
+`sudo groupadd deployers`
+
+Create a user (if you haven't already) that will be added to the "deployers" group for making all your deployments. This user should have super-user privileges. Then add the user you want to use for deployments to that group (the last argument is the username you want to add).
+
+`sudo usermod -a -G deployers deploy`
+
+Then, update permissions on your deployment path where you want your app's code to go (here, I'm assuming the user "deploy" owns that path). This will give the "deployers" group read and write access to all files and directories beneath /deploy/to/path.
+
+```
+sudo chown -R deploy:deployers /deploy/to/path
+sudo chmod -R g+w /deploy/to/path
+```
+
+### Set up Capistrano ###
+
+Capistrano is a Ruby gem that makes your deployment life a lot easier. It avoids the nightmare of having to manually copy files, logon to the server, run deployment tasks off the CLI. 
+
+Installing Capistrano is as easy as adding it to your app's Gemfile and running bundle install. You don't need it on the production server, so you can just add it under the "development" group in your Gemfile.
+
+```
+group :development do
+    gem 'capistrano'
+end
+```
+
+And install with bundler (from your app's root).
+`bundle install`
+
+Once installed, you'll need to "capify" your project. This will generate a few files (namely /config/deploy.rb and /Capfile). The deploy.rb is where you can add or write custom scripts to help automate your deployment tasks and save your carpal tunnel for more important application programming.
+
+```
+cd /path/to/your/project
+capify .
+```
+
+#### Capistrano settings ####
+
+
+Once your project is capified, open up your editor of choice and modify /config/deploy.rb
+
+First, you need to make sure you add bundler and rvm integration
+
+```
+require 'bundler/capistrano' 
+require 'rvm/capistrano'
+```
+
+Next, you need to tell Capistrano to precompile assets on each deploy.
+`load deploy/assets`
+
+Next, set the default shell and rvm ruby string
+```
+set :default_shell, :bash
+set :rvm_ruby_string, :local
+```
+
+Next, you need to tell Capistrano your app's name and the clone path to your app's remote repository.
+
+```
+set :application, "Your application's name"
+set :repository, "https://github.com/yourrepository/applicationname.git"
+```
+
+Next, tell it where your app needs to be installed on your production server (this is the path to where you want your app to live, starting from your server's root). The path will be the location you pointed your server to.
+
+```
+set :deploy_to, "/path/to/your/app"
+Set the type of repository you're using (e.g., GIT, SVN, etc.) and which branch you want to deploy from (usually "master").
+
+set :scm, :git
+set :branch, "master"
+```
+
+Set the user you want to use for your server's deploys.
+
+`set :user, "deploy"`
+
+
+I change another setting called use_sudo to false so commands are executed with the user's permissions unless I specify otherwise. If you added your user to the "deployers" group (which has write-access to your app's directory tree) you probably won't need to use sudo much, if at all.
+
+`set :use_sudo, false`
+
+Set your rails environment (this is deploying to the production server, so I'm setting it to "production", but you might want to deploy to a staging server with a custom environment). You can re-use this variable in your scripts whenever you need to specify the environment so you only need to change it in one place to keep things DRY.
+
+`set :rails_env, "production"`
+
+Tell Capistrano how you'd like to make updates. There are many different ways of doing it, the simple way is to use copy. This will clone your entire repository (download it from the remote to your local machine) and then upload the entire app to your server. 
+
+`set :deploy_via, :remote_cache`
+
+Alternatively we can use a faster method like remote_cache which will run a fetch from your server to your remote repository and only update what's changed.
+
+Next, you need to tell Capistrano about any special SSH options it should be aware of. For instance, our server uses RSA keys for authentication to the eznotes Github account. We need to specify "agent forwarding" to connect to the remote repository. Follow this link for more details on agent forwarding <https://help.github.com/articles/using-ssh-agent-forwarding>
+
+`set :ssh_options, { :forward_agent => true }`
+
+You can also specify how many releases Capistrano should store on your server's harddrive. This is handy in case you ever want to rollback to a previous version quickly in case your newly deployed code blew something up and you need to put out the fires. But you probably want this to be a finite number so you don't fill up your disk with inactive versions of your app. I keep five releases.
+
+`set :keep_releases, 5`
+
+Next, you should use the following setting to ensure any needed password prompts from SSH show up in your terminal so you can handle them.
+
+`default_run_options[:pty] = true`
+
+The last setting you need to handle is where on the internet Capistrano can find your server. This could be your domain name or the IP address. For our case this deployment is for a smallish MVP-type app where everything is on the same machine (database, app, server, etc.). In this case you can use Capistrano's server setting.
+
+`server "xxx.xxx.xxx", :app, :web, :db, :primary => true`
+
+If you want to do fancier deployments by splitting things up for scaling (like separating your database from your application server), you'll want to use Capistrano's "roles" to point it to the different places where things are installed. Use multiple roles instead of the server command (it accomplishes the same thing with greater granularity).
+
+```
+role :web, "xxx.xxx.xxx"
+role :app, "xxx.xxx.xxx"
+role :db, "xxx.xxx.xxx", :primary => true
+```
+xxx.xxx.xxx is the static ip of our server
+
+That :primary => true part of the database role tells Capistrano that this is the location of your primary database. i.e this is where rails migration will run
+
+#### Connect ####
+
+
+Before we get into the individual deployment tasks, check that all the settings you've just saved in deploy.rb are working properly. Run this command in a terminal from your app's root.
+
+`cap deploy:setup`
+
+This will SSH to your server and create some directories in the folder you specified with deploy_to where Capistrano will store your releases, and your shared files (e.g., logs, configs, static assets like uploads, etc.). If something goes wrong with permissions or SSH access, you'll see some error messages. Fix these before proceeding so you know you can actually make a connection to your server.
+
+This should setup the following directories (if you've specified to install your app in /var/www/eznotes/):
+
+```
+/var/www/eeznotes/current
+/var/www/eznotes/shared
+/var/www/eznotes/releases
+```
+
+The releases directory is where copies of all your actual code are stored. shared is a place where you can put common, shared files like logs, static assets, and in our case, config files like database.yml. current is simply a symbolic link that points to the current release inside the releases directory (Capistrano updates this for you on each deploy, so don't worry about it).
+
+If `deploy:setup` works, the next thing you can do is run the `deploy:check` command. This will check your local environment and your server and try to locate any possible issues. If you see any errors, fix them first, and then run the command again until you don't have any more errors.
+
+`cap deploy:check`
+
+Any number of things could go wrong here, but the most likely issues will be some sort of authentication or file permission issues with your server and the user you're logging in with SSH.
+
+#### Setting up Database.yml ####
+
+In order not to store our database password in plain text in github we have excluded the file database.yml from our repository by adding it to .gitignore file. This is critical as we do not want to store sensitive data like passwords in the repository. However, when you run Capistrano to update your server, it only copies the files that are in your repository (and Rails actually needs to use that database.yml file to hook up to your server's database, unless you don't plan on storing any data whatsoever). So, the problem is: we need to get that config file onto the server somehow, securely, and make sure Rails knows where to find it.
+
+There are many different solutions out there for handling this issue, but the simplist solution and easiest solution I found was to  manually put the file on the server in a shared location that only I (and the app) have read-access to.
+
+First, make a new config directory in the shared directory that Capistrano created.
+
+```
+ssh deploy@xxx.xxxx.xxxx
+mkdir /var/www/eznotes/shared/config
+```
+
+Leave the server and back on your local machine, in your app's root directory, copy the database.yml file to the server
+
+`scp ./config/database.yml  deploy@xxx.xxx.xxx.xxx:/var/www/eznotes/shared/config/database.yml`
+
+I then hook it up to the app with a simple symbolic link that I create in my deployment script inside deploy.rb (see below).
+
+#### Tasks ####
+
+I put all the deployment tasks under the "deploy" namespace inside the deploy.rb file. 
+
+```
+namespace :deploy do
+    desc "Human readable description of task"
+    task :name_of_task_command do
+        # do stuff
+    end
+end
+```
+
+The basic deployment tasks we need to accomplish are as follows:
+
+Update application code
+Precompile assets
+Update custom symlinks
+Restart the server
+Cleanup unneeded files
+
+
+1. Update Application Code
+You don't need a special task for this. This is Capistrano's primary function. When you run cap deploy it will first update your code. However, if you want to only update your code and not do anything else, you can use the
+`cap deploy:update_code` command to do it.
+
+2. Precompile assets
+uncomment this one line (that should already exist from when you capified your project) in the /Capfile file.
+
+`load 'deploy/assets'`
+This tells Capistrano to precompile assets on each deploy.
+
+3. Update custom symlinks
+This could be a link to some static assets you want to store outside your repository or something, but the main thing you need to do here is hook up your database.yml file so Rails can find it!
+
+Rails expects to see /path/to/your/app/config/database.yml. But the file is now stored in /deploy_to/shared/config/database.yml. We add the following task to our deploy.rb. we also want to symlink application.yml which contains the username and password of the Gmail account we are using to send out email notifications again for reasons of security we used the same approach as with database.yml.
+
+```
+desc "Symlink shared config files"
+  task :symlink_config_files do
+   run "#{ try_sudo } ln -s #{ deploy_to }/shared/config/database.yml #{ latest_release }/config/database.yml"
+   run "#{ try_sudo } ln -s #{ deploy_to }/shared/config/application.yml #{ latest_release }/config/application.yml"
+  end
+```
+
+4. Restart the server
+Since the server is setup to run with Passenger, you'll need to override Capistrano's default restart task with one specific to Passenger (i.e., you want to touch /tmp/restart.txt from inside your app's root. This is pretty simple by adding this task to the "deploy" namespace in deploy.rb.
+
+```
+desc "Restart Passenger app"
+task :restart do
+    run "#{ try_sudo } touch #{ File.join(current_path, 'tmp', 'restart.txt') }"
+end
+```
+
+5. Cleanup unneeded files
+If you don't run cleanup, the worst thing that will happen is that all your old releases stay stored on your server. But you might not want this as it's taking up disk space. This task is run from `deploy:cleanup`.
+
+6. After Deploy
+The final step in setting up your deployment script is to add your custom tasks to run after deployment (i.e., after all the files are copied to the server and the current_path has been updated to the latest release). All you need to do is tell Capistrano what tasks you want to run in the order you want to run them outside the deploy namespace block.
+
+```
+ before "deploy:setup", 'rvm:install_rvm'
+ before "deploy:setup", 'rvm:install_ruby'
+ before "deploy:assets:precompile", "deploy:symlink_config_files"
+ after "deploy", "deploy:restart"
+ after "deploy", "deploy:cleanup"
+```
+
+Since precompiling assets and updating the code are baked in, you don't need to specify those tasks. If you add any other tasks to your deployment process, you can just add them here to get executed.
+
+#### Deploy! ####
+
+You should have a remote Git repository with the latest version of your code in it, Capistrano setup and checked, and your deployment tasks written and ready to run. So let's run it:
+
+`cap deploy`
+
+If you need to simply migrate your database, Capistrano has a task for that too.
+
+`cap deploy:migrate`
+
+And if something goes horribly wrong (which will happen), you can quickly and easily rollback to the previous release (which is hopefully a working version).
+
+`cap deploy:rollback`
+
+Run this multiple times to go back through additional past releases.
+
+
+So our regular routine can now be something like this:
+
+```
+change some stuff in your code
+git add . it to your local repo queue
+git commit -m 'my new commit' it to your local repo
+git push origin master to sync it to your remote
+cap deploy to update your production server with your changes
+```
+-----------------------------------
+
+# Resources and References #
+
+## Installing Ubuntu server 12.04.3 LTS AMD 64 ##
+
+1. <http://www.designervisuals.com/Manual_Partitioning_of_Ubuntu_Web_Server_using_LVM.html>
+2. <http://www.designervisuals.com/Manual_Partitioning_Ubuntu_Web_Server.html>
+3. <http://net.tutsplus.com/tutorials/php/how-to-setup-a-dedicated-web-server-for-free/>
+4. <https://help.ubuntu.com/10.04/serverguide/automatic-updates.html>
+5. <http://www.web-l.nl/posts/21-production-rails-on-ubuntu-12-04-lts>
+
+## Postgres ##
+1. <https://www.digitalocean.com/community/articles/how-to-install-and-use-postgresql-on-ubuntu-12-04>
+
+## Security ##
+1. <http://www.debian-administration.org/articles/349>
+2. <http://httpd.apache.org/docs/2.2/ssl/ssl_faq.html>
+3. <http://blog.ericlamb.net/2009/05/setting-up-a-linux-web-server/>
+4. <http://www.jonathanmoeller.com/screed/?p=2097>
+
+## Set up Rails on server ##
+1. <http://robmclarty.com/blog/how-to-setup-a-production-server-for-rails-4>
+2. <http://robmclarty.com/blog/how-to-deploy-a-rails-4-app-with-git-and-capistrano>
+3. <http://www.web-l.nl/posts/21-production-rails-on-ubuntu-12-04-lts>
+4. <http://coding.smashingmagazine.com/2011/06/28/setup-a-ubuntu-vps-for-hosting-ruby-on-rails-applications-2/>
+
+## Git and GitHub ##
+1. <https://help.github.com/articles/using-ssh-agent-forwarding>
