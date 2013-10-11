@@ -16,7 +16,13 @@ class RegistrationsController < ApplicationController
                                    "%#{query[1]}%")
          @registrations = []
          @courses.each do |course|
-            @registrations << { "id" => course.id, "name" => "#{course.term.upcase} | #{course.subject_code} #{course.course_num} #{course.section}: #{course.course_title}" }
+            @registrations << { "id" => course.id,
+                                "name" => "#{course.term.upcase} | #{course.subject_code}-#{course.course_num}-#{course.section}: #{course.course_title}",
+                                "term" => "#{course.term.upcase}",
+                                "subject_code" => "#{course.subject_code}", 
+                                "course_num" => "#{course.course_num}",
+                                "section" => "#{course.section}",
+                                "course_title" => "#{course.course_title}" }
          end
       end
 
@@ -31,32 +37,43 @@ class RegistrationsController < ApplicationController
       courses = params[:user][:course_tokens].split(',')
 
       error_messages = ""
+      success_messages = ""
+
+      if params[:user][:user]
+        @user = User.find(params[:user][:user])
+      else
+        @user = current_user
+      end
 
       courses.each do |course|
         @course = Course.find(course)     
         if @course then
-          course_string = "#{@course.term.upcase} | #{@course.subject_code} #{@course.course_num} #{@course.section}: #{@course.course_title}"
-          if current_user.registered_with?(@course)
-            flash[:error] = "Already registered with course: #{course_string}!"
-            #current_user.errors.add :base, "Already registered with course: #{course_string}!"
+          course_string = "#{@course.subject_code}-#{@course.course_num}-#{@course.section} -> #{@course.course_title}"
+          if @user.registered_with?(@course)
+            error_messages += "<i class='icon-exclamation icon-large'></i> <strong>#{@user.name}</strong> is already registered with the course: <em class>#{course_string}</em> in the <em>#{@course.term.upcase}</em> term<br>"
           else
-            current_user.registrations.build(course_id: @course.id)
-            if current_user.register!(@course)
-              flash[:success] = "Registered for course: #{course_string}!"
-              # send email message you have been matched if course already has an assigned note taker
-              if @course.note_taker and not current_user.note_taker? and not current_user.admin?
-                current_user.send_notetaker_assigned(@course)
+            @user.registrations.build(course_id: @course.id)
+            if @user.register!(@course)
+              success_messages += "<i class='icon-ok icon-large'></i> Registered <strong>#{@user.name}</strong> for the course: <em class>#{course_string}</em> in the <em>#{@course.term.upcase}</em> term<br>"
+              if @course.note_taker and not @user.note_taker? and not @user.admin?
+                @user.send_notetaker_assigned(@course)
               end
-
             else
-              flash[:error] = "Could not register for course: #{course_string}!"
-              #current_user.errors.add :base, "Could not register for course: #{course_string}!"
+              error_messages += "<strong class='icon-exclamation icon-large'> #{@user.name}</strong> could not register for the course: <em class>#{course_string}</em> in the <em>#{@course.term.upcase}</em> term<br>"
             end 
           end
         end
       end
 
-        redirect_to root_path
+      if error_messages != ""
+        flash[:error] = error_messages.html_safe
+      end
+
+      if success_messages != ""
+        flash[:success] = success_messages.html_safe
+      end
+
+      redirect_to root_path
    end
 
    def destroy
@@ -64,7 +81,7 @@ class RegistrationsController < ApplicationController
       @user = User.find(params[:user])
       if @course then
          if @user.registered_with?(@course)
-            flash[:success] = "Unregistered #{@user.name} from the course #{@course.term.upcase} | #{@course.subject_code} #{@course.course_num} #{@course.section} #{@course.course_title}!"
+            flash[:success] = "<i class='icon-ok icon-large'></i> Unregistered <strong> #{@user.name} </strong> from the course <em>#{@course.subject_code}-#{@course.course_num}-#{@course.section} -> #{@course.course_title}</em> in the <em>#{@course.term.upcase}</em> term.".html_safe
             @user.unregister!(@course)
             # if the user unregistering from the course 
             # is the note taker of the course
@@ -75,10 +92,10 @@ class RegistrationsController < ApplicationController
               @course.save
             end
          else
-            flash[:error] = "You are not registered with this course!"
+            flash[:error] = "<i class='icon-exclamation icon-large'></i> <strong>#{@user.name} </strong> is not registered with this course".html_safe
          end
       else
-         flash[:error] = "Course does not exist"
+         flash[:error] = "<i class='icon-exclamation icon-large'></i> Course does not exist".html_safe
       end
       redirect_to root_url
    end

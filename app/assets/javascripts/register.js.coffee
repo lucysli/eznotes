@@ -1,5 +1,6 @@
 # coffescript to handle token input for registering for courses
 
+                
 ready = ->
    $('#user_course_tokens').tokenInput("/registrations.json", { 
       crossDomain: false,
@@ -8,6 +9,22 @@ ready = ->
       searchDelay: 500,
       minChars: 3,
       hintText: "Type in a search term(e.g MATH or MATH 123 or Linear algebra)",
+      propertyToSearch: "name",
+      resultsFormatter: (item) ->
+         if item.term == "FALL"
+            return "<li><i class='icon-leaf text-error'></i> " + item.term + " | " + item.subject_code + "-" + item.course_num + "-" + "<strong class='text-error'>" + item.section + "</strong>: " + item.course_title + "</li>"
+         if item.term == "WINTER"
+            return "<li><i class='icon-asterisk text-info'></i> " + item.term + " | " + item.subject_code + "-" + item.course_num + "-" + "<strong class='text-info'>" + item.section + "</strong>: " + item.course_title + "</li>"
+         if item.term == "SUMMER"
+            return "<li><i class='icon-sun text-warning'></i> " + item.term + " | " + item.subject_code + "-" + item.course_num + "-" + "<strong class='text-warning'>" + item.section + "</strong>: " + item.course_title + "</li>"
+      ,
+      tokenFormatter: (item) ->
+         if item.term == "FALL"
+            return "<li><p><i class='icon-leaf text-error'></i> " + item.term + " | " + item.subject_code + "-" + item.course_num + "-" + "<strong class='text-error'>" + item.section + "</strong>: " + item.course_title + "</p></li>"
+         if item.term == "WINTER"
+            return "<li><p><i class='icon-asterisk text-info'></i> " + item.term + " | " + item.subject_code + "-" + item.course_num + "-" + "<strong class='text-info'>" + item.section + "</strong>: " + item.course_title + "</p></li>"
+         if item.term == "SUMMER"
+            return "<li><p><i class='icon-sun text-warning'></i> " + item.term + " | " + item.subject_code + "-" + item.course_num + "-" + "<strong class='text-warning'>" + item.section + "</strong>: " + item.course_title + "</p></li>"
       } )
 
    ###
