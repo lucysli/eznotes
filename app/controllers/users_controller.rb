@@ -63,17 +63,23 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(update_params)
-      # Handle a successful update
-      flash[:success] = "Profile updated"
-      if current_user.admin? and not current_user?(@user)
-        redirect_to :back
+    respond_to do |format|
+      if @user.update_attributes(update_params)
+        # Handle a successful update
+        format.html {
+          flash[:success] = "Profile updated"
+          if current_user.admin? and not current_user?(@user)
+            redirect_to :back
+          else
+            sign_in @user
+            redirect_to root_path
+          end
+        }
+        format.js { render 'update', locals: { user: @user } }
       else
-        sign_in @user
-        redirect_to root_path
+        format.html { render 'edit' }
+        format.js { render nothing: true }
       end
-    else
-      render 'edit'
     end
   end
 

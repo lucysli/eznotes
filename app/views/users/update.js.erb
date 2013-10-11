@@ -1,0 +1,8 @@
+
+$(".<%= user.id %>").html("<%= escape_javascript(link_to user.name, user) %>");
+<% if user.approved? %> 
+   $(".<%= user.id %>").append(" <%= escape_javascript(link_to 'Approved', user_path(user, user: { :approved => false }), method: :put, remote: true, class: 'approve icon-star icon-large') %>");
+<% else %> 
+   $(".<%= user.id %>").append(" <%= escape_javascript(link_to 'Unapproved',user_path(user, user: { :approved => true }), method: :put, remote: true, class: 'unapprove icon-star-empty icon-large') %>");
+<% end %>
+

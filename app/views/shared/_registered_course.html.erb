@@ -37,20 +37,7 @@
          0
       <% else %>
         <strong class="muted"> <%= @notetakers.count %> registered </strong>
-         <% @notetakers.each do |notetaker| %>
-            <p> 
-              <%= link_to notetaker.name, notetaker %> 
-              <% if notetaker.approved? %>
-                <%= link_to user_path(notetaker, user: { :approved => false }), method: :put, class: "approve" do %> 
-                  <i class="icon-star icon-large"></i>
-                <% end %>
-              <% else %>
-                <%= link_to user_path(notetaker, user: { :approved => true }), method: :put, class: "unapprove" do %> 
-                  <i class="icon-star-empty icon-large"></i>
-                <% end %>
-              <% end %>
-            </p>
-         <% end %>
+        <%= render partial: 'shared/notetaker', collection: @notetakers %>
       <% end %>
    </td>
    <td>

@@ -52,21 +52,6 @@ search = ->
 # This way the events for the comment field text area will be attached whether 
 # we’ve loaded the page via Turbolinks or not.
 ready = ->
-   $('.approve').mouseenter ->
-      $(this).find('i').removeClass('icon-star')
-      $(this).find('i').addClass('icon-star-empty')
-
-   $('.approve').mouseleave ->
-      $(this).find('i').removeClass('icon-star-empty')
-      $(this).find('i').addClass('icon-star')
-
-   $('.unapprove').mouseenter ->
-      $(this).find('i').removeClass('icon-star-empty')
-      $(this).find('i').addClass('icon-star')
-
-   $('.unapprove').mouseleave ->
-      $(this).find('i').removeClass('icon-star')
-      $(this).find('i').addClass('icon-star-empty')
 
    $('#courses_search input').keyup search
    # default each row to visible
@@ -118,6 +103,28 @@ ready = ->
          $("td").removeClass("sorted").filter(":nth-child(" + (column + 1) + ")").addClass("sorted")
 
 
+approve = ->
+   $('.approve').mouseover ->
+      $(this).removeClass('icon-star')
+      $(this).addClass('icon-star-empty')
+      $(this).text("Click to Unapprove")
+
+
+   $('.approve').mouseleave ->
+      $(this).removeClass('icon-star-empty')
+      $(this).addClass('icon-star')
+      $(this).text("Approved")
+
+   $('.unapprove').mouseover ->
+      $(this).removeClass('icon-star-empty')
+      $(this).addClass('icon-star')
+      $(this).text("Click to Approve")
+
+   $('.unapprove').mouseleave ->
+      $(this).removeClass('icon-star')
+      $(this).addClass('icon-star-empty')
+      $(this).text("UnApproved")
 
 $(document).ready(ready)
 $(document).on('page:load', ready)
+$(document).on('mouseover', approve)

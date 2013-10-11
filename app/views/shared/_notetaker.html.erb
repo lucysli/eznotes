@@ -1,0 +1,8 @@
+<p class="<%= notetaker.id %>" >
+  <%= link_to notetaker.name, notetaker %> 
+  <% if notetaker.approved? %>
+    <%= link_to 'Approved', user_path(notetaker, user: { :approved => false }), method: :put, remote: true, class: "approve icon-star icon-large" %>
+  <% else %>
+    <%= link_to 'Unapproved',user_path(notetaker, user: { :approved => true }), method: :put, remote: true, class: "unapprove icon-star-empty icon-large" %> 
+  <% end %>
+</p>
