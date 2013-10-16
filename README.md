@@ -337,6 +337,8 @@ For development we generated a reasonably secure random/obscure subdomain such a
 -------------------------------------------
 # Testing #
 
+Unfortunetly due to time constraints, the necessary refactoring and improvement and completion of tests have not been done yet. This is an area that needs to be improved on in the future. Some tests are not running properly for reasons that remain unknown for me yet.
+
 Development of this web application was done using test driven development and for the most part followed a strategy along the following lines:
 - Design feature
 - Write failing tests for feature
