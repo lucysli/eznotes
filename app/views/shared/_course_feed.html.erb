@@ -1,7 +1,7 @@
 <% @user = current_user %>
 
 <% if Time.now.month >= 1 and  Time.now.month < 9 %>
-   <% fall_year = Time.now.strftime("%Y").previous %>
+   <% fall_year = Time.now.prev_year.strftime("%Y") %>
    <% winter_year = Time.now.strftime("%Y") %>
    <% summer_year = Time.now.strftime("%Y") %>
 <% elsif Time.now.month >= 9 and Time.now.month <= 12 %>
